@@ -56,15 +56,18 @@ Below are all of the slides relevant for each class. The slides will open as htm
 
 
 
-2. Physician agency and treatment decisions
-
-3. Information disclosure
-
-4. Mergers and healthcare competition
-
-5. Key issues for health insurance markets
+### Module 2. Physician agency and treatment decisions
 
 
+### Module 3. Information disclosure
+
+
+### Module 4. Mergers and healthcare competition
+
+
+
+### Module 5. Key issues for health insurance markets
+We won't get to this, but the resources are here for you if anyone is interested.
 
 
 
@@ -78,6 +81,7 @@ Below are all of the slides relevant for each class. The slides will open as htm
 4. Literature review (2nd year) or draft paper (3rd year): You will prepare a literature review or a preliminary draft paper depending on how far along you are in the PhD program. Details of these assignments are available on the [literature review](assignments/lit-review.html) and [draft paper](assignments/draft-paper.html) pages of our website. This assignment is due by **Friday, November 13, 2020**.
 
 5. Replication: You will replicate a published paper using publicly available data. Details of this assignment and a list of potential papers to replicate are available on the [replication](assignments/replication.html) page of our class website. You can also choose to replicate a paper off of the list, but I must approve any selection by **Friday, September 4, 2020**. Your final replication is due no later than **Friday, December 11, 2020** (the day of our scheduled final exam). 
+
 
 
 ## GitHub Repositories (and other data)
@@ -94,6 +98,8 @@ We'll use the following GitHub repositories and other datasets throughout the co
 5. [Physician Fee Schedule](https://github.com/imccart/PFS_Update_2010). See also the replication files for [Dranove and Ody (2019)](https://www.aeaweb.org/articles?id=10.1257/pol.20170020).
 
 6. [National Inpatient Sample, HCUP](https://www.hcup-us.ahrq.gov/db/nation/nis/nisdbdocumentation.jsp)
+
+
 
 ## Acknowledgements
 This class (and in particular the *R Markdown* formatting and animations) have benefitted significantly from several people who have been generous enough to make their website and other programs available to the public. Some of those people include:
