@@ -1,31 +1,49 @@
 # Econ 771: Health Economics II
 
-This is a PhD course in Health Economics, taught by [Ian McCarthy](http://ianmccarthyecon.com) at Emory University. 
+This is a PhD course in Health Economics, taught by [Ian McCarthy](http://ianmccarthyecon.com) at Emory University. Before going much further, please be sure to read the full [syllabus](syllabus/syllabus-771.pdf), which provides more details on class policies and learning objectives. 
 
-Before going much further, please be sure to read the [syllabus](syllabus/Econ771-Syllabus.pdf). This provides a sense of what to expect in the course and details of specific assignments and projects. Below are lecture notes and underlying code files for the class. This is very much a work-in-progress, so be sure to check back regularly for updates. Better yet, you can clone the repo via *Git* and then pull regularly to get updates. If you're not familiar with GitHub, take a look at the excellent notes from [Grant McDermott](https://grantmcdermott.com/) and his class, [Data Science for Economists](https://github.com/uo-ec607/lectures). 
+This ReadMe file is the landing page for our class website. Below, I provide details on resources, course logistics, assignments, and the course schedule. This site is very much a work-in-progress, so be sure to check back regularly for updates. Better yet, you can clone the repo via *Git* and then pull regularly to get updates. If you're not familiar with GitHub, take a look at the excellent notes from [Grant McDermott](https://grantmcdermott.com/) and his class, [Data Science for Economists](https://github.com/uo-ec607/lectures). 
+
+## Main Resources
+
+To get the most out of this class, we need to use a handful of tools. Some of these may be new to you (I'm still learning too!), but I've selected all of these resources deliberately. They should complement each other and build relevant skills for any applied economics researcher.
+
+1. **Canvas**: This is where I'll post announcements and any grades. We'll also use Canvas for our discussion forums.
+
+2. **OneNote**: Everyone will soon receive an invitation to join our OneNote classroom. This will provide you with your own notebook for the class, where you can take your own notes and have access to all of my annotated notes from class. Note that all of the notes (without annotation) are also available below.
+
+3. **GitHub**: Everyone will also soon receive an invitation to join our GitHub classroom. This is where you can access all code files and datasets that we'll use in the class. This is also how you will submit your main replication project.
+
+4. **Amazon Web Services**: Everyone will have access to cloud computing through AWS. This will serve as your own virtual computer, so we all have the same data capabilities, versions, and packages.
+
+5. **Zoom**: All office hours and one-on-one meetings will take place virtually in our private Zoom meeting room. Details of the room are available on *Canvas*.
+
+6. **Me!** Please reach out to me for any reason. I will answer emails as promptly as possible (definitely within 24 hours), and we can meet virtually whenever I am available. If you'd like to meet virtually, just go to [https://ian-meetings.youcanbook.me](https://ian-meetings.youcanbook.me) and find a time that works.
+
 
 
 ## Notes and Slides
-Below are all of the slides that I'll use throughout the class. The slides will open as html files. Note that I've disabled "touch" navigation, which means that it's not possible to advance the slides with a touchscreen. I did this because I'll annotate the slides during class, and if touch navigation is enabled, then every time I try to write with a stylus it will advance the slide. 
-
-If you want to see the slides in standard presentation format, you will need to access everything on a desktop or laptop rather than a phone or tablet. Everything is still accessible on a mobile platform, you just need to enable "simplified" view (or reader view in some browsers). I've provided a link for that view in each section. The simplified view will remove the slide/presentation formatting and allow you just to see the whole content as one big website. Some content won't display in the same way, but the content itself will be there.
-
-1. Motivation and expectations for the class
+Below are all of the slides and other resources relevant for each class. The slides will open as html files. Be sure to check the *OneNote* notebook for any annotated notes from each class, accessible via our *OneNote classroom*. 
 
 
-2. The hospital objective function and financial incentives
+0. Motivation and expectations for the class
+
+Today we'll just introduce ourselves and I'll give you my pitch for why I think health economics is an exciting and important area to study.
 
 
-3. Physician agency and treatment decisions
+1. The hospital objective function and financial incentives
 
 
-4. Information disclosure
+2. Physician agency and treatment decisions
 
 
-5. Mergers and healthcare competition
+3. Information disclosure
 
 
-6. Key issues for health insurance markets
+4. Mergers and healthcare competition
+
+
+5. Key issues for health insurance markets
 
 
 
