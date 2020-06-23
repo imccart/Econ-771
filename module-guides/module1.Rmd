@@ -1,0 +1,67 @@
+---
+title: "Module 1"
+author: "Econ 771: Health Economics II"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 3
+    theme: darkly
+    number_sections: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache.path = '_cache/')
+```
+
+# Overview 
+This is the guide for **Module 1**, which covers hospital objective functions and responses to financial incentives. There are separate "guides" for each class, the goal which is simply to highlight the material for that week. By the end of the semester, the guides should serve as a comprehensive outline of everything we've done for each module.
+
+
+# Learning objectives
+1. Synthesize the literature on hospital ownership type and its effects on healthcare outcomes
+2. Recognize identification strategies in applied empirical work
+3. Identify potential barriers to "selection on observables" and difference-in-differences in practice
+4. Analyze real data on hospital ownership type, prices, and quality
+5. Describe the Medicare prospective payment system and the idea of "upcoding" in claims data
+
+
+# Identification strategies
+1. Selection on observables (not really an identification strategy...more of an assumption to facilitate causal inference with purely observational data)
+2. Difference-in-differences (and the role of event studies)
+
+
+# Main datasets
+1. [HCRIS](https://github.com/imccart/HCRIS)
+2. [Provider of Services](https://github.com/asacarny/provider-of-services)
+3. [Hospital Compare](https://github.com/asacarny/hospital-compare)
+4. [Physician Fee Schedule](https://github.com/imccart/PFS_Update_2010)
+
+
+
+# Schedule
+
+### Class 2, 8/24
+**Theoretical models of not-for-profits**<br>
+I'll present some details on through Dranove (1988), Newhouse (1970), and Pauly (1978). These are theoretical papers proposing different models of hospital behaviors, such as a purely utility maximizing firm or a physician's owned cooperative.
+
+
+### Class 3, 8/26
+**Empirical evidence on ownership type**<br>
+Duggan (2000), Horwitz and Nichols (2009), Bayindir (2012). Note that Horwitz and Nichols (2009) and Bayindir (2012) are combined in the class presentations. Both of those papers are closely related and so it makes sense to present those papers together. The papers are also relatively short.
+
+
+### Class 4, 8/31
+Dafny (2005), Dranove and Ody (2019)
+
+
+### Class 5, 9/2
+Dranove (1988), Dranove et al. (2017). I will briefly present the Dranove (1988) paper in the beginning of class and discuss the main source of debate in this literature. Dranove et al. (2017) is the only student-led presentation for this class.
+
+
+### Class 6, 9/7
+Batty and Ippolito (2017), Eliason et al. (2018), Geruso and Layton (2020)
+
+

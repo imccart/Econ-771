@@ -23,44 +23,16 @@ To get the most out of this class, we need to use a handful of tools. Some of th
 
 
 ## Course Outline and Notes
-Below are all of the slides relevant for each class. The slides will open as html files. Be sure to check the *OneNote* notebook for any annotated notes from each class, accessible via our *OneNote classroom*. 
+The course is divided into a few distinct topic areas. In each area, we'll discuss a handful of papers and finish each module with an empirical exercise using real-world data. The empirical work is designed to replicate or at least approximate many of the key identification strategies and econometric approaches covered in the papers for that module. Follow the link to each module for more detailed information about each section of the course, including a list of resources, learning objectives, and day-to-day schedule. Each module page will also contain the slides relevant for each class. Be sure to check the *OneNote* notebook for any annotated notes from each class, accessible via our *OneNote classroom*. 
 
 
 ### Module 0. Motivation and expectations for the class
 
-### Module 1. The hospital objective function and financial incentives
-
-**Learning objectives**
-  - Synthesize the literature on hospital ownership type and its effects on healthcare outcomes
-  - Recognize identification strategies in applied empirical work  
-  - Identify potential barriers to "selection on observables" and difference-in-differences in practice
-  - Analyze real data on hospital ownership type, prices, and quality
-  - Describe the Medicare prospective payment system and the idea of "upcoding" in claims data
-
-**Papers**<br>
-  - Class 3, 9/2: Duggan (2000), Horwitz and Nichols (2009), Bayindir (2012). Note that Horwitz and Nichols (2009) and Bayindir (2012) are combined in the class presentations. Both of those papers are closely related and so it makes sense to present those papers together. The papers are also relatively short.
-  - Class 4, 9/7: Dafny (2005), Dranove and Ody (2019)
-  - Class 5, 9/16: Dranove (1988), Dranove et al. (2017). I will briefly present the Dranove (1988) paper in the beginning of class and discuss the main source of debate in this literature. Dranove et al. (2017) is the only student-led presentation for this class.
-
-
-**Identification strategies**<br>
-  - Selection on observables (not really an identification strategy...more of an assumption to facilitate causal inference with purely observational data)
-  - Difference-in-differences (and the role of event studies)
-
-
-**Main datasets**<br>
-  - [HCRIS](https://github.com/imccart/HCRIS)
-  - [Provider of Services](https://github.com/asacarny/provider-of-services)
-  - [Hospital Compare](https://github.com/asacarny/hospital-compare)
-  - [Physician Fee Schedule](https://github.com/imccart/PFS_Update_2010)
-
-
+### Module 1. [The hospital objective function and financial incentives](module-guides/module1.html)
 
 ### Module 2. Physician agency and treatment decisions
 
-
 ### Module 3. Information disclosure
-
 
 ### Module 4. Mergers and healthcare competition
 
