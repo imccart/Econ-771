@@ -1,0 +1,21 @@
+---
+title: "Module 4"
+author: "Econ 771: Health Economics II"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 3
+    theme: darkly
+    number_sections: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache.path = '_cache/')
+```
+
+# Overview 
+This is the guide for **Module 4**, the last module of the class. Over these last few weeks, we'll cover healthcare competition and the effects of mergers and closures. Most of this will deal with hospitals but we'll have some discussion of vertical integration between hospitals and physicians as well as some papers on concentration in the dialysis industry.
+

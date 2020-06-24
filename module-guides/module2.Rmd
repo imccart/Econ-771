@@ -1,0 +1,21 @@
+---
+title: "Module 2"
+author: "Econ 771: Health Economics II"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 3
+    theme: darkly
+    number_sections: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache.path = '_cache/')
+```
+
+# Overview 
+This is the guide for **Module 2**, which covers issues related to physician agency and treatment decisions. Check back for more updates.
+

@@ -34,11 +34,11 @@ The course is divided into a few distinct topic areas. In each area, we'll discu
 
 ### Module 2. [Physician agency and treatment decisions](module-guides/module2.html)
 
-### Module 3. Information disclosure
+### Module 3. [Information disclosure](module-guides/module3.html)
 
-### Module 4. Mergers and healthcare competition
+### Module 4. [Mergers and healthcare competition](module-guides/module4.html)
 
-### Module 5. Key issues for health insurance markets
+### Module 5. [Key issues for health insurance markets](module-guides/module5.html)
 We won't get to this, but the resources are here for you if anyone is interested.
 
 

@@ -17,8 +17,7 @@ knitr::opts_chunk$set(cache.path = '_cache/')
 ```
 
 # Overview 
-This is the guide for **Module 1**, which covers hospital objective functions and responses to financial incentives. There are separate "guides" for each class, the goal which is simply to highlight the material for that week. By the end of the semester, the guides should serve as a comprehensive outline of everything we've done for each module.
-
+This is the guide for **Module 1**, which covers hospital objective functions and responses to financial incentives. 
 
 # Learning objectives
 1. Synthesize the literature on hospital ownership type and its effects on healthcare outcomes
