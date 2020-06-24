@@ -45,23 +45,31 @@ This is the guide for **Module 1**, which covers hospital objective functions an
 
 ### Class 2, 8/24
 **Theoretical models of not-for-profits**<br>
-I'll present some details on through Dranove (1988), Newhouse (1970), and Pauly (1978). These are theoretical papers proposing different models of hospital behaviors, such as a purely utility maximizing firm or a physician's owned cooperative.
+I'll present some details on models of the not-for-profit hospital from Dranove (1988), Newhouse (1970), and Pauly (1978). These are theoretical papers proposing different models of hospital behaviors, such as a purely utility maximizing firm or a physician's owned cooperative. We'll also discuss some institutional details of the hospital market and the prevalence of private not-for-profit hospitals.
 
 
 ### Class 3, 8/26
 **Empirical evidence on ownership type**<br>
-Duggan (2000), Horwitz and Nichols (2009), Bayindir (2012). Note that Horwitz and Nichols (2009) and Bayindir (2012) are combined in the class presentations. Both of those papers are closely related and so it makes sense to present those papers together. The papers are also relatively short.
+Today we'll discuss some empirical work focusing on differences in behavior between for-profit versus not-for-profit hospitals. We'll cover the following papers: Duggan (2000), Horwitz and Nichols (2009), Bayindir (2012). Note that Horwitz and Nichols (2009) and Bayindir (2012) are combined in the class presentations. Both of those papers are closely related and so it makes sense to present those papers together. The papers are also relatively short.
 
 
 ### Class 4, 8/31
-Dafny (2005), Dranove and Ody (2019)
+**Response to Medicare payment changes**<br>
+This class focuses on hospital responses to Medicare payment changes. We'll discuss two responses in particular: 1) hospital "upcoding", with Dafny (2005); and hospital purchases of physician practices, in Dranove and Ody (2019). The general theme in both (and many other) papers is that hospitals respond to financial incentives and do not appear to be fully altruistic firms.
 
 
 ### Class 5, 9/2
-Dranove (1988), Dranove et al. (2017). I will briefly present the Dranove (1988) paper in the beginning of class and discuss the main source of debate in this literature. Dranove et al. (2017) is the only student-led presentation for this class.
+**Hospital cost-shifting**<br>
+Today's papers are both from David Dranove (and co-authors)...Dranove (1988) and Dranove et al. (2017). They extend the idea from 8/31 in that this literature considers negotiated prices (between a commercial insurer and a hospital) as another potential outcome affected by changes in Medicare payments. 
+
+I will briefly present the Dranove (1988) paper in the beginning of class. I'll also discuss the main source of debate in this literature. Dranove et al. (2017) is the only student-led presentation for this class.
 
 
 ### Class 6, 9/7
-Batty and Ippolito (2017), Eliason et al. (2018), Geruso and Layton (2020)
+**Response to insurance policies**<br>
+Whereas the papers on 8/31 and 9/2 deal with hospital responses to changes in Medicare payments, today's papers consider more general changes to insurance policies. The papers for today are Batty and Ippolito (2017), Eliason et al. (2018), and Geruso and Layton (2020).
 
 
+### Class 7, 9/9
+**Workshop day!**<br>
+Today we'll work on the first empirical assignment in class. We'll focus on accessing the data through GitHub and AWS, cleaning the data, and implementing the relevant identification strategy. See [exercise 1](assignments/exercise1.html) for more details on this assignment.

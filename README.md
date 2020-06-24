@@ -2,17 +2,17 @@
 
 This is a PhD course in Health Economics, taught by [Ian McCarthy](http://ianmccarthyecon.com) at Emory University. Before going much further, please be sure to read the full [syllabus](syllabus/syllabus-771.pdf), which provides more details on class policies and learning objectives. 
 
-This ReadMe file is the landing page for our class website. Below, I provide details on resources, course logistics, assignments, and the course schedule. This site is very much a work-in-progress, so be sure to check back regularly for updates. Better yet, you can clone the repo via *Git* and then pull regularly to get updates. If you're not familiar with GitHub, take a look at the excellent notes from [Grant McDermott](https://grantmcdermott.com/) and his class, [Data Science for Economists](https://github.com/uo-ec607/lectures). 
+This ReadMe file is the landing page for our class website. Below, I provide details on resources, course logistics, assignments, and the course schedule. This site is very much a work-in-progress, so be sure to check back regularly for updates.
+
 
 ## Main Resources
-
 To get the most out of this class, we need to use a handful of tools. Some of these may be new to you (I'm still learning too!), but I've selected all of these resources deliberately. They should complement each other and build relevant skills for any applied economics researcher.
 
 1. **Canvas**: This is where I'll post announcements and any grades. We'll also use Canvas for our discussion forums.
 
 2. **OneNote**: Everyone will soon receive an invitation to join our OneNote classroom. This will provide you with your own notebook for the class, where you can take your own notes and have access to all of my annotated notes from class. Note that all of the notes (without annotation) are also available below.
 
-3. **GitHub**: Everyone will also soon receive an invitation to join our GitHub classroom. This is where you can access all code files and datasets that we'll use in the class. This is also how you will submit your main replication project.
+3. **GitHub**: Everyone will also soon receive an invitation to join our GitHub classroom. This is where you can access all code files and datasets that we'll use in the class. This is also how you will submit your main replication project. If you're not familiar with GitHub, take a look at the excellent notes from [Grant McDermott](https://grantmcdermott.com/) and his class, [Data Science for Economists](https://github.com/uo-ec607/lectures).
 
 4. **Amazon Web Services**: Everyone will have access to cloud computing through AWS. This will serve as your own virtual computer, so we all have the same data capabilities, versions, and packages.
 
@@ -47,6 +47,9 @@ We won't get to this, but the resources are here for you if anyone is interested
 1. Discussion: Participation in our online discussions is a small portion of the grade. This is particulary important if we have to move to fully online course again. The goal is just to incentivize you all to participate in this discussion outside of class. Your grade will be based on 10 possible discussion forums. 
 
 2. Empirical exercises: Each course module will have an applied component where we spend some time replicating analyses from selected papers based on real-world data. These will require some of your time outside of class to get the data in working order and implement the relevant identification strategy and econometric estimator. This empirical work should heavily complement your replication project as well as your draft paper. All exercises will be assigned through GitHub classroom and will come with clear instructions on the general research question, data sources, and estimation strategies.
+
+Details of each empirical exercise are in the following links:
+- [Exercise 1](assignments/exercise1.html)
 
 3. Presentations: You will present two papers throughout the course of the semester. A list of potential papers and other instructions is available on the [presentations](assignments/presentations.html) page of our class website. Please inform me of your selected papers no later than **August 21, 2020**.
 

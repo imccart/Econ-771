@@ -1,0 +1,41 @@
+---
+title: "Module 1 Empirical Exercise"
+author: "Econ 771: Health Economics II"
+date: "Due: Friday, September 18"
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    theme: darkly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+In this assignment we're going to work through some of the details of the data sets and main identification strategies we've seen so far in the class. To begin, please "accept" the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.  
+
+You will "turn in" your repository to me with your answers and all supporting documents. Please create a final document with your main answers and analyses in a PDF. Please also be sure to include in your repository all of your supporting code files. Practice writing good code and showing me only what I would need to recreate your results.
+
+
+# Resources and data
+The data for this assignment comes from two sources:
+
+1. The Inpatient Prospective Payment System Final Rule Files. The Centers for Medicare and Medicaid services publishes these data annually, and they contain some basic information about the types of patients admitted to hospitals in a given year. The data are available on our shared AWS AMI under the "IPPS" folder. They are also available for you to download directly from the [NBER IPPS Data](https://data.nber.org/data/cms-impact-file-hospital-inpatient-prospective-payment-system-ipps.html). You can get the data from CMS as well, but they no longer host the historic data so the NBER link is your best option for these exercises.
+
+2. The Provider of Services files. These data are available from [NBER POS](https://data.nber.org/data/provider-of-services.html) as well as at [Adam Sacarny's GitHub repo](https://github.com/asacarny/provider-of-services). I've also made these data available on our shared AWS AMI in the "POS" folder.
+
+
+# Questions
+1. Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of the case mix index and payor mix across years. Show these statistics overall and separately by ownership type.
+
+2. Create a figure showing the average hospital disproportionate shares from 1986 to 2000.
+
+3. Approximate the analysis from Duggan (2000) using the public payer mix (share of public insurance patients to total inpatient stays) as your outcome of interest. Did hospitals in California attract fewer private insurance patients in response to the 1990 DSH program? Does the effect differ by ownership status?
+
+4. Estimate an "event study" version of the DD model from part 3.
+
+5. Approximate the analysis from Dafny (2005) using the Case Mix Index as the outcome of interest. Did hospitals' CMI increase following the change to the DRG adjustments in 1988? Does the effect differ by ownership status?
+
+6. Estimate an "event study" version of the DD model from part 5.
