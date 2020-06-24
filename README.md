@@ -32,7 +32,7 @@ The course is divided into a few distinct topic areas. In each area, we'll discu
 
 ### Module 1. [The hospital objective function and financial incentives](module-guides/module1.html)
 
-### Module 2. Physician agency and treatment decisions
+### Module 2. [Physician agency and treatment decisions](module-guides/module2.html)
 
 ### Module 3. Information disclosure
 
