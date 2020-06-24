@@ -38,6 +38,7 @@ This is the guide for **Module 1**, which covers hospital objective functions an
 2. [Provider of Services](https://github.com/asacarny/provider-of-services)
 3. [Hospital Compare](https://github.com/asacarny/hospital-compare)
 4. [Physician Fee Schedule](https://github.com/imccart/PFS_Update_2010)
+5. [IPPS Final Rule Files](https://data.nber.org/data/cms-impact-file-hospital-inpatient-prospective-payment-system-ipps.html)
 
 
 
@@ -72,4 +73,4 @@ Whereas the papers on 8/31 and 9/2 deal with hospital responses to changes in Me
 
 ### Class 7, 9/9
 **Workshop day!**<br>
-Today we'll work on the first empirical assignment in class. We'll focus on accessing the data through GitHub and AWS, cleaning the data, and implementing the relevant identification strategy. See [exercise 1](assignments/exercise1.html) for more details on this assignment.
+Today we'll work on the first empirical assignment in class. We'll focus on accessing the data using GitHub and AWS, cleaning the data, and implementing the relevant identification strategy. See [exercise 1](assignments/exercise1.html) for more details on this assignment. The assignment is due by **September 18th**.

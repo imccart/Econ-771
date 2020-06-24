@@ -8,17 +8,19 @@ This ReadMe file is the landing page for our class website. Below, I provide det
 ## Main Resources
 To get the most out of this class, we need to use a handful of tools. Some of these may be new to you (I'm still learning too!), but I've selected all of these resources deliberately. They should complement each other and build relevant skills for any applied economics researcher.
 
-1. **Canvas**: This is where I'll post announcements and any grades. We'll also use Canvas for our discussion forums.
+1. **Canvas**: This is where I'll post announcements, grades, and other information only for this class (such as Zoom meeting links).
 
 2. **OneNote**: Everyone will soon receive an invitation to join our OneNote classroom. This will provide you with your own notebook for the class, where you can take your own notes and have access to all of my annotated notes from class. Note that all of the notes (without annotation) are also available below.
 
 3. **GitHub**: Everyone will also soon receive an invitation to join our GitHub classroom. This is where you can access all code files and datasets that we'll use in the class. This is also how you will submit your main replication project. If you're not familiar with GitHub, take a look at the excellent notes from [Grant McDermott](https://grantmcdermott.com/) and his class, [Data Science for Economists](https://github.com/uo-ec607/lectures).
 
-4. **Amazon Web Services**: Everyone will have access to cloud computing through AWS. This will serve as your own virtual computer, so we all have the same data capabilities, versions, and packages.
+4. **Amazon Web Services**: Everyone will have access to cloud computing through AWS. This will serve as your own virtual computer, so we all have the same data capabilities, versions, and packages. You don't have to use this, but for those of you with limited computing power, this is an easy solution.
 
 5. **Zoom**: All office hours and one-on-one meetings will take place virtually in our private Zoom meeting room. Details of the room are available on *Canvas*.
 
-6. **Me!** Please reach out to me for any reason. I will answer emails as promptly as possible (definitely within 24 hours), and we can meet virtually whenever I am available. If you'd like to meet virtually, just go to [https://ian-meetings.youcanbook.me](https://ian-meetings.youcanbook.me) and find a time that works.
+6. **GroupTweet**: We'll use GroupTweet to facilitate discussions outside of normal class time. I'll set up the group and it will act as our own private Twittersphere.
+
+7. **Me!** Please reach out to me for any reason. I will answer emails as promptly as possible (definitely within 24 hours), and we can meet virtually whenever I am available. If you'd like to meet virtually, just go to [https://ian-meetings.youcanbook.me](https://ian-meetings.youcanbook.me) and find a time that works.
 
 
 
@@ -35,8 +37,6 @@ The course is divided into a few distinct topic areas. In each area, we'll discu
 ### Module 3. Information disclosure
 
 ### Module 4. Mergers and healthcare competition
-
-
 
 ### Module 5. Key issues for health insurance markets
 We won't get to this, but the resources are here for you if anyone is interested.
@@ -75,6 +75,8 @@ We'll use the following GitHub repositories and other datasets throughout the co
 5. [Physician Fee Schedule](https://github.com/imccart/PFS_Update_2010). See also the replication files for [Dranove and Ody (2019)](https://www.aeaweb.org/articles?id=10.1257/pol.20170020).
 
 6. [National Inpatient Sample, HCUP](https://www.hcup-us.ahrq.gov/db/nation/nis/nisdbdocumentation.jsp)
+
+7. [Inpatient Prospective Payment System Final Rule Files](https://data.nber.org/data/cms-impact-file-hospital-inpatient-prospective-payment-system-ipps.html)
 
 
 
