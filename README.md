@@ -48,8 +48,8 @@ We won't get to this, but the resources are here for you if anyone is interested
 
 2. Empirical exercises: Each course module will have an applied component where we spend some time replicating analyses from selected papers based on real-world data. These will require some of your time outside of class to get the data in working order and implement the relevant identification strategy and econometric estimator. This empirical work should heavily complement your replication project as well as your draft paper. All exercises will be assigned through GitHub classroom and will come with clear instructions on the general research question, data sources, and estimation strategies.
 
-Details of each empirical exercise are in the following links:
-- [Exercise 1](assignments/exercise1.html)
+  Details of each empirical exercise are in the following links:
+  - [Exercise 1](assignments/exercise1.html)
 
 3. Presentations: You will present two papers throughout the course of the semester. A list of potential papers and other instructions is available on the [presentations](assignments/presentations.html) page of our class website. Please inform me of your selected papers no later than **August 21, 2020**.
 
