@@ -1553,36 +1553,63 @@ div.tocify {
 </div>
 <div id="potential-papers" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Potential papers</h1>
-<p>Here is a list of paper’s that I think are sufficiently replicable using publicly available data.</p>
-<p>Dafny, Leemore S. (2005). “How Do Hospitals Respond to Price Changes?”
-In: <em>American Economic Review</em> 95.5, pp. 1525-1547.</p>
-<p>Dranove, David, Craig Garthwaite, and Christopher Ody (2017). “How do
-nonprofits respond to negative wealth shocks? The impact of the 2008
-stock market collapse on hospitals”. In: <em>The Rand Journal of
-Economics</em> 48.2, pp. 485-525.</p>
-<p>Dranove, David and Christopher Ody (2019). “Employed for higher pay?
-How Medicare facility fees affect hospital employment of physicians”.
-In: <em>American Economics Journal: Economic Policy</em> 11.4, pp. 249-271.</p>
-<p>Duggan, Mark (2000). “Hospital Ownership and Public Medical Spending”.
-In: <em>Quarterly Journal of Economics</em> 115.4, pp. 1343-1373.</p>
-<p>Geruso, Michael and Timothy Layton (2020). “Upcoding: Evidence from
-Medicare on squishy risk adjustment”. In: <em>Journal of Political
-Economy</em> 128.3, pp. 984-1026.</p>
-<p>Horwitz, Jill R and Austin Nichols (2009). “Hospital ownership and
-medical services: market mix, spillover effects, and nonprofit
-objectives”. In: <em>Journal of health economics</em> 28.5, pp. 924-937.</p>
-<p>No paper on this list is entirely replicable because they all use a combination of different datasets. There’s a more detailed rubric in the next section where I describe the expectations of your replication exercise. Here, I just note how you can go about the replication for any given paper:</p>
-<ul>
-<li>Duggan (2000): This is replicable with historic IPPS data that allow you to proxy for a hospital’s share of Medicaid or uninsured patients.</li>
-<li>Horwitz and Nichols (2009): This is largely reproducible with data from the American Hospital Association (AHA). We have access to these data through the Wharton Research Data Center, but there are some restrictions. So we’ll just need to chat first before you proceed with this paper as your replication choice.</li>
-<li>Dafny (2005): You can use the case mix index from the IPPS files to proxy for DRG coding. It’s not perfect, but again, the point is to work with read data using a published paper as your guide.</li>
-<li>Dranove and Ody (2019): This is also doable if you use a different measure of physician practice ownership from the AHA surveys.</li>
-<li>Dranove and Ody (2017): Reproducible with the Hospital Cost Report data.</li>
-<li>Geruso and Layton (2020): Section 5 of this paper uses publicly available Medicare Advantage data, so that’s fully reproducible. In other analyses, the authors use Massachusetts All Payer Claims Data, which is also available but may be difficult to work with in a semester. Nonetheless, if you think those data may be useful for other purposes, then it could be worth it to start that investment in this class.</li>
-</ul>
+<p>Here is a list of paper’s that I think are sufficiently replicable using publicly available data. No paper on this list is entirely replicable because they all use a combination of different datasets. There’s a more detailed rubric in the next section where I describe the expectations of your replication exercise. Here, I just note how you can go about the replication for any given paper:</p>
+<hr />
+<p>
+<cite>Duggan, Mark
+(2000).
+“Hospital Ownership and Public Medical Spending”.
+In: <em>Quarterly Journal of Economics</em> 115.4, pp. 1343-1373.</cite>
+</p>
+<p>This is replicable with historic IPPS data that allow you to proxy for a hospital’s share of Medicaid or uninsured patients.</p>
+<hr />
+<p>
+<cite>Horwitz, Jill R and Austin Nichols
+(2009).
+“Hospital ownership and medical services: market mix, spillover effects, and nonprofit objectives”.
+In: <em>Journal of health economics</em> 28.5, pp. 924–937.</cite>
+</p>
+<p>This is largely reproducible with data from the American Hospital Association (AHA). We have access to these data through the Wharton Research Data Center, but there are some restrictions. So we’ll just need to chat first before you proceed with this paper as your replication choice.</p>
+<div id="dafny-2005" class="section level3" number="2.0.1">
+<h3><span class="header-section-number">2.0.1</span> Dafny (2005)</h3>
+<p>
+<cite>Dafny, Leemore S.
+(2005).
+“How Do Hospitals Respond to Price Changes?”
+In: <em>American Economic Review</em> 95.5, pp. 1525–1547.</cite>
+</p>
+<p>You can use the case mix index from the IPPS files to proxy for DRG coding. It’s not perfect, but again, the point is to work with read data using a published paper as your guide.</p>
 </div>
-<div id="advice" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Advice</h1>
+<div id="dranove-and-ody-2019" class="section level3" number="2.0.2">
+<h3><span class="header-section-number">2.0.2</span> Dranove and Ody (2019)</h3>
+<p>
+<cite>Dranove, David and Christopher Ody
+(2019).
+“Employed for higher pay? How Medicare facility fees affect hospital employment of physicians”.
+In: <em>American Economics Journal: Economic Policy</em> 11.4, pp. 249–271.</cite>
+</p>
+<p>This is also doable if you use a different measure of physician practice ownership from the AHA surveys.</p>
+</div>
+<div id="dranove-and-ody-2017" class="section level3" number="2.0.3">
+<h3><span class="header-section-number">2.0.3</span> Dranove and Ody (2017)</h3>
+<p>
+<cite>Dranove, David, Craig Garthwaite, and Christopher Ody
+(2017).
+“How do nonprofits respond to negative wealth shocks? The impact of the 2008 stock market collapse on hospitals”.
+In: <em>The Rand Journal of Economics</em> 48.2, pp. 485–525.</cite>
+</p>
+<p>Reproducible with the Hospital Cost Report data.</p>
+</div>
+<div id="geruso-and-layton-2020" class="section level3" number="2.0.4">
+<h3><span class="header-section-number">2.0.4</span> Geruso and Layton (2020)</h3>
+<p>
+<cite>Geruso, Michael and Timothy Layton
+(2020).
+“Upcoding: Evidence from Medicare on squishy risk adjustment”.
+In: <em>Journal of Political Economy</em> 128.3, pp. 984–1026.</cite>
+</p>
+<p>Section 5 of this paper uses publicly available Medicare Advantage data, so that’s fully reproducible. In other analyses, the authors use Massachusetts All Payer Claims Data, which is also available but may be difficult to work with in a semester. Nonetheless, if you think those data may be useful for other purposes, then it could be worth it to start that investment in this class.</p>
+</div>
 </div>
 
 
@@ -1631,7 +1658,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2,h3",
+      selectors: "h1,h2",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
