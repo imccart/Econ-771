@@ -75,4 +75,4 @@ Whereas the papers on 8/31 and 9/2 deal with hospital responses to changes in Me
 
 ### Class 7, 9/9
 **Workshop day!**<br>
-Today we'll work on the first empirical assignment in class. We'll focus on accessing the data using GitHub and AWS, cleaning the data, and implementing the relevant identification strategy. See [exercise 1](assignments/exercise1.html) for more details on this assignment. The assignment is due by **September 18th**.
+Today we'll work on the first empirical assignment in class. We'll focus on accessing the data using GitHub and AWS, cleaning the data, and implementing the relevant identification strategy. See [exercise 1](https://imccart.github.io/Econ-771/assignments/exercise1.html) for more details on this assignment. The assignment is due by **Friday, September 18th**.
