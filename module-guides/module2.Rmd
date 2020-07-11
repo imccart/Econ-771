@@ -19,3 +19,10 @@ knitr::opts_chunk$set(cache.path = '_cache/')
 # Overview 
 This is the guide for **Module 2**, which covers issues related to physician agency and treatment decisions. Check back for more updates.
 
+# Learning objectives
+1. Synthesize the literature on physician agency and differentiate between agency and "supplier-induced" demand
+2. Recognize identification strategies in applied empirical work
+3. Identify potential barriers to instrumental variables in practice
+4. Analyze real data on 
+5. Describe 
+
