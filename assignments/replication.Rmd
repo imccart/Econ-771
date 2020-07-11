@@ -6,6 +6,7 @@ output:
   bookdown::html_document2:
     toc: TRUE
     toc_float: TRUE
+    toc_depth: 2
     theme: darkly
 ---
 
@@ -14,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(RefManageR)
 source('paths.R')
 bib <- ReadBib(paste0(bib.path,'/BibTeX_Library.bib'))
-myopts <- BibOptions(bib.style = "authoryear", style="citation", first.inits=FALSE, max.names = 20, check.entries=FALSE)
+myopts <- BibOptions(bib.style = "authoryear", style="html", first.inits=FALSE, max.names = 20, check.entries=FALSE)
 
 ```
 
@@ -25,22 +26,95 @@ This describes the logistics and expectations for our main class project, which 
 
 
 # Potential papers
-Here is a list of paper's that I think are sufficiently replicable using publicly available data. 
+Here is a list of papers that I think are sufficiently replicable using publicly available data. No paper on this list is entirely replicable because they all use a combination of different datasets. There's a more detailed rubric in the next section where I describe the expectations of your replication exercise. Here, I just note how you can go about the replication for any given paper. These papers are listed in order of appearance in the class schedule.
+
+
+---
 
 ```{r, echo = FALSE, results="asis"} 
-bib[c("duggan2000","horwitz2009","dafny2005","dranove2019","dranove2017","geruso2020")]
+bib["duggan2000"]
 ``` 
 
+This is replicable with historic IPPS data that allow you to proxy for a hospital's share of Medicaid or uninsured patients.
 
-No paper on this list is entirely replicable because they all use a combination of different datasets. There's a more detailed rubric in the next section where I describe the expectations of your replication exercise. Here, I just note how you can go about the replication for any given paper:
+---
 
-- Duggan (2000): This is replicable with historic IPPS data that allow you to proxy for a hospital's share of Medicaid or uninsured patients.
-- Horwitz and Nichols (2009): This is largely reproducible with data from the American Hospital Association (AHA). We have access to these data through the Wharton Research Data Center, but there are some restrictions. So we'll just need to chat first before you proceed with this paper as your replication choice.
-- Dafny (2005): You can use the case mix index from the IPPS files to proxy for DRG coding. It's not perfect, but again, the point is to work with read data using a published paper as your guide.
-- Dranove and Ody (2019): This is also doable if you use a different measure of physician practice ownership from the AHA surveys.
-- Dranove and Ody (2017): Reproducible with the Hospital Cost Report data.
-- Geruso and Layton (2020): Section 5 of this paper uses publicly available Medicare Advantage data, so that's fully reproducible. In other analyses, the authors use Massachusetts All Payer Claims Data, which is also available but may be difficult to work with in a semester. Nonetheless, if you think those data may be useful for other purposes, then it could be worth it to start that investment in this class.
+```{r, echo = FALSE, results="asis"} 
+bib["horwitz2009"]
+``` 
+
+This is largely reproducible with data from the American Hospital Association (AHA). We have access to these data through the Wharton Research Data Center, but there are some restrictions. So we'll just need to chat first before you proceed with this paper as your replication choice.
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["dafny2005"]
+``` 
+
+You can use the case mix index from the IPPS files to proxy for DRG coding. It's not perfect, but again, the point is to work with read data using a published paper as your guide.
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["dranove2019"]
+``` 
+
+This is also doable if you use a different measure of physician practice ownership from the AHA surveys.
+
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["dranove2017"]
+``` 
+
+Reproducible with the Hospital Cost Report data.
+
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["geruso2020"]
+``` 
+
+Section 5 of this paper uses publicly available Medicare Advantage data, so that's fully reproducible. In other analyses, the authors use Massachusetts All Payer Claims Data, which is also available but may be difficult to work with in a semester. Nonetheless, if you think those data may be useful for other purposes, then it could be worth it to start that investment in this class.
+
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["molitor2018"]
+``` 
+
+Parts of this paper are approximately replicable using the count of claims based on HCPCS codes and NPIs. You can also identify physician movers using the physician compare data. The outcomes will differ slightly but this approach would be analogous to the paper.
+
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["clemens2017"]
+``` 
+
+Analysis of physician practices (Section IV.E of the paper) is replicable using the [Community Tracking Study](https://www.icpsr.umich.edu/web/ICPSR/series/161). You can also reconstruct physician payments using the Physician Fee Schedule data.
+
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["gruber1996"]
+``` 
+
+Most of this analysis should be replicable using the [National Hospital Discharge Survey](https://www.cdc.gov/nchs/nhds/index.htm).
 
 
 
-# Advice
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["baicker2013"]
+``` 
+
+You can approximately replicate this paper using a combination of data from the [Area Health Resources File](https://data.hrsa.gov/topics/health-workforce/ahrf) and MA penetration and benchmark data. The MA data are available on my GitHub repo, [Medicare Advantage Repository](https://github.com/imccart/Medicare-Advantage). You could also mimic many of the cost outcomes using the [HCRIS](https://github.com/imccart/HCRIS) data, which are also part of a GitHub repo.
+
+
+# Grading

@@ -7,6 +7,7 @@ output:
     toc: TRUE
     toc_float: TRUE
     theme: darkly
+    number_sections: FALSE
 ---
 
 ```{r setup, include=FALSE}
@@ -14,7 +15,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Overview
-In this assignment we're going to work through some of the details of the data sets and main identification strategies we've seen so far in the class. To begin, please "accept" the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.  
+In this assignment, we're going to work through some applied issues related to causal inference in panel data, mainly focusing on difference-in-differences and event studies. These are the workhorses of modern applied empirical microeconomics (although not as much of a panacea as once perceived). 
+
+To begin, please "accept" the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.  
 
 You will "turn in" your repository to me with your answers and all supporting documents. Please create a final document with your main answers and analyses in a PDF. Please also be sure to include in your repository all of your supporting code files. Practice writing good code and showing me only what I would need to recreate your results.
 
@@ -28,7 +31,9 @@ The data for this assignment comes from two sources:
 
 
 # Questions
-1. Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of the case mix index and payor mix across years. Show these statistics overall and separately by ownership type.
+In your GitHub repository, please be sure to clearly address/answer the following questions.
+
+1. Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of the case mix index and payor mix across years. Show these statistics overall and separately by hospital ownership type.
 
 2. Create a figure showing the average hospital disproportionate shares from 1986 to 2000.
 

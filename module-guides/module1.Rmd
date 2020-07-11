@@ -19,6 +19,7 @@ knitr::opts_chunk$set(cache.path = '_cache/')
 # Overview 
 This is the guide for **Module 1**, which covers hospital objective functions and responses to financial incentives. 
 
+
 # Learning objectives
 1. Synthesize the literature on hospital ownership type and its effects on healthcare outcomes
 2. Recognize identification strategies in applied empirical work
@@ -27,9 +28,11 @@ This is the guide for **Module 1**, which covers hospital objective functions an
 5. Describe the Medicare prospective payment system and the idea of "upcoding" in claims data
 
 
-# Identification strategies
+# Econometrics issues
 1. Selection on observables (not really an identification strategy...more of an assumption to facilitate causal inference with purely observational data)
-2. Difference-in-differences (and the role of event studies)
+2. Difference-in-differences and parallel trends
+3. Event studies and time varying treatment effects
+4. Clustering with few treated groups
 
 
 # Main datasets
