@@ -19,3 +19,9 @@ knitr::opts_chunk$set(cache.path = '_cache/')
 # Overview 
 This is the guide for **Module 3**, which covers transparency and information disclosure in healthcare. Check back for more updates.
 
+# Learning objectives
+1. Synthesize the literature on physician agency and differentiate between agency and "supplier-induced" demand
+2. Recognize identification strategies in applied empirical work
+3. Identify potential barriers to instrumental variables in practice
+4. Analyze real data on physician behaviors and practice characteristics using publicly available data sources
+5. Describe the negotiation process underlying commercial insurance prices and differentiate between hospital charges, prices, and costs

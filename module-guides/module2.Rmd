@@ -17,12 +17,27 @@ knitr::opts_chunk$set(cache.path = '_cache/')
 ```
 
 # Overview 
-This is the guide for **Module 2**, which covers issues related to physician agency and treatment decisions. Check back for more updates.
+This is the guide for **Module 2**, which covers issues related to physician agency and treatment decisions.
 
 # Learning objectives
 1. Synthesize the literature on physician agency and differentiate between agency and "supplier-induced" demand
 2. Recognize identification strategies in applied empirical work
 3. Identify potential barriers to instrumental variables in practice
-4. Analyze real data on 
-5. Describe 
+4. Analyze real data on physician behaviors and practice characteristics using publicly available data sources
+5. Describe the physician fee schedule
 
+
+# Econometrics issues
+1. Instrumental variables and required assumptions
+2. Treatment effects with IV
+3. Using predictions as instruments
+4. Machine learning and IV (very briefly, if at all)
+
+
+# Main datasets
+1. [Physician Compare](https://data.medicare.gov/data/physician-compare)
+2. [Area Health Resources Files](https://data.hrsa.gov/topics/health-workforce/ahrf)
+3. [Medicare Advantage](https://github.com/imccart/Medicare-Advantage)
+4. [Provider Utilization and Payment Data](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Physician-and-Other-Supplier)
+5. [NPPES](https://www.cms.gov/Regulations-and-Guidance/Administrative-Simplification/NationalProvIdentStand/DataDissemination)'
+6. [National Hospital Discharge Survey](https://www.cdc.gov/nchs/nhds/index.htm)
