@@ -17,11 +17,54 @@ knitr::opts_chunk$set(cache.path = '_cache/')
 ```
 
 # Overview 
-This is the guide for **Module 3**, which covers transparency and information disclosure in healthcare. Check back for more updates.
+This is the guide for **Module 3**, which covers transparency and information disclosure in healthcare. 
 
 # Learning objectives
-1. Synthesize the literature on physician agency and differentiate between agency and "supplier-induced" demand
+1. Synthesize the literature on "consumerism" in healthcare and the effects of information disclosure
 2. Recognize identification strategies in applied empirical work
-3. Identify potential barriers to instrumental variables in practice
-4. Analyze real data on physician behaviors and practice characteristics using publicly available data sources
-5. Describe the negotiation process underlying commercial insurance prices and differentiate between hospital charges, prices, and costs
+3. Employ regression discontinuity designs for causal inference
+4. Analyze real data on Medicare Part D
+5. Describe the different initiatives for price and quality transparency healthcare
+
+
+# Econometrics issues
+1. Strict and fuzzy regression discontinuity design
+2. Testing regression discontinuity assumptions
+3. Binning and bandwidth selection for strict RD
+
+
+# Main datasets
+1. [Medicare Advantage](https://github.com/imccart/Medicare-Advantage)
+2. [Medicare Part D](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/MCRAdvPartDEnrolData)
+3. [Replication files for Ericson (2014)](https://www.aeaweb.org/articles?id=10.1257/pol.6.1.38)
+
+
+
+# Schedule
+
+### Class 13, 9/30
+**Poor decisions in healthcare and health insurance**<br>
+The first paper for today, Chernew et al. (2018), is a working paper that I think highlights the questionable value of information disclosure efforts in healthcare. They show that patients don't really shop for services even when they could save a lot of money without sacrificing quality or travel time. Referring physicians instead have the largest effects on imaging choice. On the other hand, the second paper from Ketcham et al. (2012) shows that people do appear to learn about healthcare spending over time and adjust health insurance plans to better match their needs. This is important in the context of other static studies of plan choice, where authors find that people are very bad at initially selecting an insurance plan.
+
+
+### Class 14, 10/5
+**Inertia in health insurance choice**<br>
+Handel (2013) documents the role of interia in health insurance choice, showing that inertia is a major factor in insurance choice and that policies to reduce intertia may exacerbate existing problems of adverse selection. In other words, maybe inertia isn't quite so bad. Ericson (2014) takes inertia as given and considers how firms may employ an "invest-then-harvest" strategy whereby premiums are set low to attract customers and then raised once a sufficient level of market share is reached. 
+
+
+### Class 15, 10/7
+**Effects of quality disclosure**<br>
+Dafny and Dranove (2008) study the role of quality information on Medicare Advantage enrollment decisions. They employ the Barry (1994) estimation strategy that uses market share data to recover individual utility coefficient estimates in a nested logit model. Dranove et al. (2003) examines the effect of quality information on providers (as revealed through hospital and physician report cards on mortality rates for CABG patients in New York and Pennsylvania in the early 1990s). 
+
+
+### Class 16, 10/12
+**Effects of price disclosure**<br>
+Grennan and Swanson (2020) study the effects of a "benchmarking database" in which hospitals could observe statistics on prices paid for various medical devices.
+
+
+### Class 17, 10/14
+**Workshop day!**<br>
+Today we'll work on the third empirical assignment in class. For this assignment, we'll skip straight to the replication files available online, since this exercise involves one of the few papers with data fully publicly available. See [exercise 3](https://imccart.github.io/Econ-771/assignments/exercise2.html) for more details on this assignment. The assignment is due by **Friday, October 23rd**.
+
+
+

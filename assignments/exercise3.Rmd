@@ -1,0 +1,40 @@
+---
+title: "Module 1 Empirical Exercise"
+author: "Econ 771: Health Economics II"
+date: "Due: Friday, October 23"
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    theme: darkly
+    number_sections: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+In this assignment, we're going to work through some applied issues related to regression discontinuity designs. We'll cover the basics of strict and fuzzy RD, and we'll work through standard specification tests. We'll also introduce some more technical aspects of bin and bandwidth selection.
+
+To begin, please "accept" the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.  
+
+You will "turn in" your repository to me with your answers and all supporting documents. Please create a final document with your main answers and analyses in a PDF. Please also be sure to include in your repository all of your supporting code files. Practice writing good code and showing me only what I would need to recreate your results.
+
+
+# Resources and data
+The data for this assignment comes from the AEJ: Policy website, where Keith Ericson's complete dataset is available. The data are available [here](https://www.aeaweb.org/articles?id=10.1257/pol.6.1.38). I've also uploaded the replication files to our AWS AMI under the folder "Ericson (2014)".
+
+# Questions
+In your GitHub repository, please be sure to clearly address/answer the following questions.
+
+1. Recreate Figure 3 from Ericson (2014).
+
+2. Repeat Figure 3 using different bin widths.
+
+3. Provide the results from the manipulation tests described in Cattaneo et al. (2018).
+
+4. Summarize the relationship between enrollment and market shares in 2006 on premiums in 2007.
+
+5. Use the Part D low-income subsidy as an IV in a fuzzy RD to examine the effect of a boost in enrollments in 2006 on premiums in 2007.
+

@@ -117,4 +117,22 @@ bib["baicker2013"]
 You can approximately replicate this paper using a combination of data from the [Area Health Resources File](https://data.hrsa.gov/topics/health-workforce/ahrf) and MA penetration and benchmark data. The MA data are available on my GitHub repo, [Medicare Advantage Repository](https://github.com/imccart/Medicare-Advantage). You could also mimic many of the cost outcomes using the [HCRIS](https://github.com/imccart/HCRIS) data, which are also part of a GitHub repo.
 
 
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["ericson2014"]
+``` 
+
+You can replicate this paper using data from Medicare Part D. These raw data are available from CMS and the clean data are available from the AEJ: Policy website, [Ericson (2014)](https://www.aeaweb.org/articles?id=10.1257/pol.6.1.38). If you choose this paper as your replication, you must download the data from its raw source. [CMS Part D Enrollment](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/MCRAdvPartDEnrolData) is a good starting point, but you'll probably have to navigate the website to find all of the other variables.
+
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["dafny2008"]
+``` 
+
+You can "replicate" this paper using more recent data on Medicare Advantage and the star rating program. This won't be the same analysis but it will provide good practice with the MA data, which is accessible from the [Medicare Advantage Repository](https://github.com/imccart/Medicare-Advantage).
+
+
 # Grading

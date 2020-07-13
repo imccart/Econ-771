@@ -11,9 +11,8 @@
 
 <meta name="author" content="Econ 771: Health Economics II" />
 
-<meta name="date" content="2020-07-13" />
 
-<title>Module 3</title>
+<title>Module 1 Empirical Exercise</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1541,70 +1540,33 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Module 3</h1>
+<h1 class="title toc-ignore">Module 1 Empirical Exercise</h1>
 <h4 class="author">Econ 771: Health Economics II</h4>
-<h4 class="date">July 13, 2020</h4>
+<h4 class="date">Due: Friday, October 23</h4>
 
 </div>
 
 
 <div id="overview" class="section level1">
 <h1>Overview</h1>
-<p>This is the guide for <strong>Module 3</strong>, which covers transparency and information disclosure in healthcare.</p>
+<p>In this assignment, we’re going to work through some applied issues related to regression discontinuity designs. We’ll cover the basics of strict and fuzzy RD, and we’ll work through standard specification tests. We’ll also introduce some more technical aspects of bin and bandwidth selection.</p>
+<p>To begin, please “accept” the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.</p>
+<p>You will “turn in” your repository to me with your answers and all supporting documents. Please create a final document with your main answers and analyses in a PDF. Please also be sure to include in your repository all of your supporting code files. Practice writing good code and showing me only what I would need to recreate your results.</p>
 </div>
-<div id="learning-objectives" class="section level1">
-<h1>Learning objectives</h1>
+<div id="resources-and-data" class="section level1">
+<h1>Resources and data</h1>
+<p>The data for this assignment comes from the AEJ: Policy website, where Keith Ericson’s complete dataset is available. The data are available <a href="https://www.aeaweb.org/articles?id=10.1257/pol.6.1.38">here</a>. I’ve also uploaded the replication files to our AWS AMI under the folder “Ericson (2014)”.</p>
+</div>
+<div id="questions" class="section level1">
+<h1>Questions</h1>
+<p>In your GitHub repository, please be sure to clearly address/answer the following questions.</p>
 <ol style="list-style-type: decimal">
-<li>Synthesize the literature on “consumerism” in healthcare and the effects of information disclosure</li>
-<li>Recognize identification strategies in applied empirical work</li>
-<li>Employ regression discontinuity designs for causal inference</li>
-<li>Analyze real data on Medicare Part D</li>
-<li>Describe the different initiatives for price and quality transparency healthcare</li>
+<li><p>Recreate Figure 3 from Ericson (2014).</p></li>
+<li><p>Repeat Figure 3 using different bin widths.</p></li>
+<li><p>Provide the results from the manipulation tests described in Cattaneo et al. (2018).</p></li>
+<li><p>Summarize the relationship between enrollment and market shares in 2006 on premiums in 2007.</p></li>
+<li><p>Use the Part D low-income subsidy as an IV in a fuzzy RD to examine the effect of a boost in enrollments in 2006 on premiums in 2007.</p></li>
 </ol>
-</div>
-<div id="econometrics-issues" class="section level1">
-<h1>Econometrics issues</h1>
-<ol style="list-style-type: decimal">
-<li>Strict and fuzzy regression discontinuity design</li>
-<li>Testing regression discontinuity assumptions</li>
-<li>Binning and bandwidth selection for strict RD</li>
-</ol>
-</div>
-<div id="main-datasets" class="section level1">
-<h1>Main datasets</h1>
-<ol style="list-style-type: decimal">
-<li><a href="https://github.com/imccart/Medicare-Advantage">Medicare Advantage</a></li>
-<li><a href="https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/MCRAdvPartDEnrolData">Medicare Part D</a></li>
-<li><a href="https://www.aeaweb.org/articles?id=10.1257/pol.6.1.38">Replication files for Ericson (2014)</a></li>
-</ol>
-</div>
-<div id="schedule" class="section level1">
-<h1>Schedule</h1>
-<div id="class-13-930" class="section level3">
-<h3>Class 13, 9/30</h3>
-<p><strong>Poor decisions in healthcare and health insurance</strong><br>
-The first paper for today, Chernew et al. (2018), is a working paper that I think highlights the questionable value of information disclosure efforts in healthcare. They show that patients don’t really shop for services even when they could save a lot of money without sacrificing quality or travel time. Referring physicians instead have the largest effects on imaging choice. On the other hand, the second paper from Ketcham et al. (2012) shows that people do appear to learn about healthcare spending over time and adjust health insurance plans to better match their needs. This is important in the context of other static studies of plan choice, where authors find that people are very bad at initially selecting an insurance plan.</p>
-</div>
-<div id="class-14-105" class="section level3">
-<h3>Class 14, 10/5</h3>
-<p><strong>Inertia in health insurance choice</strong><br>
-Handel (2013) documents the role of interia in health insurance choice, showing that inertia is a major factor in insurance choice and that policies to reduce intertia may exacerbate existing problems of adverse selection. In other words, maybe inertia isn’t quite so bad. Ericson (2014) takes inertia as given and considers how firms may employ an “invest-then-harvest” strategy whereby premiums are set low to attract customers and then raised once a sufficient level of market share is reached.</p>
-</div>
-<div id="class-15-107" class="section level3">
-<h3>Class 15, 10/7</h3>
-<p><strong>Effects of quality disclosure</strong><br>
-Dafny and Dranove (2008) study the role of quality information on Medicare Advantage enrollment decisions. They employ the Barry (1994) estimation strategy that uses market share data to recover individual utility coefficient estimates in a nested logit model. Dranove et al. (2003) examines the effect of quality information on providers (as revealed through hospital and physician report cards on mortality rates for CABG patients in New York and Pennsylvania in the early 1990s).</p>
-</div>
-<div id="class-16-1012" class="section level3">
-<h3>Class 16, 10/12</h3>
-<p><strong>Effects of price disclosure</strong><br>
-Grennan and Swanson (2020) study the effects of a “benchmarking database” in which hospitals could observe statistics on prices paid for various medical devices.</p>
-</div>
-<div id="class-17-1014" class="section level3">
-<h3>Class 17, 10/14</h3>
-<p><strong>Workshop day!</strong><br>
-Today we’ll work on the third empirical assignment in class. For this assignment, we’ll skip straight to the replication files available online, since this exercise involves one of the few papers with data fully publicly available. See <a href="https://imccart.github.io/Econ-771/assignments/exercise2.html">exercise 3</a> for more details on this assignment. The assignment is due by <strong>Friday, October 23rd</strong>.</p>
-</div>
 </div>
 
 

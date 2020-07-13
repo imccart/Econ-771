@@ -85,6 +85,9 @@ We'll come across the following datasets throughout the course. Some of these li
 
 11. [NPPES](https://www.cms.gov/Regulations-and-Guidance/Administrative-Simplification/NationalProvIdentStand/DataDissemination)
 
+12. [Medicare Part D](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/MCRAdvPartDEnrolData)
+
+
 
 ## Acknowledgements
 This class (and in particular the *R Markdown* formatting and animations) have benefitted significantly from several people who have been generous enough to make their website and other programs available to the public. Some of those people include:

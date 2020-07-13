@@ -31,7 +31,6 @@ This is the guide for **Module 2**, which covers issues related to physician age
 1. Instrumental variables and required assumptions
 2. Treatment effects with IV
 3. Using predictions as instruments
-4. Machine learning and IV (very briefly, if at all)
 
 
 # Main datasets
