@@ -92,19 +92,19 @@ Parts of this paper are approximately replicable using the count of claims based
 ---
 
 ```{r, echo = FALSE, results="asis"} 
-bib["clemens2017"]
+bib["gruber1996"]
 ``` 
 
-Analysis of physician practices (Section IV.E of the paper) is replicable using the [Community Tracking Study](https://www.icpsr.umich.edu/web/ICPSR/series/161). You can also reconstruct physician payments using the Physician Fee Schedule data.
+Most of this analysis should be replicable using the [National Hospital Discharge Survey](https://www.cdc.gov/nchs/nhds/index.htm).
 
 
 ---
 
 ```{r, echo = FALSE, results="asis"} 
-bib["gruber1996"]
+bib["clemens2017"]
 ``` 
 
-Most of this analysis should be replicable using the [National Hospital Discharge Survey](https://www.cdc.gov/nchs/nhds/index.htm).
+Analysis of physician practices (Section IV.E of the paper) is replicable using the [Community Tracking Study](https://www.icpsr.umich.edu/web/ICPSR/series/161). You can also reconstruct physician payments using the Physician Fee Schedule data.
 
 
 

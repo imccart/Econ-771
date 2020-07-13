@@ -25,8 +25,23 @@ You will "turn in" your repository to me with your answers and all supporting do
 # Resources and data
 The data for this assignment comes from two sources:
 
+1. **Medicare Advantage Data**: The Centers for Medicare and Medicaid services provides a ton of Medicare Advantage data. My [Medicare Advantage GitHub Repo](https://github.com/imccart/Medicare-Advantage) should help for those interested in building a comprehensive MA dataset. For this exercise, we'll just use the data on MA penetration and benchmark rates. The raw data are available on our AWS AMI in the "Medicare Advantage" folder.
+
+2. **Area Health Resources Files**: We'll use the [AHRF](https://data.hrsa.gov/topics/health-workforce/ahrf) to form county-level measures of healthcare utilization and expenditures. We could also use the HCRIS from exercise 1 to create something on our own, but we'll stick with the AHRF so that we get exposure to another common dataset.
 
 
 # Questions
 In your GitHub repository, please be sure to clearly address/answer the following questions.
+
+1. Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of the Medicare Advantage penetration rate, benchmark payments, and utilization measures. 
+
+2. Plot the mean county-level utilization against the mean MA penetration rate over time.
+
+3. Form predicted MA payments using MA benchmark rates, mirroring the analysis of Baicker, Chernew, and Robbins (2013). Plot the mean predicted MA payments over time.
+
+4. Using the predicted MA payments as an IV for MA penetration rates, estimate the effects of MA penetration on utilization.
+
+5. Present the "first stage" and "reduced form" results of your IV estimates in Part 4.
+
+6. Present selected specification/robustness checks of your IV and discuss two weakness of this identification strategy.
 

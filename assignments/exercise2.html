@@ -1542,14 +1542,14 @@ div.tocify {
 
 <h1 class="title toc-ignore">Module 1 Empirical Exercise</h1>
 <h4 class="author">Econ 771: Health Economics II</h4>
-<h4 class="date">Due: Friday, September 18</h4>
+<h4 class="date">Due: Friday, October 2</h4>
 
 </div>
 
 
 <div id="overview" class="section level1">
 <h1>Overview</h1>
-<p>In this assignment, we’re going to work through some applied issues related to causal inference in panel data, mainly focusing on difference-in-differences and event studies. These are the workhorses of modern applied empirical microeconomics (although not as much of a panacea as once perceived).</p>
+<p>In this assignment, we’re going to work through some applied issues related to instrumental variables. For a long time, IV (or 2SLS) was the primary identification strategy for applied empirical micro, but it fell out of favor as people became more aware of the assumptions underlying the estimator and better understand what IV actually estimates (not the ATE in most cases).</p>
 <p>To begin, please “accept” the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.</p>
 <p>You will “turn in” your repository to me with your answers and all supporting documents. Please create a final document with your main answers and analyses in a PDF. Please also be sure to include in your repository all of your supporting code files. Practice writing good code and showing me only what I would need to recreate your results.</p>
 </div>
@@ -1557,18 +1557,20 @@ div.tocify {
 <h1>Resources and data</h1>
 <p>The data for this assignment comes from two sources:</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Inpatient Prospective Payment System Final Rule Files</strong>: The Centers for Medicare and Medicaid services publishes these data annually, and they contain some basic information about the types of patients admitted to hospitals in a given year. The data are available on our shared AWS AMI under the “IPPS” folder. They are also available for you to download directly from the <a href="https://data.nber.org/data/cms-impact-file-hospital-inpatient-prospective-payment-system-ipps.html">NBER IPPS Data</a>. You can get the data from CMS as well, but they no longer host the historic data so the NBER link is your best option for these exercises. Use these data to get information on hospital case mix and disproportionate share information.</p></li>
-<li><p><strong>Provider of Services files</strong>: These data are available from <a href="https://data.nber.org/data/provider-of-services.html">NBER POS</a> as well as at <a href="https://github.com/asacarny/provider-of-services">Adam Sacarny’s GitHub repo</a>. I’ve also made these data available on our shared AWS AMI in the “POS” folder. Use these data to get information on hospital ownership type.</p></li>
+<li><p><strong>Medicare Advantage Data</strong>: The Centers for Medicare and Medicaid services provides a ton of Medicare Advantage data. My <a href="https://github.com/imccart/Medicare-Advantage">Medicare Advantage GitHub Repo</a> should help for those interested in building a comprehensive MA dataset. For this exercise, we’ll just use the data on MA penetration and benchmark rates. The raw data are available on our AWS AMI in the “Medicare Advantage” folder.</p></li>
+<li><p><strong>Area Health Resources Files</strong>: We’ll use the <a href="https://data.hrsa.gov/topics/health-workforce/ahrf">AHRF</a> to form county-level measures of healthcare utilization and expenditures. We could also use the HCRIS from exercise 1 to create something on our own, but we’ll stick with the AHRF so that we get exposure to another common dataset.</p></li>
 </ol>
 </div>
 <div id="questions" class="section level1">
 <h1>Questions</h1>
 <p>In your GitHub repository, please be sure to clearly address/answer the following questions.</p>
 <ol style="list-style-type: decimal">
-<li><p>Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of the case mix index and disproportionate share across years. Show these statistics overall and separately by hospital ownership type.</p></li>
-<li><p>Create a figure showing the average hospital disproportionate shares from 1986 to 2000.</p></li>
-<li><p>Approximate the analysis from Dafny (2005) using the Case Mix Index as the outcome of interest. Did hospitals’ CMI increase following the change to the DRG adjustments in 1988? Does the effect differ by ownership status?</p></li>
-<li><p>Estimate an “event study” version of the DD model from part 3.</p></li>
+<li><p>Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of the Medicare Advantage penetration rate, benchmark payments, and utilization measures.</p></li>
+<li><p>Plot the mean county-level utilization against the mean MA penetration rate over time.</p></li>
+<li><p>Form predicted MA payments using MA benchmark rates, mirroring the analysis of Baicker, Chernew, and Robbins (2013). Plot the mean predicted MA payments over time.</p></li>
+<li><p>Using the predicted MA payments as an IV for MA penetration rates, estimate the effects of MA penetration on utilization.</p></li>
+<li><p>Present the “first stage” and “reduced form” results of your IV estimates in Part 4.</p></li>
+<li><p>Present selected specification/robustness checks of your IV and discuss two weakness of this identification strategy.</p></li>
 </ol>
 </div>
 

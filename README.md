@@ -61,7 +61,7 @@ We won't get to a lot of this, but the resources are here for you if anyone is i
 
 
 ## Data
-We'll come across the following datasets throughout the course. Some of these link to GitHub repositories that I and others have put together to help with some of the larger, more cumbersome data endeavors. Others are just direct links to the downloadable data on the CMS or NBER websites. This is a long list...the goal is not for you to all use each of these datasets in detail in this class. Rather, the goal is that you have some understanding of the available public use datasets for studying supply-side issues in U.S. healthcare.
+We'll come across the following datasets throughout the course. Some of these link to GitHub repositories that I and others have put together to help with some of the larger, more cumbersome data endeavors. Others are just direct links to the downloadable data on the CMS or NBER websites. This is a long list...the goal is not for you to all use each of these datasets in detail in this class. Rather, the goal is that you have some understanding of the available public use datasets for studying supply-side issues in U.S. healthcare. We'll use a subset of these datasets in our exercises for each module.
 
 1. [Medicare Advantage](https://github.com/imccart/Medicare-Advantage)
 
