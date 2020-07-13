@@ -1,0 +1,30 @@
+---
+title: "Module 4 Empirical Exercise"
+author: "Econ 771: Health Economics II"
+date: "Due: Friday, November 20"
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    theme: darkly
+    number_sections: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+In this assignment, we're going to work through some applied issues related to measuring hospital markets and examining the effects of market power.
+
+To begin, please "accept" the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.  
+
+You will "turn in" your repository to me with your answers and all supporting documents. Please create a final document with your main answers and analyses in a PDF. Please also be sure to include in your repository all of your supporting code files. Practice writing good code and showing me only what I would need to recreate your results.
+
+
+# Resources and data
+
+
+# Questions
+In your GitHub repository, please be sure to clearly address/answer the following questions.
+

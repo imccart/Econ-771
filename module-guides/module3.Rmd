@@ -17,7 +17,8 @@ knitr::opts_chunk$set(cache.path = '_cache/')
 ```
 
 # Overview 
-This is the guide for **Module 3**, which covers transparency and information disclosure in healthcare. 
+This is the guide for **Module 3**, which covers healthcare decision-making and the role of transparency/disclosure in healthcare. Our empirical exercise considers inertia in healthcare decision-making and its potential effects on insurance prices.
+
 
 # Learning objectives
 1. Synthesize the literature on "consumerism" in healthcare and the effects of information disclosure

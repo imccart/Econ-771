@@ -1,5 +1,5 @@
 ---
-title: "Module 1 Empirical Exercise"
+title: "Module 3 Empirical Exercise"
 author: "Econ 771: Health Economics II"
 date: "Due: Friday, October 23"
 output: 

@@ -19,3 +19,65 @@ knitr::opts_chunk$set(cache.path = '_cache/')
 # Overview 
 This is the guide for **Module 4**, the last module of the class. Over these last few weeks, we'll cover healthcare competition and the effects of mergers and closures. Most of this will deal with hospitals but we'll have some discussion of vertical integration between hospitals and physicians as well as some papers on concentration in the dialysis industry.
 
+
+# Learning objectives
+1. Synthesize the literature on hospital competition and its effects on prices and quality
+2. Recognize identification strategies in applied empirical work
+3. Employ ... for causal inference
+4. Analyze real data on hospital prices
+5. Describe the negotiation process between commercial insurance firms and hospitals, and distinguish between charges, costs, and prices.
+
+
+# Econometrics issues
+1. Strict and fuzzy regression discontinuity design
+2. Testing regression discontinuity assumptions
+3. Binning and bandwidth selection for strict RD
+
+
+# Main datasets
+1. [HCRIS](https://github.com/imccart/HCRIS)
+
+
+
+# Schedule
+
+### Class 18, 10/19
+**Competition in price and quality**<br>
+No student presentations today. Instead, I'll present some basics on the nature of competition when firms set both prices and quality. The main takeaway--theory doesn't tell us much about the effects of competition in this case. It really depends on the dimension by which customers are most responsive (price or quality).
+
+### Class 19, 10/21
+**Measuring hospital market power**<br>
+Today's class is about how we measure market power. The only paper for today is Dranove (2016), which provides a nice comparison of different measures in the literature.
+
+
+### Class 20, 10/26
+**Evidence from "structure-conduct-performance" studies**<br>
+Kessler and McClellan (2000) is one of the first healthcare studies in this literature. I label it as a "structure-conduct-performance" study because it takes a reduced form approach and attempts to capture the "structure" of the market with some summary statistic, assumes some conduct results from the structure, and then examins the outcome (or "performance"). This was a standard empirical approach in the early days of industrial organization. 
+
+Cooper et al. (2019) provides an excellent set of summary statistics and regression analysis of hospital pricing and industrial organization of healthcare markets. Their analysis is not necessarily causal but is an important set of empirical facts nonetheless. 
+
+
+### Class 21, 10/28
+**Competition in a bargaining model**<br>
+Ho and Lee (2017) is not the first paper to present a bargaining model and estimate the structure IO model with data; however, this is one of the most complete models of the insurer/hospital bargaining process and is therefore the one we'll focus on in this class.
+
+
+### Class 22, 11/2
+**Evidence from mergers and closures**<br>
+Dafny (2009) looks specifically at the effects of a hospital merger on hospital prices. As opposed to the "structure-conduct-performance" approach, this analysis compares markets in which there was a merger to those in which there was no merger and examines the relative changes in prices. 
+
+
+### Class 23, 11/4
+**Evidence from out-of-market mergers**<br>
+
+
+
+### Class 19, 10/21
+**Workshop day!**<br>
+Today we'll work on the third empirical assignment in class. For this assignment, we'll skip straight to the replication files available online, since this exercise involves one of the few papers with data fully publicly available. See [exercise 3](https://imccart.github.io/Econ-771/assignments/exercise2.html) for more details on this assignment. The assignment is due by **Friday, October 23rd**.
+
+
+
+
+
+

@@ -135,4 +135,32 @@ bib["dafny2008"]
 You can "replicate" this paper using more recent data on Medicare Advantage and the star rating program. This won't be the same analysis but it will provide good practice with the MA data, which is accessible from the [Medicare Advantage Repository](https://github.com/imccart/Medicare-Advantage).
 
 
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["dranove2016"]
+``` 
+
+You can approximately replicate this paper using data from the Hospital Cost Reports, [HCRIS](https://github.com/imccart/HCRIS), and [Provider of Services](https://github.com/asacarny/provider-of-services) files. For information on how to define hospital markets, be sure to take a look at this [healthcare markets GitHub repo](https://github.com/graveja0/health-care-markets).
+
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["cooper2017"]
+```
+
+You can't replicate this analysis directly because they use commercial insurance data; however, you can recreate most of their analysis using an estimate of price from [HCRIS](https://github.com/imccart/HCRIS).
+
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["dafny2009"]
+```
+
+You can replicate this analysis using [HCRIS](https://github.com/imccart/HCRIS) and the [Provider of Services](https://github.com/asacarny/provider-of-services) files. You will also need to track down data on hospital mergers and acquisitions. As an Emory student, you all have access to the AHA annual survey data which includes information that you can use to identify mergers. You may also be able to track down other resources that list hospital mergers and acquisitions. If you need to use the AHA data, just let me know and we'll try to get an account set up.
+
+
+
 # Grading
