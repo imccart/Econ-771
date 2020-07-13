@@ -24,7 +24,7 @@ This is the guide for **Module 2**, which covers issues related to physician age
 2. Recognize identification strategies in applied empirical work
 3. Identify potential barriers to instrumental variables in practice
 4. Analyze real data on physician behaviors and practice characteristics using publicly available data sources
-5. Describe the physician fee schedule
+5. Describe the physician fee schedule and how Medicare pays for Part B services
 
 
 # Econometrics issues
