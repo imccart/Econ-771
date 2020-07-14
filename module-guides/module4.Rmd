@@ -23,19 +23,21 @@ This is the guide for **Module 4**, the last module of the class. Over these las
 # Learning objectives
 1. Synthesize the literature on hospital competition and its effects on prices and quality
 2. Recognize identification strategies in applied empirical work
-3. Employ ... for causal inference
+3. Employ modern techniques for measuring hospital markets
 4. Analyze real data on hospital prices
-5. Describe the negotiation process between commercial insurance firms and hospitals, and distinguish between charges, costs, and prices.
+5. Describe the negotiation process between commercial insurance firms and hospitals, and distinguish between charges, costs, and prices
 
 
 # Econometrics issues
-1. Strict and fuzzy regression discontinuity design
-2. Testing regression discontinuity assumptions
-3. Binning and bandwidth selection for strict RD
+1. Demand estimation with market-level data
+2. Empirical issues in measuring hospital markets
 
 
 # Main datasets
 1. [HCRIS](https://github.com/imccart/HCRIS)
+2. [Provider of Services](https://github.com/asacarny/provider-of-services)
+3. [Measuring Hospital Markets](https://github.com/graveja0/health-care-markets)
+4. [Hospital Service Area Files](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Hospital-Service-Area-File/index)
 
 
 
@@ -69,12 +71,19 @@ Dafny (2009) looks specifically at the effects of a hospital merger on hospital 
 
 ### Class 23, 11/4
 **Evidence from out-of-market mergers**<br>
+Dafny, Ho, and Lee (2019) examines the effects of "cross-market" mergers (i.e., hospital A in Atlanta mergers with hospital B in Savannah). They investigate a few potential mechanisms from such mergers, ultimately settling on the "common consumer" mechanism in which insurers negotiate with both hospitals so that the merger provides the joined system with more bargaining leverage even though the hospital markets themselves (Atlanta and Savannah, in our example) are distinct. Schmitt (2018) also considers out-of-market mergers; however, he considers them in the context of changing the extent to which different hospitals compete in other markets. In other words, his analysis uses out-of-market mergers as an event that changes the "pairwise overlaps" of hospitals in an otherwise unrelated market. 
 
+### Class 24, 11/9
+**Mergers and acquisitions in dialysis**<br>
+So far, we've focused exclusively on hospital markets, but there are some very interesting studies done on other aspects of healthcare. Eliason et al. (2020) is one such study on the dialysis industry.
 
+### Class 25, 11/11
+**Vertical integration between hospitals and physicians**<br>
+One of the biggest changes to the U.S. healthcare delivery system in the past 20 years is the relationships between physicians and hospitals. Around 2000, less than 5% of all physician practices were owned by a hospital. Today, over 1/3rd of physician practices are owned by hospital systems. Given the physician's important role as an agent to the patient, this change in the physician/hospital relationship has potentially important consequences for the amount and quality of care delivered. Also, in a bargaining context, this change in physician/hospital relationships has important consequences for prices.  Koch, Wendling, and Wilson (2017) examines the effects of physician/hospital integration on the quantity of care. Lin, McCarthy, and Richards (2020) examines the effects of physician/hospital integration on hospital prices.
 
-### Class 19, 10/21
+### Class 26, 11/16
 **Workshop day!**<br>
-Today we'll work on the third empirical assignment in class. For this assignment, we'll skip straight to the replication files available online, since this exercise involves one of the few papers with data fully publicly available. See [exercise 3](https://imccart.github.io/Econ-771/assignments/exercise2.html) for more details on this assignment. The assignment is due by **Friday, October 23rd**.
+Today we'll work on the fourth (and final) empirical assignment in class. For this assignment, instead of considering a causal inference strategy, we're going to think about how to measure hospital markets and how to estimate demand for hospital services. See [exercise 4](https://imccart.github.io/Econ-771/assignments/exercise2.html) for more details on this assignment. The assignment is due by **Friday, November 20th**.
 
 
 

@@ -11,9 +11,8 @@
 
 <meta name="author" content="Econ 771: Health Economics II" />
 
-<meta name="date" content="2020-07-14" />
 
-<title>Module 4</title>
+<title>Module 4 Empirical Exercise</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1541,91 +1540,37 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Module 4</h1>
+<h1 class="title toc-ignore">Module 4 Empirical Exercise</h1>
 <h4 class="author">Econ 771: Health Economics II</h4>
-<h4 class="date">July 14, 2020</h4>
+<h4 class="date">Due: Friday, November 20</h4>
 
 </div>
 
 
 <div id="overview" class="section level1">
 <h1>Overview</h1>
-<p>This is the guide for <strong>Module 4</strong>, the last module of the class. Over these last few weeks, we’ll cover healthcare competition and the effects of mergers and closures. Most of this will deal with hospitals but we’ll have some discussion of vertical integration between hospitals and physicians as well as some papers on concentration in the dialysis industry.</p>
+<p>In this assignment, we’re going to work through some applied issues related to measuring hospital markets and estimating demand with market-level data.</p>
+<p>To begin, please “accept” the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.</p>
+<p>You will “turn in” your repository to me with your answers and all supporting documents. Please create a final document with your main answers and analyses in a PDF. Please also be sure to include in your repository all of your supporting code files. Practice writing good code and showing me only what I would need to recreate your results.</p>
 </div>
-<div id="learning-objectives" class="section level1">
-<h1>Learning objectives</h1>
+<div id="resources-and-data" class="section level1">
+<h1>Resources and data</h1>
+<p>The data for this assignment comes from three sources:</p>
 <ol style="list-style-type: decimal">
-<li>Synthesize the literature on hospital competition and its effects on prices and quality</li>
-<li>Recognize identification strategies in applied empirical work</li>
-<li>Employ modern techniques for measuring hospital markets</li>
-<li>Analyze real data on hospital prices</li>
-<li>Describe the negotiation process between commercial insurance firms and hospitals, and distinguish between charges, costs, and prices</li>
+<li><p><strong>HCRIS</strong>: All hospitals that treat Medicare patients must submit a hospital cost report. The data are then made available on the CMS website. The NBER also provides a slightly more user-friendly version of these data. Info and code for these data are available at my GitHub page <a href="https://github.com/imccart/HCRIS">here</a>. The raw data are available on our AWS AMI in the “HCRIS” folder.</p></li>
+<li><p><strong>Provider of Services files</strong>: These data are available from <a href="https://data.nber.org/data/provider-of-services.html">NBER POS</a> as well as at <a href="https://github.com/asacarny/provider-of-services">Adam Sacarny’s GitHub repo</a>. I’ve also made these data available on our shared AWS AMI in the “POS” folder. Use these data to get information on hospital ownership type.</p></li>
+<li><p><strong>Hospital Market GitHub Repo</strong>: John Graves has an excellent GitHub repository detailing the issues in measuring hospital markets. You can access that reop <a href="https://github.com/graveja0/health-care-markets">here</a>.</p></li>
 </ol>
 </div>
-<div id="econometrics-issues" class="section level1">
-<h1>Econometrics issues</h1>
+<div id="questions" class="section level1">
+<h1>Questions</h1>
+<p>In your GitHub repository, please be sure to clearly address/answer the following questions.</p>
 <ol style="list-style-type: decimal">
-<li>Demand estimation with market-level data</li>
-<li>Empirical issues in measuring hospital markets</li>
+<li><p>Calculate hospital market shares when defining the “market” as a hospital’s zip code and using hospital beds as your measure of quantity. Create a “violin plot” of market shares over time.</p></li>
+<li><p>Calculate hospital market shares when defining the “market” as the HRR, again using hospital beds as your measure of quantity. Create a violin plot of market shares over time. How do these results differ from part 1?</p></li>
+<li><p>Calculate hospital market shares when defining the market based on the community detection algorithms described <a href="https://github.com/graveja0/health-care-markets">here</a>. Continue to use hospital beds as your measure of quantity, and summarize your results with a violin plot. How do these results differ from those in parts 1 and 2?</p></li>
+<li><p>Estimate a nested logit discrete choice model using market share data based on the different definition of markets in parts 1-3. What is your price elasticity estimate in each case, and how does it differ based on your measure of the market? <em>hint: don’t worry about instrumenting for anything right now.</em></p></li>
 </ol>
-</div>
-<div id="main-datasets" class="section level1">
-<h1>Main datasets</h1>
-<ol style="list-style-type: decimal">
-<li><a href="https://github.com/imccart/HCRIS">HCRIS</a></li>
-<li><a href="https://github.com/asacarny/provider-of-services">Provider of Services</a></li>
-<li><a href="https://github.com/graveja0/health-care-markets">Measuring Hospital Markets</a></li>
-<li><a href="https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Hospital-Service-Area-File/index">Hospital Service Area Files</a></li>
-</ol>
-</div>
-<div id="schedule" class="section level1">
-<h1>Schedule</h1>
-<div id="class-18-1019" class="section level3">
-<h3>Class 18, 10/19</h3>
-<p><strong>Competition in price and quality</strong><br>
-No student presentations today. Instead, I’ll present some basics on the nature of competition when firms set both prices and quality. The main takeaway–theory doesn’t tell us much about the effects of competition in this case. It really depends on the dimension by which customers are most responsive (price or quality).</p>
-</div>
-<div id="class-19-1021" class="section level3">
-<h3>Class 19, 10/21</h3>
-<p><strong>Measuring hospital market power</strong><br>
-Today’s class is about how we measure market power. The only paper for today is Dranove (2016), which provides a nice comparison of different measures in the literature.</p>
-</div>
-<div id="class-20-1026" class="section level3">
-<h3>Class 20, 10/26</h3>
-<p><strong>Evidence from “structure-conduct-performance” studies</strong><br>
-Kessler and McClellan (2000) is one of the first healthcare studies in this literature. I label it as a “structure-conduct-performance” study because it takes a reduced form approach and attempts to capture the “structure” of the market with some summary statistic, assumes some conduct results from the structure, and then examins the outcome (or “performance”). This was a standard empirical approach in the early days of industrial organization.</p>
-<p>Cooper et al. (2019) provides an excellent set of summary statistics and regression analysis of hospital pricing and industrial organization of healthcare markets. Their analysis is not necessarily causal but is an important set of empirical facts nonetheless.</p>
-</div>
-<div id="class-21-1028" class="section level3">
-<h3>Class 21, 10/28</h3>
-<p><strong>Competition in a bargaining model</strong><br>
-Ho and Lee (2017) is not the first paper to present a bargaining model and estimate the structure IO model with data; however, this is one of the most complete models of the insurer/hospital bargaining process and is therefore the one we’ll focus on in this class.</p>
-</div>
-<div id="class-22-112" class="section level3">
-<h3>Class 22, 11/2</h3>
-<p><strong>Evidence from mergers and closures</strong><br>
-Dafny (2009) looks specifically at the effects of a hospital merger on hospital prices. As opposed to the “structure-conduct-performance” approach, this analysis compares markets in which there was a merger to those in which there was no merger and examines the relative changes in prices.</p>
-</div>
-<div id="class-23-114" class="section level3">
-<h3>Class 23, 11/4</h3>
-<p><strong>Evidence from out-of-market mergers</strong><br>
-Dafny, Ho, and Lee (2019) examines the effects of “cross-market” mergers (i.e., hospital A in Atlanta mergers with hospital B in Savannah). They investigate a few potential mechanisms from such mergers, ultimately settling on the “common consumer” mechanism in which insurers negotiate with both hospitals so that the merger provides the joined system with more bargaining leverage even though the hospital markets themselves (Atlanta and Savannah, in our example) are distinct. Schmitt (2018) also considers out-of-market mergers; however, he considers them in the context of changing the extent to which different hospitals compete in other markets. In other words, his analysis uses out-of-market mergers as an event that changes the “pairwise overlaps” of hospitals in an otherwise unrelated market.</p>
-</div>
-<div id="class-24-119" class="section level3">
-<h3>Class 24, 11/9</h3>
-<p><strong>Mergers and acquisitions in dialysis</strong><br>
-So far, we’ve focused exclusively on hospital markets, but there are some very interesting studies done on other aspects of healthcare. Eliason et al. (2020) is one such study on the dialysis industry.</p>
-</div>
-<div id="class-25-1111" class="section level3">
-<h3>Class 25, 11/11</h3>
-<p><strong>Vertical integration between hospitals and physicians</strong><br>
-One of the biggest changes to the U.S. healthcare delivery system in the past 20 years is the relationships between physicians and hospitals. Around 2000, less than 5% of all physician practices were owned by a hospital. Today, over 1/3rd of physician practices are owned by hospital systems. Given the physician’s important role as an agent to the patient, this change in the physician/hospital relationship has potentially important consequences for the amount and quality of care delivered. Also, in a bargaining context, this change in physician/hospital relationships has important consequences for prices. Koch, Wendling, and Wilson (2017) examines the effects of physician/hospital integration on the quantity of care. Lin, McCarthy, and Richards (2020) examines the effects of physician/hospital integration on hospital prices.</p>
-</div>
-<div id="class-26-1116" class="section level3">
-<h3>Class 26, 11/16</h3>
-<p><strong>Workshop day!</strong><br>
-Today we’ll work on the fourth (and final) empirical assignment in class. For this assignment, instead of considering a causal inference strategy, we’re going to think about how to measure hospital markets and how to estimate demand for hospital services. See <a href="https://imccart.github.io/Econ-771/assignments/exercise2.html">exercise 4</a> for more details on this assignment. The assignment is due by <strong>Friday, November 20th</strong>.</p>
-</div>
 </div>
 
 

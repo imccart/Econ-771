@@ -10,9 +10,9 @@ To get the most out of this class, we need to use a handful of tools. Some of th
 
 1. **Canvas**: This is where I'll post announcements, grades, and other information only for this class (such as Zoom meeting links).
 
-2. **OneNote**: Everyone will soon receive an invitation to join our OneNote classroom. This will provide you with your own notebook for the class, where you can take your own notes and have access to all of my annotated notes from class. Note that all of the notes (without annotation) are also available below.
+2. **OneNote**: Everyone will soon receive an invitation to join our OneNote classroom. This will provide you with your own notebook for the class, where you can take your own notes and have access to all of my annotated notes from class. Note that all of the notes (without annotation) will also be available below in the Module links.
 
-3. **GitHub**: Everyone will also soon receive an invitation to join our GitHub classroom. This is where you can access code files and datasets (where possible) and organize all of your code for class assignments. This is also how you will submit your main replication project. If you're not familiar with GitHub, take a look at the excellent notes from [Grant McDermott](https://grantmcdermott.com/) and his class, [Data Science for Economists](https://github.com/uo-ec607/lectures).
+3. **GitHub**: Everyone will soon receive an invitation to join our GitHub classroom. This is where you can access code files and datasets (where possible) and organize all of your code for class assignments. This is also how you will submit your assignments. If you're not familiar with GitHub, take a look at the excellent notes from [Grant McDermott](https://grantmcdermott.com/) and his class, [Data Science for Economists](https://github.com/uo-ec607/lectures).
 
 4. **Amazon Web Services**: Everyone will have access to cloud computing through AWS. This will serve as your own virtual computer, so we all have the same data capabilities, versions, and packages. You don't have to use this, but for those of you with limited computing power, this is an easy solution.
 
@@ -25,7 +25,7 @@ To get the most out of this class, we need to use a handful of tools. Some of th
 
 
 ## Course Outline and Notes
-The course is divided into a few distinct topic areas. In each area, we'll discuss a handful of papers and finish each module with an empirical exercise using real-world data. The empirical work is designed to replicate or at least approximate many of the key identification strategies and econometric approaches covered in the papers for that module. Follow the link to each module for more detailed information about each section of the course, including a list of resources, learning objectives, and daily schedule. Each module page will also contain the slides relevant for each class. Be sure to check the *OneNote* notebook for any annotated notes from each class, accessible via our *OneNote classroom*. 
+The course is divided into a few distinct topic areas. In each area, we'll discuss a handful of papers and finish each module with an empirical exercise using real-world data. The empirical work is designed to replicate or at least approximate many of the key identification strategies and econometric approaches in the literature. Follow the link to each module for more detailed information about each section of the course, including a list of resources, learning objectives, and daily schedule. Each module page will also contain the slides relevant for each class. Be sure to check the *OneNote* notebook for any annotated notes from each class, accessible via our *OneNote classroom*. 
 
 
 ### Module 0. Motivation and expectations for the class
@@ -44,19 +44,19 @@ We won't get to a lot of this, but the resources are here for you if anyone is i
 
 
 ## Assignments
-1. **Discussion**: Participation in our online discussions is a small portion of the grade. This is particulary important if we have to move to fully online course again. The goal is just to incentivize you all to participate in this discussion outside of class. Your grade will be based on 10 possible discussion forums/topics. 
+1. **Discussion**: Participation in our online discussions is a small portion of the grade. This is particulary important if we have to move to a fully online course again. The goal is just to incentivize you all to participate in this discussion outside of class. Your grade will be based on 10 possible discussion forums/topics. 
 
 2. **Empirical exercises**: Each course module will have an applied component where we spend some time replicating analyses from selected papers based on real-world data. These will require some of your time outside of class to get the data in working order and implement the relevant identification strategy and econometric estimator. This empirical work should heavily complement your replication project as well as your draft paper. All exercises will be assigned through GitHub classroom and will come with clear instructions on the general research question, data sources, and estimation strategies. Details of each empirical exercise are in the following links:
   - [Exercise 1](assignments/exercise1.html): Basics of causal inference with panel data; get some experience using the inpatient prospective payment system final rule files, the provider of services files, and the hospital cost report data.
   - [Exercise 2](assignments/exercise2.html): Instrumental variables
+  - [Exercise 3](assignments/exercise3.html): Regression Discontinuity
+  - [Exercise 4](assignments/exercise4.html): Hospital markets and demand estimation
 
 3. **Presentations**: You will present two papers throughout the course of the semester. A list of potential papers and other instructions is available on the [presentations](assignments/presentations.html) page of our class website. Please inform me of your selected papers no later than **August 21, 2020**.
 
-4. **Referee report**: You will write a brief referee report and letter to the editor. A list of potential papers on which to write your report, as well as detailed instructions, is available on the [report](assignments/report.html) page of our class webiste. Please inform me of your selected paper no later than **September 4, 2020**. Your report and letter are due by **Friday, October 23, 2020**.
+4. **Literature review** (2nd year) or **draft paper** (3rd year): You will prepare a literature review or a preliminary draft paper depending on how far along you are in the PhD program. Details of these assignments are available on the [literature review](assignments/lit-review.html) and [draft paper](assignments/draft-paper.html) pages of our website. This assignment is due by **Friday, November 13, 2020**.
 
-5. **Literature review** (2nd year) or **draft paper** (3rd year): You will prepare a literature review or a preliminary draft paper depending on how far along you are in the PhD program. Details of these assignments are available on the [literature review](assignments/lit-review.html) and [draft paper](assignments/draft-paper.html) pages of our website. This assignment is due by **Friday, November 13, 2020**.
-
-6. **Replication**: You will replicate a published paper using publicly available data. Details of this assignment and a list of potential papers to replicate are available on the [replication](assignments/replication.html) page of our class website. You can also choose to replicate a paper off of the list, but I must approve any selection by **Friday, September 4, 2020**. Your final replication is due no later than **Friday, December 11, 2020** (the day of our scheduled final exam). 
+5. **Replication**: You will replicate a published paper using publicly available data. Details of this assignment and a list of potential papers to replicate are available on the [replication](assignments/replication.html) page of our class website. You can also choose to replicate a paper off of the list, but I must approve any selection by **Friday, September 4, 2020**. Your final replication is due no later than **Friday, December 11, 2020** (the day of our scheduled final exam). 
 
 
 
@@ -87,6 +87,11 @@ We'll come across the following datasets throughout the course. Some of these li
 
 12. [Medicare Part D](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/MCRAdvPartDEnrolData)
 
+13. [Hospital Mergers](https://healthcarepricingproject.org/)
+
+14. [Measuring Hospital Markets](https://github.com/graveja0/health-care-markets)
+
+15. [Hospital Service Area Files](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Hospital-Service-Area-File/index)
 
 
 ## Acknowledgements

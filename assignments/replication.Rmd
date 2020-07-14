@@ -159,8 +159,25 @@ You can't replicate this analysis directly because they use commercial insurance
 bib["dafny2009"]
 ```
 
-You can replicate this analysis using [HCRIS](https://github.com/imccart/HCRIS) and the [Provider of Services](https://github.com/asacarny/provider-of-services) files. You will also need to track down data on hospital mergers and acquisitions. As an Emory student, you all have access to the AHA annual survey data which includes information that you can use to identify mergers. You may also be able to track down other resources that list hospital mergers and acquisitions. If you need to use the AHA data, just let me know and we'll try to get an account set up.
+You can replicate this analysis using [HCRIS](https://github.com/imccart/HCRIS) and the [Provider of Services](https://github.com/asacarny/provider-of-services) files. You will also need to track down data on hospital mergers and acquisitions. As an Emory student, you all have access to the AHA annual survey data which includes information that you can use to identify mergers. A better data source is from the [Healthcare Pricing Project](https://healthcarepricingproject.org/), which provides merger data from 2001 through 2014 (based on AHA surveys).
 
 
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["dafny2019"]
+```
+
+Most of this analysis is replicable using [HCRIS](https://github.com/imccart/HCRIS) and the [Provider of Services](https://github.com/asacarny/provider-of-services) files, along with the merger data from the [Healthcare Pricing Project](https://healthcarepricingproject.org/).
+
+
+
+---
+
+```{r, echo = FALSE, results="asis"} 
+bib["schmitt2018"]
+```
+
+Most of this analysis is replicable using [HCRIS](https://github.com/imccart/HCRIS) and the [Provider of Services](https://github.com/asacarny/provider-of-services) files, along with the merger data from the [Healthcare Pricing Project](https://healthcarepricingproject.org/). But a word of warning...measuring multi-market contact can be computationally cumbersome.
 
 # Grading

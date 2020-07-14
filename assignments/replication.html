@@ -1612,14 +1612,6 @@ In: <em>American Economic Journal: Economic Policy</em> 10.1, pp. 326–56.</ci
 <p>Parts of this paper are approximately replicable using the count of claims based on HCPCS codes and NPIs. You can also identify physician movers using the physician compare data. The outcomes will differ slightly but this approach would be analogous to the paper.</p>
 <hr />
 <p>
-<cite>Clemens, Jeffrey and Joshua D Gottlieb
-(2017).
-“In the shadow of a giant: Medicare’s influence on private physician payments”.
-In: <em>Journal of Political Economy</em> 125.1, pp. 1–39.</cite>
-</p>
-<p>Analysis of physician practices (Section IV.E of the paper) is replicable using the <a href="https://www.icpsr.umich.edu/web/ICPSR/series/161">Community Tracking Study</a>. You can also reconstruct physician payments using the Physician Fee Schedule data.</p>
-<hr />
-<p>
 <cite>Gruber, Jonathan and Maria Owings
 (1996).
 “Physician financial incentives and cesarean section delivery”.
@@ -1628,12 +1620,77 @@ In: <em>The RAND Journal of Economics</em> 27.1, pp. 99–123.</cite>
 <p>Most of this analysis should be replicable using the <a href="https://www.cdc.gov/nchs/nhds/index.htm">National Hospital Discharge Survey</a>.</p>
 <hr />
 <p>
+<cite>Clemens, Jeffrey and Joshua D Gottlieb
+(2017).
+“In the shadow of a giant: Medicare’s influence on private physician payments”.
+In: <em>Journal of Political Economy</em> 125.1, pp. 1–39.</cite>
+</p>
+<p>Analysis of physician practices (Section IV.E of the paper) is replicable using the <a href="https://www.icpsr.umich.edu/web/ICPSR/series/161">Community Tracking Study</a>. You can also reconstruct physician payments using the Physician Fee Schedule data.</p>
+<hr />
+<p>
 <cite>Baicker, Katherine, Michael E Chernew, and Jacob A Robbins
 (2013).
 “The spillover effects of Medicare managed care: Medicare Advantage and hospital utilization”.
 In: <em>Journal of health economics</em> 32.6, pp. 1289–1300.</cite>
 </p>
 <p>You can approximately replicate this paper using a combination of data from the <a href="https://data.hrsa.gov/topics/health-workforce/ahrf">Area Health Resources File</a> and MA penetration and benchmark data. The MA data are available on my GitHub repo, <a href="https://github.com/imccart/Medicare-Advantage">Medicare Advantage Repository</a>. You could also mimic many of the cost outcomes using the <a href="https://github.com/imccart/HCRIS">HCRIS</a> data, which are also part of a GitHub repo.</p>
+<hr />
+<p>
+<cite>Ericson, Keith M
+(2014).
+“Consumer inertia and firm pricing in the Medicare Part D prescription drug insurance exchange”.
+In: <em>American Economic Journal: Economic Policy</em> 6.1, pp. 38–64.</cite>
+</p>
+<p>You can replicate this paper using data from Medicare Part D. These raw data are available from CMS and the clean data are available from the AEJ: Policy website, <a href="https://www.aeaweb.org/articles?id=10.1257/pol.6.1.38">Ericson (2014)</a>. If you choose this paper as your replication, you must download the data from its raw source. <a href="https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/MCRAdvPartDEnrolData">CMS Part D Enrollment</a> is a good starting point, but you’ll probably have to navigate the website to find all of the other variables.</p>
+<hr />
+<p>
+<cite>Dafny, L. and D. Dranove
+(2008).
+“Do report cards tell consumers anything they don’t already know? The case of Medicare HMOs”.
+In: <em>The Rand journal of economics</em> 39.3, pp. 790–821.</cite>
+</p>
+<p>You can “replicate” this paper using more recent data on Medicare Advantage and the star rating program. This won’t be the same analysis but it will provide good practice with the MA data, which is accessible from the <a href="https://github.com/imccart/Medicare-Advantage">Medicare Advantage Repository</a>.</p>
+<hr />
+<p>
+<cite>Dranove, David and Christopher Ody
+(2016).
+“Evolving Measures of Provider Market Power”.
+In: <em>American Journal of Health Economics</em> 2.2, pp. 145-160.</cite>
+</p>
+<p>You can approximately replicate this paper using data from the Hospital Cost Reports, <a href="https://github.com/imccart/HCRIS">HCRIS</a>, and <a href="https://github.com/asacarny/provider-of-services">Provider of Services</a> files. For information on how to define hospital markets, be sure to take a look at this <a href="https://github.com/graveja0/health-care-markets">healthcare markets GitHub repo</a>.</p>
+<hr />
+<p>
+<cite>Cooper, Zack, Stuart V Craig, Martin Gaynor, and John Van Reenen
+(2017).
+<em>The price ain’t right? Hospital prices and health spending on the privately insured</em>.
+Working Paper.
+National Bureau of Economic Research.</cite>
+</p>
+<p>You can’t replicate this analysis directly because they use commercial insurance data; however, you can recreate most of their analysis using an estimate of price from <a href="https://github.com/imccart/HCRIS">HCRIS</a>.</p>
+<hr />
+<p>
+<cite>Dafny, Leemore
+(2009).
+“Estimation and Identification of Merger Effects: An Application to Hospital Mergers”.
+In: <em>Journal of Law and Economics</em> 52.3, pp. 523–550.</cite>
+</p>
+<p>You can replicate this analysis using <a href="https://github.com/imccart/HCRIS">HCRIS</a> and the <a href="https://github.com/asacarny/provider-of-services">Provider of Services</a> files. You will also need to track down data on hospital mergers and acquisitions. As an Emory student, you all have access to the AHA annual survey data which includes information that you can use to identify mergers. A better data source is from the <a href="https://healthcarepricingproject.org/">Healthcare Pricing Project</a>, which provides merger data from 2001 through 2014 (based on AHA surveys).</p>
+<hr />
+<p>
+<cite>Dafny, Leemore, Kate Ho, and Robin S Lee
+(2019).
+“The price effects of cross-market mergers: theory and evidence from the hospital industry”.
+In: <em>The RAND Journal of Economics</em> 50.2, pp. 286–325.</cite>
+</p>
+<p>Most of this analysis is replicable using <a href="https://github.com/imccart/HCRIS">HCRIS</a> and the <a href="https://github.com/asacarny/provider-of-services">Provider of Services</a> files, along with the merger data from the <a href="https://healthcarepricingproject.org/">Healthcare Pricing Project</a>.</p>
+<hr />
+<p>
+<cite>Schmitt, Matt
+(2018).
+“Multimarket Contact in the Hospital Industry”.
+In: <em>American Economic Journal: Economic Policy</em> 10.3, pp. 361–87.</cite>
+</p>
+<p>Most of this analysis is replicable using <a href="https://github.com/imccart/HCRIS">HCRIS</a> and the <a href="https://github.com/asacarny/provider-of-services">Provider of Services</a> files, along with the merger data from the <a href="https://healthcarepricingproject.org/">Healthcare Pricing Project</a>. But a word of warning…measuring multi-market contact can be computationally cumbersome.</p>
 </div>
 <div id="grading" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Grading</h1>
