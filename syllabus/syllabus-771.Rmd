@@ -1,0 +1,671 @@
+---
+output: 
+  pdf_document:
+    keep_tex: true
+    fig_caption: yes
+    latex_engine: pdflatex
+    template: syllabus-template.tex
+geometry: margin=1in
+
+title: "Econ 771: Health Economics II"
+author: Ian McCarthy
+date: "8/19/2020 - 12/11/2020"
+
+email: "ian.mccarthy@emory.edu"
+web: "ianmccathyecon.com"
+officehours: "W 09:30-11:30 a.m."
+office: "319 Rich Memorial Building"
+classroom: "*online*"
+classhours: "TTh 9:40-11:30 a.m."
+
+fontfamily: mathpazo
+fontsize: 11pt
+header-includes:
+   - \linespread{1.05}
+---
+
+
+```{r setup, include=FALSE, cache=F, message=F, warning=F, results="hide"}
+knitr::opts_chunk$set(cache=TRUE)
+knitr::opts_chunk$set(cache.path = '_cache/')
+knitr::opts_chunk$set(warning=F, message=F)
+```
+
+
+
+```{r dates_bib, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE, dev='pdf')
+start <- as.Date("2020-08-19")
+advdate <- function(adv) {
+ twed <- start + 7*floor(adv/2)
+ tmon <- twed-2
+ tmon <- format(tmon, format="%m/%d")
+ twed <- format(twed, format="%m/%d")
+ zadv <- sprintf("%02d", adv)
+ tday <- ifelse( (adv %% 2) == 0, tmon,twed)
+ tmp <- paste("Class ",zadv,sep='',", ", tday)
+ return(tmp)
+}
+library(RefManageR)
+bib <- ReadBib('D:/CloudStation/Professional/Bibliography/BibTeX_Library.bib')
+myopts <- BibOptions(bib.style = "authoryear", style="citation", first.inits=FALSE, max.names = 20, check.entries=FALSE)
+```
+
+
+# Course Description
+
+This course explores the industrial organization of healthcare markets in the U.S. We will focus on the following areas: hospital ownership and production, physician agency, quality disclosure, and hospital competition. If we have time, we will briefly cover some issues on health insurance markets. The class is effectively designed as a combination of empirical IO and causal inference, with applications to healthcare. As such, we will also examine several econometric tools and causal inference identification strategies. These methods will be introduced as needed throughout the course.
+
+Supply-side health economics is a rapidly growing field with many new developments, particularly in the areas of bargaining in two-sided markets and physician learning. Some of these recent developments use tools from network analysis and machine learning, which we unfortunately do not have time to cover in this course. I've also chosen specific topics that overlap most with my own research --- the upside here is that I can speak somewhat confidently about the literature and empirical studies in this area, but the downside is that some very interesting areas of health economics are not studied. For example, we will largely ignore issues of the prescription drug market, medical devices, and physician labor supply. My hope is that the content that we do cover will provide a springboard for those interested in these other important areas.
+
+
+# Learning Outcomes
+
+I have four central goals for this course:
+
+1. Synthesize the current literature in each of the main areas of health economics covered in this class
+
+2. Apply standard causal inference techniques in the area of healthcare
+
+3. Provide constructive criticism of academic work in this area
+
+4. Develop your own preliminary research in some area of health economics
+
+There are more specific learning outcomes for each module described on the relevant module's page of our class website, accessible [here](https://imccart.github.io/Econ-771/).
+
+# Text, Software, and Class Materials
+
+1. **Readings:** As an elective PhD course, we will rely on academic papers from the reading list below. I expect everyone to read the papers in advance and come to class with questions on the study's contribution, empirical techniques, identification strategies, and datasets used. Where possible, we will work to replicate results or apply the paper's central methodology to some simulated data. My goal with each paper is to discuss the analysis in detail. As such, the primary reading list is perhaps shorter than a standard PhD course. I've provided supplemental reading in each section for those interested in additional readings in a specific area.
+
+2. **Statistics Software:** For any data analysis or econometrics, I'll use `R` for my work, but you are free to use whatever software you're most comfortable with. I encourage you to use `R`, `Stata`, or `Python` simply because these are the most common programs used in practice right now. 
+
+3. **Accessing Data:** For any in-class activities, I will house all of the code and links to the data on our class website. For any real-life datasets, I will also point you to other GitHub repositories where available. So you'll need to be sure to have a simple working knowledge of Git and GitHub. If you're new to Git or GitHub, take a look at [Grant McDermott's](https://grantmcdermott.com/) notes on [Data Science for Economists](https://github.com/uo-ec607/lectures) as well as [Jenny Bryan's](https://jennybryan.org/) online reference book, [Happy Git and GitHub with R](https://happygitwithr.com/).
+
+4. **Cloud Storage and Analysis:** You have access Amazon Web Services (AWS) Cloud Computing services for all of the empirical work in the class through the AWS Classroom. This *should* act as a virtual console that each of you can access independently but where you are each working on an identical system. This avoids issues of different versions of stats programs or, in the case of `R` and `Python`, different packages or package versions. Using AWS isn't required for the class, but it is available to you for those interested.
+
+5. **Logistics:** For day-to-day communication, grades, and other private information (such as Zoom meeting links), I'll use *Canvas*. I'll post all other materials to our class website.
+
+6. **Lectures and Notes:** Any presentations will be made available on our class website prior to any given class. I may also annotate those slides during each class, for which I'll use *OneNote*. Everyone has access to this as an Emory student, so I will set up a classroom notebook which will serve as a single resource for all class notes. You can also take your own notes as part of the app, which should help with keeping things organized. 
+
+7. **Online Discussions:** We'll use [GroupTweet](https://grouptweet.com/) to facilitate online discussions this semester. This will work with any smartphone. It's basically our own private Twittersphere for our class. You will receive an invitation to join the group, at which point we can post and respond throughout the semester. Participation in these online discussions is a small part of your grade, as discussed below.
+
+8. **Turning things in:** We'll use GitHub Classroom to facilitate all of the assignments. You'll soon receive an invite which will get you access to the classroom. Within the classroom, you will have to accept each assignment, which will then create a separate GitHub repository for you for each assignment. You can then do all of your work in whatever software program you'd like, and then commit and push your changes to your repository. I will see this repository and can comment on it, which is how I will provide feedback on each assignment.
+
+
+# Course Policies
+
+Various policies for this course are described below. Basically, let's all work to be good citizens and take seriously our various roles as a student, teacher, friend, colleague, human, etc.
+
+
+## Academic integrity
+
+The Emory University Honor Code is taken seriously and governs all work in this course. Details about the Honor Code are available in the Laney Graduate School Handbook and available online [here](https://www.gs.emory.edu/academics/policies-progress/conduct.html). By taking this course, you affirm that it is a violation of the code to plagiarize, to deviate from the instructions about collaboration on work that is submitted for grades, to give false information to a faculty member, and to undertake any other form of academic misconduct. You also affirm that if you witness others violating the code you have a duty to report them to the honor council.
+
+## Accessibility services
+
+If you anticipate issues related to the format or requirements of this course, please meet with me. I would like us to discuss ways to ensure your full participation in the course. If you determine that accommodations are necessary, you may register with Accessibility Services at (404)727-9877 or via e-mail at accessibility@emory.edu. To register with OAS, students must self identify and initiate contact with the OAS office.
+
+
+## Communication
+
+I will post regular announcements to the class on *Canvas*, so please set up your notifications on *Canvas* accordingly. I will also use *Canvas* to post all grades and any other information that needs to stay in the class (like our *Zoom* meeting link for virtual meetings). All other course materials will be available on our class website, [imccart.github.io/Econ-771/](https://imccart.github.io/Econ-771/).
+
+Please feel free to reach out to me for any reason. I generally respond to all e-mails within 24 hours.
+
+
+## Virtual meetings
+
+All meetings and office hours will take place virtually this semester on *Zoom*. I'll use the same *Zoom* meeting room for all meetings, the details of which are available on our *Canvas* site. If you can't make it to my usual office hours, please feel free to schedule another time to meet (virtually). Just follow the link to select a time that works for you, [https://ian-meetings.youcanbook.me](https://ian-meetings.youcanbook.me). 
+
+
+## Attendance
+
+While there is no official "attendance" credit, everyone is expect to attend all class sessions. Given our small class, it is very important that we are all present and engaged.
+
+
+# Assignments and Grading
+
+There are four main assignments throughout the semester, along with a participation component. I describe each assignment below, with much more detail provided on our [class website](https://imccart.github.io/Econ-771/).
+
+
+## Participation
+
+We will have semi-weekly online discussion forums in GroupTweet where we discuss a variety of issues, ranging from specific areas of confusion on some papers to best coding practices for empirical work. I anticipate close to one discussion forum per week. Your final participation grade will reflect your percentage (out of a maximum of 10) of discussion forums in which you participate.
+
+
+## Empirical exercises
+
+Each course module will have an applied component where we spend some time replicating analyses from selected papers based on real-world data. These will require some of your time outside of class to get the data in working order and implement the relevant identification strategy and econometric estimator. This empirical work should heavily complement your replication project as well as your draft paper. The due dates for all empirical exercises are indicated in the schedule below. In general, we have one empirical assignment due at the end of each module. 
+
+
+## Presentations
+
+You will present two papers throughout the course of the semester. A list of potential papers will be provided on our class website within the first week of class. Please inform me of your selected papers no later than **August 21, 2020**.
+
+Each presentation should be no more than 30 minutes, including questions and class discussion. The presentation should follow a standard conference setup, with a brief introduction/motivation, a very brief discussion of the literature and some context of the paper, discussion of the data, empirical analysis, and results.
+
+Note that a presentation is not just a re-hashing of the paper in slide form. A good academic presentation should have as little information as possible on each slide, and the content on the slides doesn't necessarily need to follow that of the paper. For example, in a real-time environment, it is much easier to move between different aspects of the empirical analysis and data.
+
+In addition to the presentation, please send me your slides in advance. For people in the economics department, I expect the slides to be completed in Beamer (LaTeX), `R Markdown`, or Python. Others can use PowerPoint or some other presentation tool as they see fit. My only recommendation with those other programs is that, for some of them like Prezi or Powtoon, it is easy for the presentation to become distracting. Slides should complement your presentation and not replace your presence!
+
+Grades for each presentation will be based 50% on the slides and 50% on the actual presentation (delivery, clarity/organization, and content). Additional details and a grading rubric are available on the assignments page in our class website.
+
+
+## Literature review (2nd year students)
+
+The literature review can be on any health economics topic of your choice, subject to my approval. There is no specific page requirement. 10 double-spaced pages might be a good target, but an efficiently-written paper could be shorter, while a student wishing to use the paper as a springboard to a dissertation may choose to write more. The paper will mostly consist of discussions of prior research, but should end with discussions of three open questions in the literature plus a proposed strategy for answering at least one of these questions. The paper is due by **Friday, November 13, 2020**.
+
+
+## Draft paper (3rd year students)
+
+The paper requirement is more extensive for 3rd year students. In this case, your papers should include not only an extensive literature review but also a preliminary empirical analysis, including a discussion of the data you're using, the construction of your sample, your identification strategy, econometric model and estimator, and some preliminary results. There is again no specific page requirement, but I expect at least 20 double-spaced pages to appropriately discuss your topic, context, data, and early results. Your draft paper should end with an outline of additional analyses you hope to run (i.e., robustness/sensitivity analyses, a discussion of different mechanisms of interest, policy-relevant heterogeneities in your estimated effects, etc.). The paper is due by **Friday, November 13, 2020**.
+
+
+## Replication
+
+You must replicate the empirical analysis of a recent health economics paper. Your final product should consist of a discussion of the data sources, steps taken to clean the data and replicate the final analytic sample, a summary of your model and estimator, and your results. You must turn in your assignment on *GitHub*, including your code files (Stata, R, Python, SAS, etc.), all figures/tables, and of course the final paper and presentation.
+
+Please organize your folders in a useful way. The way I organize things (though certainly not the only way to do it) is to keep a folder for each new project and named accordingly. I typically have the following subfolders:
+
+  - Data: This is where I keep the raw data files and any additional data files I create as part of my analysis. I also keep a "Research Data" folder on my computer that has raw data that I access regularly, in which case the "Data" folder in any given project is just a cleaned version of the larger files.
+
+  - Analysis: This is where I keep my code files, log files, and results. I typically have a subfolder for the log files since I create one every time I run a code file as well as a subfolder for results.
+  
+  - Manuscript: This is where I keep all of my files for the actual paper. I usually have a different subfolder for every month or two (whenever I create a sufficiently different version of the paper).
+
+  - Presentation: This is where I keep my slides and underlying code files.
+
+
+It's good to start developing some organization practices that work best for you. It's extremely easy to forget what you were doing on a project once you have several things going at once, especially when you wait for 6-8 months after submitting a paper for publication. The last thing you want is to not be able to replicate your own work!
+
+I will provide a set of papers from which you can choose to replicate, but you are also free to select your own. You need to get approval from me on a paper to replicate by **Friday, September 4**. Final replications are due no later than **Friday, December 11, 2020**.
+
+
+## Due dates
+
+This section is just to highlight the most important dates on which an assignment is due. These dates are repeated within the description of each assignment above. Note that you can always turn assignments in prior to the official due date. Late assignments will receive an automatic 10% reduction in the grade for each day the assignment is turned in after the due date.
+
+  - **August 21**: Send me the references for the 2 papers that you would like to present throughout the semester. Only one student can present each paper, so this is first-come first-served.
+  - **September 4**: Send me the name of the paper you'd like to replicate for the main class project.
+  - **Friday, November 13**: Due date for literature review or draft paper.
+  - **Friday, December 11**: Due date for the replication.
+  - Empirical exercises due one week after the end of each module 
+
+
+## Final grades
+
+- **5%** for participation in online discussions
+
+- **20%** for empirical exercises (5% each)
+
+- **20%** for presentations of selected papers (10% each)
+
+- **25%** for literature review (2nd year students) or draft paper (3rd year students)
+
+- **30%** for a replication of a selected paper
+
+Letter grades will be assigned at the end of the course based on total score achieved:
+(A = 100-93%, A- = 92.99-90%, B+ = 89.99-87%, B = 86.99-83%, B- = 82.99-80%, C+ = 79.99-77%, C = 76.99-73%, C- = 72.99-70%, D+ = 69.99-67%, D = 66.99-60%, F = 60% or less)
+
+
+
+\newpage
+
+# Class Schedule
+
+Below is a preliminary outline of specific topics and readings throughout the semester. Based on our collective interests, discussions, and timing, individual papers and order may change somewhat, but any such changes will be announced in advance. For each class, one of us will present the "primary reading," followed by a general discussion of the papers and topic among the class. Where relevant, we will work through some simulation exercises or derive some theoretical results. Papers listed as "supplemental" represent other relevant papers in that area that we won't have time to cover directly in class. Days with ** indicate that no one will present a paper on that day. Those days are reserved for some basic theoretical derivations or presentation of new empirical methods.
+
+## Module 0: Kicking things off!
+
+### `r advdate(1)`: Introduction to the economics of healthcare
+
+**General references:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("arrow1963", "dranove2000", "evans2000")]
+``` 
+
+
+## Module 1: The hospital objective function(s) and financial incentives
+
+### `r advdate(2)`: Theoretical models of not-for-profits**
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("newhouse1970", "pauly1978", "dranove1988")]
+``` 
+
+**Supplemental:**<br>
+ 
+```{r, echo = FALSE, results="asis"} 
+bib["sloan2000"]
+``` 
+
+
+
+### `r advdate(3)`: Empirical evidence on ownership type
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("duggan2000", "horwitz2009", "bayindir2012")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("frank1991", "gruber1994", "sloan2001", "deneffe2002", "duggan2002", "kessler2002", "gaynor2003", "david2009", "chang2017")]
+``` 
+
+
+
+### `r advdate(4)`: Response to Medicare payment changes
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dafny2005", "dranove2019")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dranove1987rate","cutler1995","ellis1996","silverman2004","carroll2018","cook2020","desai2018")]
+``` 
+
+
+
+### `r advdate(5)`: Hospital cost-shifting
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dranove1988", "dranove2017")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("clement1997","zwanziger2000","wu2010","wagner2016","darden2018","david2014","hay1983","frakt2011")]
+``` 
+
+
+
+### `r advdate(6)`: Response to insurance policies
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("batty2017", "eliason2018", "geruso2020")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("gowrisankaran2019","lee2020")]
+``` 
+
+
+### `r advdate(7)`: Working with data
+
+**Causal inference with panel data**<br>
+
+- Difference-in-differences and parallel trends
+- Event studies and time-varying treatment effects
+- Inference with few treated groups
+
+**Applications and data**<br>  
+
+- Provider of Services files and Inpatient Prospective Payment System Final Rule files
+- Replicate parts of Dafny (2005)
+
+
+## Module 2: Physician agency and treatment decisions
+
+### `r advdate(8)`: The agency problem in healthcare**
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib["mcguire2000"]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("grossman1983","chandra2011")]
+``` 
+
+
+
+### `r advdate(9)`: Supply-side variation in healthcare
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("finkelstein2016","molitor2018")]
+``` 
+
+
+### `r advdate(10)`: Physician response to payment changes
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("gruber1996","clemens2014")]
+``` 
+
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("baker2016","gaynor2016","beckert2018")]
+``` 
+
+
+
+### `r advdate(11)`: Physician spillovers
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("baicker2013", "clemens2017")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("chandra2007","mcguire1991","glied2002","baker2003","newhouse1978","frank2007","chernew2010","landon2017")]
+``` 
+
+
+### `r advdate(12)`: Working with data
+
+**Instrumental variables**<br>
+
+- What is a good instrument?
+- What are we estimating with IV?
+- Specification tests and current robustness checks
+
+**Applications and data**<br>  
+
+- Medicare Advantage data and Area Health Resources File
+- Replicate elements of Baicker, Chernew, and Robbins (2013)
+
+
+## Module 3: Information disclosure and patient decision making
+
+### `r advdate(13)`: Poor decisions in healthcare and health insurance
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("cooper2018","ketcham2012")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("farrell2007","abaluck2011")]
+``` 
+
+
+
+
+### `r advdate(14)`: Inertia in health insurance choice
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("handel2013","ericson2014")]
+``` 
+
+
+
+### `r advdate(15)`: Effects of quality disclosure
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dranove2003more","dafny2008")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("chernew1998","scanlon2002","wedig2002","jin2006","dranove2010","reid2013","darden2015","mccarthy2017")]
+``` 
+
+
+
+
+### `r advdate(16)`: Effects of price disclosure
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib["grennan2020"]
+``` 
+
+
+### `r advdate(17)`: Working with data
+
+**Regression discontinuity**<br>
+
+- Basics of strict and fuzzy RD
+- Specification tests
+- Bin and bandwidth selection
+
+**Applications and data**<br>  
+
+- Medicare Part D Data 
+- Replicate Ericson (2014)
+
+
+## Module 4: Healthcare competition and industrial organization
+
+### `r advdate(18)`: Competition in price and quality**
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dranove1992","fan2013","lewis2016")]
+``` 
+
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("spence1975","mussa1978","hausman1994","dana2011")]
+``` 
+
+
+
+
+
+### `r advdate(19)`: Measuring hospital market power
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib["dranove2016"]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dranove1990","capps2003")]
+``` 
+
+
+
+
+### `r advdate(20)`: Evidence from "structure-conduct-performance" studies
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("kessler2000","cooper2017")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dranove1992hospital","lynk1995","keeler1999")]
+``` 
+
+
+
+
+
+### `r advdate(21)`: Competition in a bargaining model
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib["ho2017"]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("bresnahan1991","reiss2007","abraham2007","gowrisankaran2015","lewis2015")]
+``` 
+
+
+
+
+### `r advdate(22)`: Evidence from mergers and closures
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dafny2009","craig2008")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("vita2001","gaynor2003","lindrooth2003","gaynor2012rwjf")]
+``` 
+
+
+
+
+
+### `r advdate(23)`: Evidence from out-of-market mergers
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dafny2019","schmitt2018")]
+``` 
+
+
+
+
+
+### `r advdate(24)`: Mergers and acquisitions in dialysis
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib["eliason2020"]
+``` 
+
+
+
+
+
+### `r advdate(25)`: Vertical integration between hospitals and physicians
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("luco2019","koch2017","lin2020")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("burns2002","ciliberto2006","cuellar2006","baker2016","neprash2015","capps2018","konetzka2018")]
+``` 
+
+
+
+### `r advdate(26)`: Working with data
+
+
+## Module 5: Health insurance markets (likely won't get to this)
+
+### Insurance markets and competitiveness
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dafny2010","dafny2012","bundorf2012")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("town2003","einav2010","einav2010qje","starc2014")]
+``` 
+
+
+
+
+### Adverse selection
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("cutler1998","decarolis2017")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("ackerloff1970","frank2000","rothschild1976","einav2011")]
+``` 
+
+
+
+### Moral hazard
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib["einav2013"]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("manning1996","finkelstein2014","einav2017")]
+``` 
+
+
+
+
+### Managed competition
+
+**Primary reading:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("curto2015","einav2015")]
+``` 
+
+**Supplemental:**<br>
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("song2013","cabral2014","stockley2014","duggan2016","pelech2018")]
+``` 
+
+
+
+
+
+
+

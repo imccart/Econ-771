@@ -1,0 +1,1391 @@
+\documentclass[11pt,]{article}
+\usepackage[margin=1in]{geometry}
+\newcommand*{\authorfont}{\fontfamily{phv}\selectfont}
+\usepackage[]{mathpazo}
+\usepackage{abstract}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+\newcommand{\blankline}{\quad\pagebreak[2]}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}} 
+\usepackage{longtable,booktabs}
+
+\usepackage{parskip}
+\usepackage{titlesec}
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{6pt plus 2pt minus 2pt}
+
+\titleformat*{\subsubsection}{\normalsize\itshape}
+
+\usepackage{titling}
+\setlength{\droptitle}{-.25cm}
+
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{6pt plus 2pt minus 1pt}
+%\setlength{\emergencystretch}{3em}  % prevent overfull lines 
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{lastpage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.0pt} 
+\lhead{}
+\chead{}
+\rhead{\footnotesize Econ 771: Health Economics II -- 8/19/2020 -
+12/11/2020}
+\lfoot{}
+\cfoot{\small \thepage/\pageref*{LastPage}}
+\rfoot{}
+
+\fancypagestyle{firststyle}
+{
+\renewcommand{\headrulewidth}{0pt}%
+   \fancyhf{}
+   \fancyfoot[C]{\small \thepage/\pageref*{LastPage}}
+}
+
+%\def\labelitemi{--}
+%\usepackage{enumitem}
+%\setitemize[0]{leftmargin=25pt}
+%\setenumerate[0]{leftmargin=25pt}
+
+
+
+
+\makeatletter
+\@ifpackageloaded{hyperref}{}{%
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+}
+\@ifpackageloaded{color}{
+    \PassOptionsToPackage{usenames,dvipsnames}{color}
+}{%
+    \usepackage[usenames,dvipsnames]{color}
+}
+\makeatother
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={ ()},
+             pdfkeywords = {},  
+            pdftitle={Econ 771: Health Economics II},
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+
+
+\setcounter{secnumdepth}{0}
+
+
+
+
+
+\usepackage{setspace}
+
+\title{Econ 771: Health Economics II}
+\author{Ian McCarthy}
+\date{8/19/2020 - 12/11/2020}
+
+
+\begin{document}  
+
+		\maketitle
+		
+	
+		\thispagestyle{firststyle}
+
+%	\thispagestyle{empty}
+
+
+	\noindent \begin{tabular*}{\textwidth}{ @{\extracolsep{\fill}} lr @{\extracolsep{\fill}}}
+
+
+E-mail: \texttt{\href{mailto:ian.mccarthy@emory.edu}{\nolinkurl{ian.mccarthy@emory.edu}}} & Web: \href{http://ianmccathyecon.com}{\tt ianmccathyecon.com}\\
+Office Hours: W 09:30-11:30 a.m.  &  Class Hours: TTh 9:40-11:30 a.m.\\
+Office: 319 Rich Memorial Building  & Class Room: \emph{online}\\
+	&  \\
+	\hline
+	\end{tabular*}
+	
+\vspace{2mm}
+	
+
+
+\hypertarget{course-description}{%
+\section{Course Description}\label{course-description}}
+
+This course explores the industrial organization of healthcare markets
+in the U.S. We will focus on the following areas: hospital ownership and
+production, physician agency, quality disclosure, and hospital
+competition. If we have time, we will briefly cover some issues on
+health insurance markets. The class is effectively designed as a
+combination of empirical IO and causal inference, with applications to
+healthcare. As such, we will also examine several econometric tools and
+causal inference identification strategies. These methods will be
+introduced as needed throughout the course.
+
+Supply-side health economics is a rapidly growing field with many new
+developments, particularly in the areas of bargaining in two-sided
+markets and physician learning. Some of these recent developments use
+tools from network analysis and machine learning, which we unfortunately
+do not have time to cover in this course. I've also chosen specific
+topics that overlap most with my own research --- the upside here is
+that I can speak somewhat confidently about the literature and empirical
+studies in this area, but the downside is that some very interesting
+areas of health economics are not studied. For example, we will largely
+ignore issues of the prescription drug market, medical devices, and
+physician labor supply. My hope is that the content that we do cover
+will provide a springboard for those interested in these other important
+areas.
+
+\hypertarget{learning-outcomes}{%
+\section{Learning Outcomes}\label{learning-outcomes}}
+
+I have four central goals for this course:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Synthesize the current literature in each of the main areas of health
+  economics covered in this class
+\item
+  Apply standard causal inference techniques in the area of healthcare
+\item
+  Provide constructive criticism of academic work in this area
+\item
+  Develop your own preliminary research in some area of health economics
+\end{enumerate}
+
+There are more specific learning outcomes for each module described on
+the relevant module's page of our class website, accessible
+\href{https://imccart.github.io/Econ-771/}{here}.
+
+\hypertarget{text-software-and-class-materials}{%
+\section{Text, Software, and Class
+Materials}\label{text-software-and-class-materials}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Readings:} As an elective PhD course, we will rely on academic
+  papers from the reading list below. I expect everyone to read the
+  papers in advance and come to class with questions on the study's
+  contribution, empirical techniques, identification strategies, and
+  datasets used. Where possible, we will work to replicate results or
+  apply the paper's central methodology to some simulated data. My goal
+  with each paper is to discuss the analysis in detail. As such, the
+  primary reading list is perhaps shorter than a standard PhD course.
+  I've provided supplemental reading in each section for those
+  interested in additional readings in a specific area.
+\item
+  \textbf{Statistics Software:} For any data analysis or econometrics,
+  I'll use \texttt{R} for my work, but you are free to use whatever
+  software you're most comfortable with. I encourage you to use
+  \texttt{R}, \texttt{Stata}, or \texttt{Python} simply because these
+  are the most common programs used in practice right now.
+\item
+  \textbf{Accessing Data:} For any in-class activities, I will house all
+  of the code and links to the data on our class website. For any
+  real-life datasets, I will also point you to other GitHub repositories
+  where available. So you'll need to be sure to have a simple working
+  knowledge of Git and GitHub. If you're new to Git or GitHub, take a
+  look at \href{https://grantmcdermott.com/}{Grant McDermott's} notes on
+  \href{https://github.com/uo-ec607/lectures}{Data Science for
+  Economists} as well as \href{https://jennybryan.org/}{Jenny Bryan's}
+  online reference book, \href{https://happygitwithr.com/}{Happy Git and
+  GitHub with R}.
+\item
+  \textbf{Cloud Storage and Analysis:} You have access Amazon Web
+  Services (AWS) Cloud Computing services for all of the empirical work
+  in the class through the AWS Classroom. This \emph{should} act as a
+  virtual console that each of you can access independently but where
+  you are each working on an identical system. This avoids issues of
+  different versions of stats programs or, in the case of \texttt{R} and
+  \texttt{Python}, different packages or package versions. Using AWS
+  isn't required for the class, but it is available to you for those
+  interested.
+\item
+  \textbf{Logistics:} For day-to-day communication, grades, and other
+  private information (such as Zoom meeting links), I'll use
+  \emph{Canvas}. I'll post all other materials to our class website.
+\item
+  \textbf{Lectures and Notes:} Any presentations will be made available
+  on our class website prior to any given class. I may also annotate
+  those slides during each class, for which I'll use \emph{OneNote}.
+  Everyone has access to this as an Emory student, so I will set up a
+  classroom notebook which will serve as a single resource for all class
+  notes. You can also take your own notes as part of the app, which
+  should help with keeping things organized.
+\item
+  \textbf{Online Discussions:} We'll use
+  \href{https://grouptweet.com/}{GroupTweet} to facilitate online
+  discussions this semester. This will work with any smartphone. It's
+  basically our own private Twittersphere for our class. You will
+  receive an invitation to join the group, at which point we can post
+  and respond throughout the semester. Participation in these online
+  discussions is a small part of your grade, as discussed below.
+\item
+  \textbf{Turning things in:} We'll use GitHub Classroom to facilitate
+  all of the assignments. You'll soon receive an invite which will get
+  you access to the classroom. Within the classroom, you will have to
+  accept each assignment, which will then create a separate GitHub
+  repository for you for each assignment. You can then do all of your
+  work in whatever software program you'd like, and then commit and push
+  your changes to your repository. I will see this repository and can
+  comment on it, which is how I will provide feedback on each
+  assignment.
+\end{enumerate}
+
+\hypertarget{course-policies}{%
+\section{Course Policies}\label{course-policies}}
+
+Various policies for this course are described below. Basically, let's
+all work to be good citizens and take seriously our various roles as a
+student, teacher, friend, colleague, human, etc.
+
+\hypertarget{academic-integrity}{%
+\subsection{Academic integrity}\label{academic-integrity}}
+
+The Emory University Honor Code is taken seriously and governs all work
+in this course. Details about the Honor Code are available in the Laney
+Graduate School Handbook and available online
+\href{https://www.gs.emory.edu/academics/policies-progress/conduct.html}{here}.
+By taking this course, you affirm that it is a violation of the code to
+plagiarize, to deviate from the instructions about collaboration on work
+that is submitted for grades, to give false information to a faculty
+member, and to undertake any other form of academic misconduct. You also
+affirm that if you witness others violating the code you have a duty to
+report them to the honor council.
+
+\hypertarget{accessibility-services}{%
+\subsection{Accessibility services}\label{accessibility-services}}
+
+If you anticipate issues related to the format or requirements of this
+course, please meet with me. I would like us to discuss ways to ensure
+your full participation in the course. If you determine that
+accommodations are necessary, you may register with Accessibility
+Services at (404)727-9877 or via e-mail at
+\href{mailto:accessibility@emory.edu}{\nolinkurl{accessibility@emory.edu}}.
+To register with OAS, students must self identify and initiate contact
+with the OAS office.
+
+\hypertarget{communication}{%
+\subsection{Communication}\label{communication}}
+
+I will post regular announcements to the class on \emph{Canvas}, so
+please set up your notifications on \emph{Canvas} accordingly. I will
+also use \emph{Canvas} to post all grades and any other information that
+needs to stay in the class (like our \emph{Zoom} meeting link for
+virtual meetings). All other course materials will be available on our
+class website,
+\href{https://imccart.github.io/Econ-771/}{imccart.github.io/Econ-771/}.
+
+Please feel free to reach out to me for any reason. I generally respond
+to all e-mails within 24 hours.
+
+\hypertarget{virtual-meetings}{%
+\subsection{Virtual meetings}\label{virtual-meetings}}
+
+All meetings and office hours will take place virtually this semester on
+\emph{Zoom}. I'll use the same \emph{Zoom} meeting room for all
+meetings, the details of which are available on our \emph{Canvas} site.
+If you can't make it to my usual office hours, please feel free to
+schedule another time to meet (virtually). Just follow the link to
+select a time that works for you,
+\url{https://ian-meetings.youcanbook.me}.
+
+\hypertarget{attendance}{%
+\subsection{Attendance}\label{attendance}}
+
+While there is no official ``attendance'' credit, everyone is expect to
+attend all class sessions. Given our small class, it is very important
+that we are all present and engaged.
+
+\hypertarget{assignments-and-grading}{%
+\section{Assignments and Grading}\label{assignments-and-grading}}
+
+There are four main assignments throughout the semester, along with a
+participation component. I describe each assignment below, with much
+more detail provided on our
+\href{https://imccart.github.io/Econ-771/}{class website}.
+
+\hypertarget{participation}{%
+\subsection{Participation}\label{participation}}
+
+We will have semi-weekly online discussion forums in GroupTweet where we
+discuss a variety of issues, ranging from specific areas of confusion on
+some papers to best coding practices for empirical work. I anticipate
+close to one discussion forum per week. Your final participation grade
+will reflect your percentage (out of a maximum of 10) of discussion
+forums in which you participate.
+
+\hypertarget{empirical-exercises}{%
+\subsection{Empirical exercises}\label{empirical-exercises}}
+
+Each course module will have an applied component where we spend some
+time replicating analyses from selected papers based on real-world data.
+These will require some of your time outside of class to get the data in
+working order and implement the relevant identification strategy and
+econometric estimator. This empirical work should heavily complement
+your replication project as well as your draft paper. The due dates for
+all empirical exercises are indicated in the schedule below. In general,
+we have one empirical assignment due at the end of each module.
+
+\hypertarget{presentations}{%
+\subsection{Presentations}\label{presentations}}
+
+You will present two papers throughout the course of the semester. A
+list of potential papers will be provided on our class website within
+the first week of class. Please inform me of your selected papers no
+later than \textbf{August 21, 2020}.
+
+Each presentation should be no more than 30 minutes, including questions
+and class discussion. The presentation should follow a standard
+conference setup, with a brief introduction/motivation, a very brief
+discussion of the literature and some context of the paper, discussion
+of the data, empirical analysis, and results.
+
+Note that a presentation is not just a re-hashing of the paper in slide
+form. A good academic presentation should have as little information as
+possible on each slide, and the content on the slides doesn't
+necessarily need to follow that of the paper. For example, in a
+real-time environment, it is much easier to move between different
+aspects of the empirical analysis and data.
+
+In addition to the presentation, please send me your slides in advance.
+For people in the economics department, I expect the slides to be
+completed in Beamer (LaTeX), \texttt{R\ Markdown}, or Python. Others can
+use PowerPoint or some other presentation tool as they see fit. My only
+recommendation with those other programs is that, for some of them like
+Prezi or Powtoon, it is easy for the presentation to become distracting.
+Slides should complement your presentation and not replace your
+presence!
+
+Grades for each presentation will be based 50\% on the slides and 50\%
+on the actual presentation (delivery, clarity/organization, and
+content). Additional details and a grading rubric are available on the
+assignments page in our class website.
+
+\hypertarget{literature-review-2nd-year-students}{%
+\subsection{Literature review (2nd year
+students)}\label{literature-review-2nd-year-students}}
+
+The literature review can be on any health economics topic of your
+choice, subject to my approval. There is no specific page requirement.
+10 double-spaced pages might be a good target, but an
+efficiently-written paper could be shorter, while a student wishing to
+use the paper as a springboard to a dissertation may choose to write
+more. The paper will mostly consist of discussions of prior research,
+but should end with discussions of three open questions in the
+literature plus a proposed strategy for answering at least one of these
+questions. The paper is due by \textbf{Friday, November 13, 2020}.
+
+\hypertarget{draft-paper-3rd-year-students}{%
+\subsection{Draft paper (3rd year
+students)}\label{draft-paper-3rd-year-students}}
+
+The paper requirement is more extensive for 3rd year students. In this
+case, your papers should include not only an extensive literature review
+but also a preliminary empirical analysis, including a discussion of the
+data you're using, the construction of your sample, your identification
+strategy, econometric model and estimator, and some preliminary results.
+There is again no specific page requirement, but I expect at least 20
+double-spaced pages to appropriately discuss your topic, context, data,
+and early results. Your draft paper should end with an outline of
+additional analyses you hope to run (i.e., robustness/sensitivity
+analyses, a discussion of different mechanisms of interest,
+policy-relevant heterogeneities in your estimated effects, etc.). The
+paper is due by \textbf{Friday, November 13, 2020}.
+
+\hypertarget{replication}{%
+\subsection{Replication}\label{replication}}
+
+You must replicate the empirical analysis of a recent health economics
+paper. Your final product should consist of a discussion of the data
+sources, steps taken to clean the data and replicate the final analytic
+sample, a summary of your model and estimator, and your results. You
+must turn in your assignment on \emph{GitHub}, including your code files
+(Stata, R, Python, SAS, etc.), all figures/tables, and of course the
+final paper and presentation.
+
+Please organize your folders in a useful way. The way I organize things
+(though certainly not the only way to do it) is to keep a folder for
+each new project and named accordingly. I typically have the following
+subfolders:
+
+\begin{itemize}
+\item
+  Data: This is where I keep the raw data files and any additional data
+  files I create as part of my analysis. I also keep a ``Research Data''
+  folder on my computer that has raw data that I access regularly, in
+  which case the ``Data'' folder in any given project is just a cleaned
+  version of the larger files.
+\item
+  Analysis: This is where I keep my code files, log files, and results.
+  I typically have a subfolder for the log files since I create one
+  every time I run a code file as well as a subfolder for results.
+\item
+  Manuscript: This is where I keep all of my files for the actual paper.
+  I usually have a different subfolder for every month or two (whenever
+  I create a sufficiently different version of the paper).
+\item
+  Presentation: This is where I keep my slides and underlying code
+  files.
+\end{itemize}
+
+It's good to start developing some organization practices that work best
+for you. It's extremely easy to forget what you were doing on a project
+once you have several things going at once, especially when you wait for
+6-8 months after submitting a paper for publication. The last thing you
+want is to not be able to replicate your own work!
+
+I will provide a set of papers from which you can choose to replicate,
+but you are also free to select your own. You need to get approval from
+me on a paper to replicate by \textbf{Friday, September 4}. Final
+replications are due no later than \textbf{Friday, December 11, 2020}.
+
+\hypertarget{due-dates}{%
+\subsection{Due dates}\label{due-dates}}
+
+This section is just to highlight the most important dates on which an
+assignment is due. These dates are repeated within the description of
+each assignment above. Note that you can always turn assignments in
+prior to the official due date. Late assignments will receive an
+automatic 10\% reduction in the grade for each day the assignment is
+turned in after the due date.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{August 21}: Send me the references for the 2 papers that you
+  would like to present throughout the semester. Only one student can
+  present each paper, so this is first-come first-served.
+\item
+  \textbf{September 4}: Send me the name of the paper you'd like to
+  replicate for the main class project.
+\item
+  \textbf{Friday, November 13}: Due date for literature review or draft
+  paper.
+\item
+  \textbf{Friday, December 11}: Due date for the replication.
+\item
+  Empirical exercises due one week after the end of each module
+\end{itemize}
+
+\hypertarget{final-grades}{%
+\subsection{Final grades}\label{final-grades}}
+
+\begin{itemize}
+\item
+  \textbf{5\%} for participation in online discussions
+\item
+  \textbf{20\%} for empirical exercises (5\% each)
+\item
+  \textbf{20\%} for presentations of selected papers (10\% each)
+\item
+  \textbf{25\%} for literature review (2nd year students) or draft paper
+  (3rd year students)
+\item
+  \textbf{30\%} for a replication of a selected paper
+\end{itemize}
+
+Letter grades will be assigned at the end of the course based on total
+score achieved: (A = 100-93\%, A- = 92.99-90\%, B+ = 89.99-87\%, B =
+86.99-83\%, B- = 82.99-80\%, C+ = 79.99-77\%, C = 76.99-73\%, C- =
+72.99-70\%, D+ = 69.99-67\%, D = 66.99-60\%, F = 60\% or less)
+
+\newpage
+
+\hypertarget{class-schedule}{%
+\section{Class Schedule}\label{class-schedule}}
+
+Below is a preliminary outline of specific topics and readings
+throughout the semester. Based on our collective interests, discussions,
+and timing, individual papers and order may change somewhat, but any
+such changes will be announced in advance. For each class, one of us
+will present the ``primary reading,'' followed by a general discussion
+of the papers and topic among the class. Where relevant, we will work
+through some simulation exercises or derive some theoretical results.
+Papers listed as ``supplemental'' represent other relevant papers in
+that area that we won't have time to cover directly in class. Days with
+** indicate that no one will present a paper on that day. Those days are
+reserved for some basic theoretical derivations or presentation of new
+empirical methods.
+
+\hypertarget{module-0-kicking-things-off}{%
+\subsection{Module 0: Kicking things
+off!}\label{module-0-kicking-things-off}}
+
+\hypertarget{class-01-0819-introduction-to-the-economics-of-healthcare}{%
+\subsubsection{Class 01, 08/19: Introduction to the economics of
+healthcare}\label{class-01-0819-introduction-to-the-economics-of-healthcare}}
+
+\textbf{General references:}
+
+{[}1{]} K. J. Arrow. ``Uncertainty and the Welfare Economics of Medical
+Care''. In: \emph{The American Economics Review} 53.5 (1963).
+
+{[}2{]} D. Dranove and M. A. Satterthwaite. ``The industrial
+organization of health care markets''. In: \emph{Handbook of health
+economics} 1 (2000), pp. 1093-1139.
+
+{[}3{]} W. N. Evans, H. Levy, and K. I. Simon. ``Data watch: Research
+data in health economics''. In: \emph{Journal of Economic Perspectives}
+14.4 (2000), pp.~203-216.
+
+\hypertarget{module-1-the-hospital-objective-functions-and-financial-incentives}{%
+\subsection{Module 1: The hospital objective function(s) and financial
+incentives}\label{module-1-the-hospital-objective-functions-and-financial-incentives}}
+
+\hypertarget{class-02-0824-theoretical-models-of-not-for-profits}{%
+\subsubsection{Class 02, 08/24: Theoretical models of
+not-for-profits**}\label{class-02-0824-theoretical-models-of-not-for-profits}}
+
+\textbf{Primary reading:}
+
+{[}1{]} D. Dranove. ``Pricing by non-profit institutions: the case of
+hospital cost-shifting''. In: \emph{Journal of Health Economics} 7.1
+(1988), pp.~47-57.
+
+{[}2{]} J. P. Newhouse. ``Toward a theory of nonprofit institutions: An
+economic model of a hospital''. In: \emph{American Economic Review}
+(1970), pp.~64-74.
+
+{[}3{]} M. V. Pauly. ``Medical staff characteristics and hospital
+costs''. In: \emph{Journal of Human Resources} (1978), pp.~77-111.
+
+\textbf{Supplemental:}
+
+{[}1{]} F. A. Sloan. ``Not-for-profit ownership and hospital behavior''.
+In: \emph{Handbook of health economics} 1 (2000), pp.~1141-1174.
+
+\hypertarget{class-03-0826-empirical-evidence-on-ownership-type}{%
+\subsubsection{Class 03, 08/26: Empirical evidence on ownership
+type}\label{class-03-0826-empirical-evidence-on-ownership-type}}
+
+\textbf{Primary reading:}
+
+{[}1{]} E. E. Bayindir. ``Hospital ownership type and treatment
+choices''. In: \emph{Journal of health economics} 31.2 (2012),
+pp.~359-370.
+
+{[}2{]} M. Duggan. ``Hospital Ownership and Public Medical Spending''.
+In: \emph{Quarterly Journal of Economics} 115.4 (2000), pp.~1343-1373.
+
+{[}3{]} J. R. Horwitz and A. Nichols. ``Hospital ownership and medical
+services: market mix, spillover effects, and nonprofit objectives''. In:
+\emph{Journal of health economics} 28.5 (2009), pp.~924-937.
+
+\textbf{Supplemental:}
+
+{[}1{]} T. Chang and M. Jacobson. \emph{What do Nonprofit Hospitals
+Maximize. Evidence from California's Seismic Retrofit Mandate}. Working
+Paper. Case Western Reserve University, 2017.
+
+{[}2{]} G. David. ``The convergence between for-profit and nonprofit
+hospitals in the United States''. In: \emph{International journal of
+health care finance and economics} 9.4 (2009), pp.~403-428.
+
+{[}3{]} D. Deneffe and R. T. Masson. ``What do not-for-profit hospitals
+maximize?'' In: \emph{International Journal of Industrial Organization}
+20.4 (2002), pp.~461-492.
+
+{[}4{]} M. Duggan. ``Hospital market structure and the behavior of
+not-for-profit hospitals''. In: \emph{RAND Journal of Economics} (2002),
+pp. 433-446.
+
+{[}5{]} R. G. Frank and D. S. Salkever. ``The supply of charity services
+by nonprofit hospitals: motives and market structure''. In: \emph{RAND
+journal of economics} (1991), pp.~430-445.
+
+{[}6{]} M. Gaynor and W. B. Vogt. ``Competition among Hospitals''. In:
+\emph{RAND Journal of Economics} (2003), pp.~764-785.
+
+{[}7{]} J. Gruber. ``The effect of competitive pressure on charity:
+Hospital responses to price shopping in California''. In: \emph{Journal
+of Health Economics} 13.2 (1994), pp.~183-211.
+
+{[}8{]} D. P. Kessler, M. B. McClellan, and others. ``The Effects of
+Hospital Ownership on Medical Productivity''. In: \emph{RAND Journal of
+Economics} 33.3 (2002), pp.~488-506.
+
+{[}9{]} F. A. Sloan, G. A. Picone, D. H. Taylor, et al.~``Hospital
+ownership and cost and quality of care: is there a dime's worth of
+difference?'' In: \emph{Journal of health economics} 20.1 (2001),
+pp.~1-21.
+
+\hypertarget{class-04-0831-response-to-medicare-payment-changes}{%
+\subsubsection{Class 04, 08/31: Response to Medicare payment
+changes}\label{class-04-0831-response-to-medicare-payment-changes}}
+
+\textbf{Primary reading:}
+
+{[}1{]} L. S. Dafny. ``How Do Hospitals Respond to Price Changes?'' In:
+\emph{American Economic Review} 95.5 (2005), pp.~1525-1547.
+
+{[}2{]} D. Dranove and C. Ody. ``Employed for higher pay? How Medicare
+facility fees affect hospital employment of physicians''. In:
+\emph{American Economics Journal: Economic Policy} 11.4 (2019),
+pp.~249-271.
+
+\textbf{Supplemental:}
+
+{[}1{]} A. Cook and S. Averett. ``Do Hospitals Respond to Changing
+Incentive Structures? Evidence from Medicare's 2007 DRG Restructuring''.
+In: \emph{Journal of Health Economics} (2020), p.~102319.
+
+{[}2{]} S. Desai and J. M. McWilliams. ``Consequences of the 340B drug
+pricing program''. In: \emph{New England Journal of Medicine} 378.6
+(2018), pp.~539-548.
+
+{[}3{]} E. Silverman and J. Skinner. ``Medicare upcoding and hospital
+ownership''. In: \emph{Journal of health economics} 23.2 (2004),
+pp.~369-389.
+
+\hypertarget{class-05-0902-hospital-cost-shifting}{%
+\subsubsection{Class 05, 09/02: Hospital
+cost-shifting}\label{class-05-0902-hospital-cost-shifting}}
+
+\textbf{Primary reading:}
+
+{[}1{]} D. Dranove. ``Pricing by non-profit institutions: the case of
+hospital cost-shifting''. In: \emph{Journal of Health Economics} 7.1
+(1988), pp.~47-57.
+
+{[}2{]} D. Dranove, C. Garthwaite, and C. Ody. ``How do nonprofits
+respond to negative wealth shocks? The impact of the 2008 stock market
+collapse on hospitals''. In: \emph{The Rand Journal of Economics} 48.2
+(2017), pp. 485-525.
+
+\textbf{Supplemental:}
+
+{[}1{]} M. Darden, I. McCarthy, and E. Barrette. \emph{Who Pays in
+Pay-for-Performance? Evidence from Hospital Pricing}. Working Paper
+w24304. National Bureau of Economic Research, 2018.
+
+{[}2{]} G. David, R. C. Lindrooth, L. A. Helmchen, et al.~``Do hospitals
+cross-subsidize?'' In: \emph{Journal of health economics} 37 (2014), pp.
+198-218.
+
+{[}3{]} A. B. Frakt. ``How much do hospitals cost shift? A review of the
+evidence''. In: \emph{Milbank Quarterly} 89.1 (2011), pp.~90-130.
+
+{[}4{]} J. W. Hay. ``The impact of public health care financing policies
+on private-sector hospital costs''. In: \emph{Journal of Health
+Politics, Policy and Law} 7.4 (1983), pp.~945-952.
+
+{[}5{]} V. Y. Wu. ``Hospital cost shifting revisited: new evidence from
+the balanced budget act of 1997''. In: \emph{International journal of
+health care finance and economics} 10.1 (2010), pp.~61-83.
+
+{[}6{]} J. Zwanziger, G. A. Melnick, A. Bamezai, et al.~``Can cost
+shifting continue in a price competitive environment?'' In: \emph{Health
+Economics} 9.3 (2000), pp.~211-226.
+
+\hypertarget{class-06-0907-response-to-insurance-policies}{%
+\subsubsection{Class 06, 09/07: Response to insurance
+policies}\label{class-06-0907-response-to-insurance-policies}}
+
+\textbf{Primary reading:}
+
+{[}1{]} M. Batty and B. Ippolito. ``Financial incentives, hospital care,
+and health outcomes: Evidence from fair pricing laws''. In:
+\emph{American Economic Journal: Economic Policy} 9.2 (2017), pp.~28-56.
+
+{[}2{]} P. J. Eliason, P. L. Grieco, R. C. McDevitt, et al.~``Strategic
+patient discharge: The case of long-term care hospitals''. In:
+\emph{American Economic Review} 108.11 (2018), pp.~3232-65.
+
+{[}3{]} M. Geruso and T. Layton. ``Upcoding: Evidence from Medicare on
+squishy risk adjustment''. In: \emph{Journal of Political Economy} 128.3
+(2020), pp.~984-1026.
+
+\textbf{Supplemental:}
+
+{[}1{]} G. Gowrisankaran, K. A. Joiner, and J. Lin. \emph{How do
+Hospitals Respond to Payment Incentives?} Tech. rep. National Bureau of
+Economic Research, 2019.
+
+{[}2{]} A. Lee. ``How do hospitals respond to managed care? Evidence
+from at-risk newborns''. In: \emph{Journal of Public Economics} 184
+(2020), p. 104130.
+
+\hypertarget{class-07-0909-working-with-data}{%
+\subsubsection{Class 07, 09/09: Working with
+data}\label{class-07-0909-working-with-data}}
+
+\textbf{Causal inference with panel data}
+
+\begin{itemize}
+\tightlist
+\item
+  Difference-in-differences and parallel trends
+\item
+  Event studies and time-varying treatment effects
+\item
+  Inference with few treated groups
+\end{itemize}
+
+\textbf{Applications and data}
+
+\begin{itemize}
+\tightlist
+\item
+  Provider of Services files and Inpatient Prospective Payment System
+  Final Rule files
+\item
+  Replicate parts of Dafny (2005)
+\end{itemize}
+
+\hypertarget{module-2-physician-agency-and-treatment-decisions}{%
+\subsection{Module 2: Physician agency and treatment
+decisions}\label{module-2-physician-agency-and-treatment-decisions}}
+
+\hypertarget{class-08-0914-the-agency-problem-in-healthcare}{%
+\subsubsection{Class 08, 09/14: The agency problem in
+healthcare**}\label{class-08-0914-the-agency-problem-in-healthcare}}
+
+\textbf{Primary reading:}
+
+{[}1{]} T. G. McGuire. ``Physician agency''. In: \emph{Handbook of
+health economics} 1 (2000), pp.~461-536.
+
+\textbf{Supplemental:}
+
+{[}1{]} A. Chandra, A. Jena, and J. Skinner. ``The Pragmatist's Guide to
+Comparative Effectiveness Research''. In: \emph{The Journal of Economic
+Perspectives} 25.2 (2011), pp.~27-46.
+
+{[}2{]} S. J. Grossman and O. D. Hart. ``An analysis of the
+principal-agent problem''. In: \emph{Econometrica: Journal of the
+Econometric Society} (1983), pp.~7-45.
+
+\hypertarget{class-09-0916-supply-side-variation-in-healthcare}{%
+\subsubsection{Class 09, 09/16: Supply-side variation in
+healthcare}\label{class-09-0916-supply-side-variation-in-healthcare}}
+
+\textbf{Primary reading:}
+
+{[}1{]} A. Finkelstein, M. Gentzkow, and H. Williams. ``Sources of
+geographic variation in health care: Evidence from patient migration''.
+In: \emph{The quarterly journal of economics} 131.4 (2016),
+pp.~1681-1726.
+
+{[}2{]} D. Molitor. ``The evolution of physician practice styles:
+evidence from cardiologist migration''. In: \emph{American Economic
+Journal: Economic Policy} 10.1 (2018), pp.~326-56.
+
+\hypertarget{class-10-0921-physician-response-to-payment-changes}{%
+\subsubsection{Class 10, 09/21: Physician response to payment
+changes}\label{class-10-0921-physician-response-to-payment-changes}}
+
+\textbf{Primary reading:}
+
+{[}1{]} J. Clemens and J. D. Gottlieb. ``Do Physicians' Financial
+Incentives Affect Medical Treatment and Patient Health?'' In:
+\emph{American Economic Review} 104.4 (2014), pp.~1320-1349.
+
+{[}2{]} J. Gruber and M. Owings. ``Physician financial incentives and
+cesarean section delivery''. In: \emph{The RAND Journal of Economics}
+27.1 (1996), pp.~99-123.
+
+\textbf{Supplemental:}
+
+{[}1{]} L. C. Baker, M. K. Bundorf, and D. P. Kessler. ``The Effect of
+Hospital/Physician Integration on Hospital Choice''. In: \emph{Journal
+of Health Economics} 50 (2016), pp.~1-8.
+
+{[}2{]} W. Beckert. ``Choice in the presence of experts: The role of
+general practitioners in patients' hospital choice''. In: \emph{Journal
+of Health Economics} 60 (2018), pp.~98 - 117. ISSN: 0167-6296. DOI:
+\url{https://doi.org/10.1016/j.jhealeco.2018.06.003}. \textless URL:
+\url{http://www.sciencedirect.com/science/article/pii/S0167629617302722}\textgreater.
+
+{[}3{]} M. Gaynor, C. Propper, and S. Seiler. ``Free to Choose? Reform,
+Choice, and Consideration Sets in the English National Health Service''.
+In: \emph{American Economic Review} 106.11 (Nov.~2016), pp.~3521-57.
+DOI: 10.1257/aer.20121532. \textless URL:
+\url{http://www.aeaweb.org/articles?id=10.1257/aer.20121532}\textgreater.
+
+\hypertarget{class-11-0923-physician-spillovers}{%
+\subsubsection{Class 11, 09/23: Physician
+spillovers}\label{class-11-0923-physician-spillovers}}
+
+\textbf{Primary reading:}
+
+{[}1{]} K. Baicker, M. E. Chernew, and J. A. Robbins. ``The spillover
+effects of Medicare managed care: Medicare Advantage and hospital
+utilization''. In: \emph{Journal of health economics} 32.6 (2013), pp.
+1289-1300.
+
+{[}2{]} J. Clemens and J. D. Gottlieb. ``In the shadow of a giant:
+Medicare's influence on private physician payments''. In: \emph{Journal
+of Political Economy} 125.1 (2017), pp.~1-39.
+
+\textbf{Supplemental:}
+
+{[}1{]} L. C. Baker. ``Managed care spillover effects''. In:
+\emph{Annual review of public health} 24.1 (2003), pp.~435-456.
+
+{[}2{]} A. Chandra and D. O. Staiger. ``Productivity spillovers in
+health care: evidence from the treatment of heart attacks''. In:
+\emph{Journal of Political Economy} 115.1 (2007), pp.~103-140.
+
+{[}3{]} M. Chernew, K. Baicker, and C. Martin. \emph{Spillovers in
+Health Care Markets: Implications for Current Law Projections.} Report.
+Centers for Medicare and Medicaid Services, 2010.
+
+{[}4{]} R. G. Frank and R. J. Zeckhauser. ``Custom-made versus
+ready-to-wear treatments: Behavioral propensities in physicians'
+choices''. In: \emph{Journal of health economics} 26.6 (2007),
+pp.~1101-1127.
+
+{[}5{]} S. Glied and J. G. Zivin. ``How do doctors behave when some (but
+not all) of their patients are in managed care?'' In: \emph{Journal of
+Health Economics} 21.2 (2002), pp.~337-353.
+
+{[}6{]} B. E. Landon. ``Tipping the scale: The norms hypothesis and
+primary care physician behavior''. In: \emph{New England Journal of
+Medicine} 376.9 (2017), pp.~810-811.
+
+{[}7{]} T. G. McGuire and M. V. Pauly. ``Physician response to fee
+changes with multiple payers''. In: \emph{Journal of health economics}
+10.4 (1991), pp.~385-410.
+
+{[}8{]} J. P. Newhouse and M. S. Marquis. ``The norms hypothesis and the
+demand for medical care''. In: \emph{Journal of Human Resources} (1978),
+pp. 159-182.
+
+\hypertarget{class-12-0928-working-with-data}{%
+\subsubsection{Class 12, 09/28: Working with
+data}\label{class-12-0928-working-with-data}}
+
+\textbf{Instrumental variables}
+
+\begin{itemize}
+\tightlist
+\item
+  What is a good instrument?
+\item
+  What are we estimating with IV?
+\item
+  Specification tests and current robustness checks
+\end{itemize}
+
+\textbf{Applications and data}
+
+\begin{itemize}
+\tightlist
+\item
+  Medicare Advantage data and Area Health Resources File
+\item
+  Replicate elements of Baicker, Chernew, and Robbins (2013)
+\end{itemize}
+
+\hypertarget{module-3-information-disclosure-and-patient-decision-making}{%
+\subsection{Module 3: Information disclosure and patient decision
+making}\label{module-3-information-disclosure-and-patient-decision-making}}
+
+\hypertarget{class-13-0930-poor-decisions-in-healthcare-and-health-insurance}{%
+\subsubsection{Class 13, 09/30: Poor decisions in healthcare and health
+insurance}\label{class-13-0930-poor-decisions-in-healthcare-and-health-insurance}}
+
+\textbf{Primary reading:}
+
+{[}1{]} M. Chernew, Z. Cooper, E. Larsen-Hallock, et al.~\emph{Are
+Health Care Services Shoppable? Evidence from the Consumption of
+Lower-Limb MRI Scans}. Working Paper 24869. National Bureau of Economic
+Research, Jul. 2018. \textless URL:
+\url{http://www.nber.org/papers/w24869}\textgreater.
+
+{[}2{]} J. D. Ketcham, C. Lucarelli, E. J. Miravete, et al.~``Sinking,
+swimming, or learning to swim in Medicare Part D''. In: \emph{American
+Economic Review} 102.6 (2012), pp.~2639-2673.
+
+\textbf{Supplemental:}
+
+{[}1{]} J. Abaluck and J. Gruber. ``Heterogeneity in choice
+inconsistencies among the elderly: evidence from prescription drug plan
+choice''. In: \emph{American Economic Review} 101.3 (2011), pp.~377-381.
+
+{[}2{]} J. Farrell and P. Klemperer. ``Coordination and lock-in:
+Competition with switching costs and network effects''. In:
+\emph{Handbook of industrial organization} 3 (2007), pp.~1967-2072.
+
+\hypertarget{class-14-1005-inertia-in-health-insurance-choice}{%
+\subsubsection{Class 14, 10/05: Inertia in health insurance
+choice}\label{class-14-1005-inertia-in-health-insurance-choice}}
+
+\textbf{Primary reading:}
+
+{[}1{]} K. M. Ericson. ``Consumer inertia and firm pricing in the
+Medicare Part D prescription drug insurance exchange''. In:
+\emph{American Economic Journal: Economic Policy} 6.1 (2014), pp.~38-64.
+
+{[}2{]} B. R. Handel. ``Adverse selection and inertia in health
+insurance markets: When nudging hurts''. In: \emph{American Economic
+Review} 103.7 (2013), pp.~2643-2682.
+
+\hypertarget{class-15-1007-effects-of-quality-disclosure}{%
+\subsubsection{Class 15, 10/07: Effects of quality
+disclosure}\label{class-15-1007-effects-of-quality-disclosure}}
+
+\textbf{Primary reading:}
+
+{[}1{]} L. Dafny and D. Dranove. ``Do report cards tell consumers
+anything they don't already know? The case of Medicare HMOs''. In:
+\emph{The Rand journal of economics} 39.3 (2008), pp.~790-821.
+
+{[}2{]} D. Dranove, D. Kessler, M. McClellan, et al.~``Is More
+Information Better? The Effects of Report Cards on Health Care
+Providers''. In: \emph{The Journal of Political Economy} 111.3 (2003),
+pp.~555-588.
+
+\textbf{Supplemental:}
+
+{[}1{]} M. Chernew, D. Scanlon, and others. ``Health plan report cards
+and insurance choice.'' In: \emph{Inquiry: a journal of medical care
+organization, provision and financing} 35.1 (1998), p.~9.
+
+{[}2{]} M. Darden and I. McCarthy. ``The Star Treatment: Estimating the
+Impact of Star Ratings on Medicare Advantage Enrollments''. In:
+\emph{Journal of Human Resources} 50.4 (2015), pp.~980-1008.
+
+{[}3{]} D. Dranove and G. Z. Jin. ``Quality Disclosure and
+Certification: Theory and Practice''. In: \emph{Journal of Economic
+Literature} 48.4 (2010), pp.~935-963.
+
+{[}4{]} G. Jin and A. Sorensen. ``Information and consumer choice: the
+value of publicized health plan ratings''. In: \emph{Journal of Health
+Economics} 25.2 (2006), pp.~248-275.
+
+{[}5{]} I. McCarthy and M. Darden. ``Supply-side Responses to Public
+Quality Ratings: Evidence from Medicare Advantage''. In: \emph{American
+Journal of Health Economics} 3.2 (2017), pp.~140-164.
+
+{[}6{]} R. O. Reid, P. Deb, B. L. Howell, et al.~``Association Between
+Medicare Advantage Plan Star Ratings and EnrollmentStar Ratings for
+Medicare Advantage Plan''. In: \emph{JAMA} 309.3 (2013), pp.~267-274.
+
+{[}7{]} D. Scanlon, M. Chernew, C. McLaughlin, et al.~``The impact of
+health plan report cards on managed care enrollment''. In: \emph{Journal
+of Health Economics} 21.1 (2002), pp.~19-41.
+
+{[}8{]} G. Wedig and M. Tai-Seale. ``The effect of report cards on
+consumer choice in the health insurance market''. In: \emph{Journal of
+Health Economics} 21.6 (2002), pp.~1031-1048.
+
+\hypertarget{class-16-1012-effects-of-price-disclosure}{%
+\subsubsection{Class 16, 10/12: Effects of price
+disclosure}\label{class-16-1012-effects-of-price-disclosure}}
+
+\textbf{Primary reading:}
+
+{[}1{]} M. Grennan and A. Swanson. ``Transparency and negotiated prices:
+The value of information in hospital-supplier bargaining''. In:
+\emph{Journal of Political Economy} 128.4 (2020), pp.~1234-1268.
+
+\hypertarget{class-17-1014-working-with-data}{%
+\subsubsection{Class 17, 10/14: Working with
+data}\label{class-17-1014-working-with-data}}
+
+\textbf{Regression discontinuity}
+
+\begin{itemize}
+\tightlist
+\item
+  Basics of strict and fuzzy RD
+\item
+  Specification tests
+\item
+  Bin and bandwidth selection
+\end{itemize}
+
+\textbf{Applications and data}
+
+\begin{itemize}
+\tightlist
+\item
+  Medicare Part D Data
+\item
+  Replicate Ericson (2014)
+\end{itemize}
+
+\hypertarget{module-4-healthcare-competition-and-industrial-organization}{%
+\subsection{Module 4: Healthcare competition and industrial
+organization}\label{module-4-healthcare-competition-and-industrial-organization}}
+
+\hypertarget{class-18-1019-competition-in-price-and-quality}{%
+\subsubsection{Class 18, 10/19: Competition in price and
+quality**}\label{class-18-1019-competition-in-price-and-quality}}
+
+\textbf{Primary reading:}
+
+{[}1{]} D. Dranove and M. A. Satterthwaite. ``Monopolistic competition
+when price and quality are imperfectly observable''. In: \emph{The RAND
+Journal of Economics} (1992), pp.~518-534.
+
+{[}2{]} Y. Fan. ``Ownership consolidation and product characteristics: A
+study of the US daily newspaper market''. In: \emph{American Economic
+Review} 103.5 (2013), pp.~1598-1628.
+
+{[}3{]} M. Lewis and K. Pflum. ``Competition and Quality Choice in
+Hospital Markets''. In: \emph{Working Paper} (2016).
+
+\textbf{Supplemental:}
+
+{[}1{]} J. D. Dana Jr and Y. Fong. ``Product quality, reputation, and
+market structure''. In: \emph{International Economic Review} 52.4
+(2011), pp. 1059-1076.
+
+{[}2{]} J. Hausman, G. Leonard, and J. D. Zona. ``Competitive analysis
+with differenciated products''. In: \emph{Annales d'Economie et de
+Statistique} (1994), pp.~159-180.
+
+{[}3{]} M. Mussa and S. Rosen. ``Monopoly and product quality''. In:
+\emph{Journal of Economic theory} 18.2 (1978), pp.~301-317.
+
+{[}4{]} A. Spence. ``Monopoly, Quality, and Regulation''. In: \emph{Bell
+Journal of Economics} 6.2 (1975), pp.~417-429.
+
+\hypertarget{class-19-1021-measuring-hospital-market-power}{%
+\subsubsection{Class 19, 10/21: Measuring hospital market
+power}\label{class-19-1021-measuring-hospital-market-power}}
+
+\textbf{Primary reading:}
+
+{[}1{]} D. Dranove and C. Ody. ``Evolving Measures of Provider Market
+Power''. In: \emph{American Journal of Health Economics} 2.2 (2016), pp.
+145-160.
+
+\textbf{Supplemental:}
+
+{[}1{]} C. Capps, D. Dranove, and M. Satterthwaite. ``Competition and
+market power in option demand markets''. In: \emph{RAND Journal of
+Economics} (2003), pp.~737-763.
+
+{[}2{]} D. Dranove and M. Shanley. ``A note on the relational aspects of
+hospital market definitions''. In: \emph{Journal of health economics}
+8.4 (1990), pp.~473-478.
+
+\hypertarget{class-20-1026-evidence-from-structure-conduct-performance-studies}{%
+\subsubsection{Class 20, 10/26: Evidence from
+``structure-conduct-performance''
+studies}\label{class-20-1026-evidence-from-structure-conduct-performance-studies}}
+
+\textbf{Primary reading:}
+
+{[}1{]} Z. Cooper, S. V. Craig, M. Gaynor, et al.~\emph{The price ain't
+right? Hospital prices and health spending on the privately insured}.
+Working Paper. National Bureau of Economic Research, 2017.
+
+{[}2{]} D. Kessler and M. McClellan. ``Is hospital competition socially
+wasteful?'' In: \emph{Quarterly Journal of Economics} 2.115 (2000), pp.
+577-615.
+
+\textbf{Supplemental:}
+
+{[}1{]} D. Dranove, M. Shanley, and C. Simon. ``Is hospital competition
+wasteful?'' In: \emph{The RAND journal of economics} (1992),
+pp.~247-262.
+
+{[}2{]} E. B. Keeler, G. Melnick, and J. Zwanziger. ``The changing
+effects of competition on non-profit and for-profit hospital pricing
+behavior''. In: \emph{Journal of health economics} 18.1 (1999),
+pp.~69-86.
+
+{[}3{]} W. J. Lynk. ``Nonprofit hospital mergers and the exercise of
+market power''. In: \emph{The Journal of Law and Economics} 38.2 (1995),
+pp. 437-461.
+
+\hypertarget{class-21-1028-competition-in-a-bargaining-model}{%
+\subsubsection{Class 21, 10/28: Competition in a bargaining
+model}\label{class-21-1028-competition-in-a-bargaining-model}}
+
+\textbf{Primary reading:}
+
+{[}1{]} K. Ho and R. S. Lee. ``Insurer competition in health care
+markets''. In: \emph{Econometrica} 85.2 (2017), pp.~379-417.
+
+\textbf{Supplemental:}
+
+{[}1{]} J. Abraham, M. Gaynor, and W. B. Vogt. ``Entry and Competition
+in Local Hospital Markets''. In: \emph{The Journal of Industrial
+Economics} 55.2 (2007), pp.~265-288.
+
+{[}2{]} T. F. Bresnahan and P. C. Reiss. ``Entry and competition in
+concentrated markets''. In: \emph{Journal of Political Economy} (1991),
+pp. 977-1009.
+
+{[}3{]} G. Gowrisankaran, A. Nevo, and R. Town. ``Mergers When Prices
+Are Negotiated: Evidence from the Hospital Industry''. In:
+\emph{American Economic Review} 105.1 (2015), pp.~172-203.
+
+{[}4{]} M. Lewis and K. Pflum. ``Diagnosing Hospital System Bargaining
+Power in Managed Care Networks''. In: \emph{American Economic Journal:
+Economic Policy} 7.1 (2015), pp.~243-274.
+
+{[}5{]} P. Reiss, F. Wolak, and E. Learner. ``Handbook of
+econometrics''. In: \emph{Structural econometric modeling: Rationales
+and examples from industrial organization} 6A (2007).
+
+\hypertarget{class-22-1102-evidence-from-mergers-and-closures}{%
+\subsubsection{Class 22, 11/02: Evidence from mergers and
+closures}\label{class-22-1102-evidence-from-mergers-and-closures}}
+
+\textbf{Primary reading:}
+
+{[}1{]} L. Dafny. ``Estimation and Identification of Merger Effects: An
+Application to Hospital Mergers''. In: \emph{Journal of Law and
+Economics} 52.3 (2009), pp.~523-550.
+
+\textbf{Supplemental:}
+
+{[}1{]} M. Gaynor and R. Town. \emph{The impact of hospital
+consolidation - Update}. Policy Brief. Robert Wood Johnson Foundation,
+2012.
+
+{[}2{]} M. Gaynor and W. B. Vogt. ``Competition among Hospitals''. In:
+\emph{RAND Journal of Economics} (2003), pp.~764-785.
+
+{[}3{]} R. C. Lindrooth, A. T. L. Sasso, and G. J. Bazzoli. ``The effect
+of urban hospital closure on markets''. In: \emph{Journal of Health
+Economics} 22.5 (2003), pp.~691-712.
+
+{[}4{]} M. G. Vita and S. Sacher. ``The competitive effects of
+not-for-profit hospital mergers: a case study''. In: \emph{The Journal
+of Industrial Economics} 49.1 (2001), pp.~63-84.
+
+\hypertarget{class-23-1104-evidence-from-out-of-market-mergers}{%
+\subsubsection{Class 23, 11/04: Evidence from out-of-market
+mergers}\label{class-23-1104-evidence-from-out-of-market-mergers}}
+
+\textbf{Primary reading:}
+
+{[}1{]} L. Dafny, K. Ho, and R. S. Lee. ``The price effects of
+cross-market mergers: theory and evidence from the hospital industry''.
+In: \emph{The RAND Journal of Economics} 50.2 (2019), pp.~286-325.
+
+{[}2{]} M. Schmitt. ``Multimarket Contact in the Hospital Industry''.
+In: \emph{American Economic Journal: Economic Policy} 10.3 (2018),
+pp.~361-87.
+
+\hypertarget{class-24-1109-mergers-and-acquisitions-in-dialysis}{%
+\subsubsection{Class 24, 11/09: Mergers and acquisitions in
+dialysis}\label{class-24-1109-mergers-and-acquisitions-in-dialysis}}
+
+\textbf{Primary reading:}
+
+{[}1{]} P. J. Eliason, B. Heebsh, R. C. McDevitt, et al.~``How
+Acquisitions Affect Firm Behavior and Performance: Evidence from the
+Dialysis Industry''. In: \emph{The Quarterly Journal of Economics} 135.1
+(2020), pp. 221-267.
+
+\hypertarget{class-25-1111-vertical-integration-between-hospitals-and-physicians}{%
+\subsubsection{Class 25, 11/11: Vertical integration between hospitals
+and
+physicians}\label{class-25-1111-vertical-integration-between-hospitals-and-physicians}}
+
+\textbf{Primary reading:}
+
+{[}1{]} T. G. Koch, B. W. Wendling, and N. E. Wilson. ``How vertical
+integration affects the quantity and cost of care for Medicare
+beneficiaries''. In: \emph{Journal of Health Economics} 52 (2017),
+pp.~19-32.
+
+{[}2{]} H. Lin, I. McCarthy, and M. Richards. \emph{How does
+hospital-physician integration affect hospital prices and quality of
+care?} Working Paper. Indiana University, Kelley School of Business,
+2020.
+
+\textbf{Supplemental:}
+
+{[}1{]} L. C. Baker, M. K. Bundorf, and D. P. Kessler. ``The Effect of
+Hospital/Physician Integration on Hospital Choice''. In: \emph{Journal
+of Health Economics} 50 (2016), pp.~1-8.
+
+{[}2{]} L. R. Burns and M. V. Pauly. ``Integrated delivery networks: a
+detour on the road to integrated health care?'' In: \emph{Health
+affairs} 21.4 (2002), pp.~128-143.
+
+{[}3{]} C. Capps, D. Dranove, and C. Ody. ``The effect of hospital
+acquisitions of physician practices on prices and spending''. In:
+\emph{Journal of health economics} 59 (2018), pp.~139-152.
+
+{[}4{]} F. Ciliberto and D. Dranove. ``The effect of physician-hospital
+affiliations on hospital prices in California''. In: \emph{Journal of
+Health Economics} 25.1 (2006), pp.~29-38.
+
+{[}5{]} A. E. Cuellar and P. J. Gertler. ``Strategic integration of
+hospitals and physicians''. In: \emph{Journal of Health Economics} 25.1
+(2006), pp.~1-28.
+
+{[}6{]} R. T. Konetzka, E. A. Stuart, and R. M. Werner. ``The effect of
+integration of hospitals and post-acute care providers on Medicare
+payment and patient outcomes''. In: \emph{Journal of health economics}
+(2018).
+
+{[}7{]} H. T. Neprash, M. E. Chernew, A. L. Hicks, et al.~``Association
+of financial integration between physicians and hospitals with
+commercial health care prices''. In: \emph{JAMA internal medicine}
+175.12 (2015), pp. 1932-1939.
+
+\hypertarget{class-26-1116-working-with-data}{%
+\subsubsection{Class 26, 11/16: Working with
+data}\label{class-26-1116-working-with-data}}
+
+\hypertarget{module-5-health-insurance-markets-likely-wont-get-to-this}{%
+\subsection{Module 5: Health insurance markets (likely won't get to
+this)}\label{module-5-health-insurance-markets-likely-wont-get-to-this}}
+
+\hypertarget{insurance-markets-and-competitiveness}{%
+\subsubsection{Insurance markets and
+competitiveness}\label{insurance-markets-and-competitiveness}}
+
+\textbf{Primary reading:}
+
+{[}1{]} M. K. Bundorf, J. Levin, and N. Mahoney. ``Pricing and welfare
+in health plan choice''. In: \emph{American Economic Review} 102.7
+(2012), pp. 3214-3248.
+
+{[}2{]} L. Dafny. ``Are Health Insurance Markets Competitive?'' In:
+\emph{American Economic Review} 100.4 (2010), pp.~1399-1431.
+
+{[}3{]} L. Dafny, M. Duggan, and S. Ramanarayanan. ``Paying a Premium on
+Your Premium? Consolidation in the US Health Insurance Industry''. In:
+\emph{American Economic Review} 102.2 (2012), pp.~1161-1185.
+
+\textbf{Supplemental:}
+
+{[}1{]} L. Einav, A. Finkelstein, and M. R. Cullen. ``Estimating Welfare
+in Insurance Markets Using Variation in Prices''. In: \emph{Quarterly
+Journal of Economics} 125.3 (2010), pp.~877-921.
+
+{[}2{]} L. Einav, A. Finkelstein, and J. Levin. ``Beyond Testing:
+Empirical Models of Insurance Markets''. In: \emph{Annu. Rev.~Econ.} 2.1
+(2010), pp. 311-336.
+
+{[}3{]} A. Starc. ``Insurer pricing and consumer welfare: Evidence from
+medigap''. In: \emph{The RAND Journal of Economics} 45.1 (2014),
+pp.~198-220.
+
+{[}4{]} R. Town and S. Liu. ``The welfare impact of Medicare HMOs''. In:
+\emph{RAND Journal of Economics} (2003), pp.~719-736.
+
+\hypertarget{adverse-selection}{%
+\subsubsection{Adverse selection}\label{adverse-selection}}
+
+\textbf{Primary reading:}
+
+{[}1{]} D. M. Cutler and S. J. Reber. ``Paying for Health Insurance: The
+Trade-Off between Competition and Adverse Selection''. In:
+\emph{Quarterly Journal of Economics} 113.2 (1998), pp.~433-466.
+
+{[}2{]} F. Decarolis and A. Guglielmo. ``Insurers' response to selection
+risk: Evidence from Medicare enrollment reforms''. In: \emph{Journal of
+health economics} 56 (2017), pp.~383-396.
+
+\textbf{Supplemental:}
+
+{[}1{]} G. Ackerloff. ``The market for lemons: Quality uncertainty and
+the market mechanism''. In: \emph{Quarterly Journal of Economics} 84.3
+(1970), pp.~488-500.
+
+{[}2{]} L. Einav and A. Finkelstein. ``Selection in Insurance Markets:
+Theory and Empirics in Pictures''. In: \emph{The Journal of Economic
+Perspectives} 25.1 (2011), pp.~115-138.
+
+{[}3{]} R. G. Frank, J. Glazer, and T. G. McGuire. ``Measuring adverse
+selection in managed health care''. In: \emph{Journal of Health
+Economics} 19.6 (2000), pp.~829-854.
+
+{[}4{]} M. Rothschild and J. Stiglitz. ``Equilibrium in competitive
+insurance markets: An essay on the economics of imperfect information''.
+In: \emph{Quarterly Journal of Economics} (1976), pp.~629-649.
+
+\hypertarget{moral-hazard}{%
+\subsubsection{Moral hazard}\label{moral-hazard}}
+
+\textbf{Primary reading:}
+
+{[}1{]} L. Einav, A. Finkelstein, S. P. Ryan, et al.~``Selection on
+moral hazard in health insurance''. In: \emph{American Economic Review}
+103.1 (2013), pp.~178-219.
+
+\textbf{Supplemental:}
+
+{[}1{]} L. Einav and A. Finkelstein. \emph{Moral Hazard in Health
+Insurance: What We Know and How We Know It}. Tech. rep. 24055. National
+Bureau of Economic Research, 2017.
+
+{[}2{]} A. Finkelstein. \emph{Moral hazard in health insurance}.
+Columbia University Press, 2014.
+
+{[}3{]} W. G. Manning and M. S. Marquis. ``Health insurance: the
+tradeoff between risk pooling and moral hazard''. In: \emph{Journal of
+health economics} 15.5 (1996), pp.~609-639.
+
+\hypertarget{managed-competition}{%
+\subsubsection{Managed competition}\label{managed-competition}}
+
+\textbf{Primary reading:}
+
+{[}1{]} V. Curto, L. Einav, J. Levin, et al.~\emph{Can Health Insurance
+Competition Work? Evidence from Medicare Advantage}. Working Paper.
+Department of Economics, Stanford University, 2015.
+
+{[}2{]} L. Einav and J. Levin. ``Managed competition in health
+insurance''. In: \emph{Journal of the European Economic Association}
+13.6 (2015), pp. 998-1021.
+
+\textbf{Supplemental:}
+
+{[}1{]} M. Cabral, M. Geruso, and N. Mahoney. \emph{Does privatized
+health insurance benefit patients or producers? Evidence from Medicare
+Advantage}. Tech. rep. 20470. National Bureau of Economic Research,
+2014.
+
+{[}2{]} M. Duggan, A. Starc, and B. Vabson. ``Who benefits when the
+government pays more? Pass-through in the Medicare Advantage program''.
+In: \emph{Journal of Public Economics} 141 (2016), pp.~50-67.
+
+{[}3{]} D. Pelech. ``Paying more for less? Insurer competition and
+health plan generosity in the Medicare Advantage program''. In:
+\emph{Journal of Health Economics} 61 (2018), pp.~77-92.
+
+{[}4{]} Z. Song, M. B. Landrum, and M. E. Chernew. ``Competitive bidding
+in Medicare Advantage: Effect of benchmark changes on plan bids''. In:
+\emph{Journal of health economics} 32.6 (2013), pp.~1301-1312.
+
+{[}5{]} K. Stockley, T. McGuire, C. Afendulis, et al.~\emph{Premium
+Transparency in the Medicare Advantage Market: Implications for
+Premiums, Benefits, and Efficiency}. Working Paper. National Bureau of
+Economic Research, 2014.
+
+
+
+
+\end{document}
+
+\makeatletter
+\def\@maketitle{%
+  \newpage
+%  \null
+%  \vskip 2em%
+%  \begin{center}%
+  \let \footnote \thanks
+    {\fontsize{18}{20}\selectfont\raggedright  \setlength{\parindent}{0pt} \@title \par}%
+}
+%\fi
+\makeatother
