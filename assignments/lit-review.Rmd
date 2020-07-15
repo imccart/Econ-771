@@ -1,0 +1,43 @@
+---
+title: "Literature Review"
+author: "Econ 771: Health Economics II"
+date: "Due: Friday, November 13"
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 2
+    theme: darkly
+    number_sections: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RefManageR)
+source('paths.R')
+bib <- ReadBib(paste0(bib.path,'/BibTeX_Library.bib'))
+myopts <- BibOptions(bib.style = "authoryear", style="html", first.inits=FALSE, max.names = 20, check.entries=FALSE)
+
+```
+
+
+# Overview
+This describes the expectations for the literature review. This is only required for 2nd year students. For 3rd year students, you'll need to go a bit further and submit a draft paper. Details of the draft paper assignment are [here](assignments/draft-paper.html). Your literature review is due no later than **Friday, November 13, 2020**.
+
+To begin, please "accept" the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.  
+
+You will "turn in" your repository to me with your paper and all supporting documents. Please create a final document with your main literature review in a PDF. Please also be sure to include in your repository all of your supporting code files (probably very little for a literature review). 
+
+
+# Expectations
+The literature review can be on any health economics topic of your choice, subject to my approval. There is no specific page requirement. 10 double-spaced pages might be a good target, but an efficiently-written paper could be shorter, while a student wishing to use the paper as a springboard to a dissertation may choose to write more. The paper will mostly consist of discussions of prior research, but should end with discussions of three open questions in the literature plus a proposed strategy for answering at least one of these questions. In your literature discussion, you should discuss in more detail at least 5 specific papers and broadly summarize any other relevant papers you've identified.
+
+
+# Grading
+Your grade will be based on 5 items, each worth 20 points toward the final assignment grade. For each component, you'll receive a 0 (not present), 10 (the element is there but poorly executed), or 20 (element is there and sufficiently executed). The 5 elements are listed below:
+
+1. Details of at least 5 specific papers
+2. General summary of other relevant research
+3. List and description of open questions in the literature
+4. Proposal for research to address an open question
+5. Organization and clarity of exposition

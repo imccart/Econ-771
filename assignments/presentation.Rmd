@@ -43,10 +43,14 @@ myopts <- BibOptions(bib.style = "authoryear", style="html", first.inits=FALSE, 
 # Overview
 This describes the logistics and expectations for the presentations. Below is a list of the days and papers that you can select to present to the class. You must select two papers to present. Please send me your selections no later than **August 21, 2020**.
 
+Once your papers have been approved, please "accept" each presentation as an assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.  
+
+You will "turn in" your repository to me with your presentations all supporting documents. Please create a final document with your main presentation in a PDF. Please also be sure to include in your repository all of your supporting code files. Practice writing good code and showing me only what I would need to recreate your results.
+
+
 
 # Potential papers
 Below is a list of papers and dates that you can select to present.
-
 
 
 ### `r advdate(3)`
@@ -193,6 +197,7 @@ I'll briefly discuss some theoretical issues from Luco (2020), and then we'll mo
 
 # Expectations
 Your presentation should be around 30 minutes long and follow a standard academic seminar format. For some tips on how to give an applied micro talk, look at Jesse Shapiro's notes [here](https://www.brown.edu/Research/Shapiro/pdfs/applied_micro_slides.pdf). Since this isn't **your** paper, you won't need to emphasize its contribution as much as a normal presentation, but still, your presentation should have the following components:
+
 1. Motivation: What is the issue being studied and why is it important?
 2. Research question: What is the main research question?
 3. Contribution: What is it that this paper is doing that is new and relevant? *Note: just doing something that hasn't been done before isn't a contribution*
@@ -210,7 +215,8 @@ Finally, a presentation should be more dynamic and interesting than the paper (w
 
 
 # Grading
-Your grade will be based on 10 items, each worth 10% of the final grade. For each component, you'll receive a 0 (not present), 5 (the element is there but poorly executed), or 10 (element is there and sufficiently executed). I'll be pretty lenient between a 5 and 10, leaning toward full credit wherever possible. The 10 elements are listed below:
+Your grade will be based on 10 items, each worth 10 points toward the final assignment grade. For each component, you'll receive a 0 (not present), 5 (the element is there but poorly executed), or 10 (element is there and sufficiently executed). I'll be pretty lenient between a 5 and 10, leaning toward full credit wherever possible. The 10 elements are listed below:
+
 1. Motivation
 2. Research question
 3. Contribution

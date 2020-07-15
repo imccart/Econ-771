@@ -1,0 +1,64 @@
+---
+title: "Draft Paper"
+author: "Econ 771: Health Economics II"
+date: "Due: Friday, November 13"
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 2
+    theme: darkly
+    number_sections: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RefManageR)
+source('paths.R')
+bib <- ReadBib(paste0(bib.path,'/BibTeX_Library.bib'))
+myopts <- BibOptions(bib.style = "authoryear", style="html", first.inits=FALSE, max.names = 20, check.entries=FALSE)
+
+```
+
+
+# Overview
+This describes the expectations for the draft paper. This is only required for 3rd year students. For 2nd year students, you need only submit a literature review. Details of the lit review assignment are [here](assignments/lit-review.html). Your draft paper is due no later than **Friday, November 13, 2020**.
+
+To begin, please "accept" the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.  
+
+You will "turn in" your repository to me with your paper and all supporting documents. Please create a final document with your main paper in a PDF. Please also be sure to include in your repository all of your supporting code files. Practice writing good code and showing me only what I would need to recreate your results.
+
+
+# Expectations
+Your papers should include not only an extensive literature review but also a preliminary empirical analysis, including a discussion of the data you're using, the construction of your sample, your identification strategy, econometric model and estimator, and some preliminary results. There is no specific page requirement, but I expect at least 20 double-spaced pages to appropriately discuss your topic, context, data, and early results. Your draft paper should end with an outline of additional analyses you hope to run (i.e., robustness/sensitivity analyses, a discussion of different mechanisms of interest, policy-relevant heterogeneities in your estimated effects, etc.). 
+
+For some advice on how to write your paper, please take a look at Jesse Shapiro's [four steps to an applied micro paper](https://www.brown.edu/Research/Shapiro/pdfs/foursteps.pdf). The overall structure of your paper should be relatively standard:
+
+1. **Introduction**: Here's where you'll introduce the problem, why it's interesting, your specific research question, and your contribution. The introduction is the hardest and most important part of a paper. For some advice on how to structure your intro, take a look at the [introduction formula](https://www.albany.edu/spatial/training/5-The%20Introduction%20Formula.pdf). I prefer to put the "literature review" in the introduction rather than as a seperate section. But for dissertation purposes, you should have your own literature review section. You can shorten it and add it to the intro when you submit a paper for publication.
+2. **Policy background**: Many (but not all) applied micro papers exploit some specific policy in their identification strategy, or they are specifically studying the effects of some policy on outcomes of interest. These policies are usually complicated and need some explanation, and having a designated section to discuss the policy and its historical context is useful.
+3. **Theoretical motivation**: Where relevant, it's good to have some theoretical discussion of your economic framework. This can also help inform your empirical work. This section isn't always necessary though. Nonetheless, for this assignment, it's expected because I want to make sure you're thinking about the economics underlying your question.
+4. **Data**: Discuss your data sources, main variables of interest, and present some basic summary statistics. You should think of this section as detailing where you got your data and how some basic trends in your data comport with your main research question.
+5. **Econometrics**: Here's where you present your main identification strategy and econometric framework. What estimator are you using? What are the sources of exogeneity that you're exploiting to identify the effect of interest? What equation are you ultimately estimating and what assumptions do you need to estimate the effect of interest with that equation and your estimator?
+6. **Results**: What do you find? What secondary analyses are of interest and what do you find from those analyses?
+7. **Robustness and sensitivity**: How sensitive are your results to the required assumptions?
+8. **Discussion**: What is the main takeaway from your results and why does this matter? Try not to rehash your introduction, although there will of course be some general overlap here.
+
+One final note...many modern papers in applied empirical micro do not necessarily follow the strict headings of "Data", "Econometrics", and "Results". It's more common now to employ a few different techniques and possibly many different datasets in order to tell a comprehensive story. You may have one approach that is very clean and easy to follow, but not convincing in terms of causal identification. Then you may have a more formal strategy for causal inference, focusing on an overall average effect. Then you may be interested in heterogeneous effects by certain groups or in underlying mechanisms of your average effect. All of these objects of interest may not be identifiable from the same data and the same estimation strategy. So in that case, people will turn to a different organization of the paper to accommodate the different analyses.
+
+Ultimately, there is no single correct way to write an empirical paper. All papers will have a strong intro, a solid policy background (if relevant), and a strong theoretical motivation (even if not explicitly written out in a theoretical model). From there, different papers may take a different approach, but they all present their data, econometrics, and identification strategy in some way.
+
+
+
+# Grading
+Your grade will be based on 10 items, each worth 10 points toward the final assignment grade. For each component, you'll receive a 0 (not present), 5 (the element is there but poorly executed), or 10 (element is there and sufficiently executed). The 10 elements are listed below:
+
+1. Introduction
+2. Policy background or some discussion of the empirical context
+3. Theoretical motivation
+4. Data
+5. Estimation strategy (identification strategy, estimating equation/model, and estimator being used)
+6. Results
+7. Discussion of robustness and sensivity (not expected to be completed, just listed out)
+8. Discussion/conclusion
+9. Clarity of exposition
+10. Accuracy of empirical analysis

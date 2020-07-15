@@ -52,7 +52,7 @@ We won't get to a lot of this, but the resources are here for you if anyone is i
   - [Exercise 3](assignments/exercise3.html): Regression Discontinuity
   - [Exercise 4](assignments/exercise4.html): Hospital markets and demand estimation
 
-3. **Presentations**: You will present two papers throughout the course of the semester. A list of potential papers and other instructions is available on the [presentations](assignments/presentations.html) page of our class website. Please inform me of your selected papers no later than **August 21, 2020**.
+3. **Presentations**: You will present two papers throughout the course of the semester. A list of potential papers and other instructions is available on the [presentations](assignments/presentation.html) page of our class website. Please inform me of your selected papers no later than **August 21, 2020**.
 
 4. **Literature review** (2nd year) or **draft paper** (3rd year): You will prepare a literature review or a preliminary draft paper depending on how far along you are in the PhD program. Details of these assignments are available on the [literature review](assignments/lit-review.html) and [draft paper](assignments/draft-paper.html) pages of our website. This assignment is due by **Friday, November 13, 2020**.
 

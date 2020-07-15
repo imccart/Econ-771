@@ -8,6 +8,7 @@ output:
     toc_float: TRUE
     toc_depth: 2
     theme: darkly
+    number_sections: FALSE
 ---
 
 ```{r setup, include=FALSE}
@@ -23,6 +24,12 @@ myopts <- BibOptions(bib.style = "authoryear", style="html", first.inits=FALSE, 
 
 # Overview
 This describes the logistics and expectations for our main class project, which is a replication of an empirical paper in health economics. Note that by "replication", I don't necessarily mean a 1-to-1 match in the data and empirical anlalysis. That's possible in some settings where the authors use entirely publicly available and easily accessible data, but more often than not, authors use a combination of datasets. Some of those datasets are restricted, and some are technically publicly available but require a ton of cleanup to use. I want us to get *some* experience working with real-life data, but I don't want it to take months of your time. So...the expectation is that you make an attempt to replicate the authors' identification strategy and econometric analysis for at least a subset of the questions/analyses addressed in the paper. Essentially, you're going to work with some real data and use the paper as a guide for how to go about your analysis.
+
+To begin, please "accept" the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your replication in your data management/econometrics software of choice.  
+
+You will "turn in" your repository to me with your replication and all supporting documents. Please create a final document with your main results in a PDF. Please also be sure to include in your repository all of your supporting code files. Practice writing good code and showing me only what I would need to recreate your results.
+
+You have until the final exam date to submit your replication (**December 11, 2020**).
 
 
 # Potential papers
@@ -180,4 +187,17 @@ bib["schmitt2018"]
 
 Most of this analysis is replicable using [HCRIS](https://github.com/imccart/HCRIS) and the [Provider of Services](https://github.com/asacarny/provider-of-services) files, along with the merger data from the [Healthcare Pricing Project](https://healthcarepricingproject.org/). But a word of warning...measuring multi-market contact can be computationally cumbersome.
 
+
+# Expectations
+Replicating empirical work is really hard and always underestimated in terms of the time and effort necessary to do it. I **do not** expect that you can match someone's results exactly (or even approximately). The point is to try and see where your results differ. 
+
+To that end, you should state clearly the elements of the paper and research quetions(s) you're trying to replicate. Describe your data. Present your estimation strategy and results. And ultimately discuss your data and results relative to the paper you're replicating.
+
 # Grading
+Your grade will be based on 5 items, each worth 20 points toward the final assignment grade. For each component, you'll receive a 0 (not present), 10 (the element is there but poorly executed), or 20 (element is there and sufficiently executed). The 5 elements are listed below:
+
+1. What parts of the paper are you attempting to replicate?
+2. What data are you using?
+3. What econometric tools are you using (identification strategy, estimator, and estimating equation)?
+4. What are your results?
+5. How do your data and results differ from the paper you're replicating? Why? You may not really know why your results differ, but you should at least be able to describe some potential reasons.
