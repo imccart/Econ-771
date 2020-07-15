@@ -9,14 +9,14 @@ geometry: margin=1in
 
 title: "Econ 771: Health Economics II"
 author: Ian McCarthy
-date: "8/19/2020 - 12/11/2020"
+date: "8/19/2020 - 11/24/2020"
 
 email: "ian.mccarthy@emory.edu"
-web: "ianmccathyecon.com"
+web: "imccart.github.io/Econ-771/"
 officehours: "W 09:30-11:30 a.m."
-office: "319 Rich Memorial Building"
-classroom: "*online*"
-classhours: "TTh 9:40-11:30 a.m."
+office: "*online*"
+classroom: "Math and Science, N306"
+classhours: "TuTh 9:40-10:55 a.m."
 
 fontfamily: mathpazo
 fontsize: 11pt
