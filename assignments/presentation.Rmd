@@ -8,6 +8,7 @@ output:
     toc_float: TRUE
     toc_depth: 2
     theme: darkly
+    number_sections: FALSE
 ---
 
 ```{r setup, include=FALSE}
@@ -20,16 +21,203 @@ myopts <- BibOptions(bib.style = "authoryear", style="html", first.inits=FALSE, 
 ```
 
 
+```{r dates_bib, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE, dev='pdf')
+start <- as.Date("2020-08-19")
+advdate <- function(adv) {
+ twed <- start + 7*floor(adv/2)
+ tmon <- twed-2
+ tmon <- format(tmon, format="%m/%d")
+ twed <- format(twed, format="%m/%d")
+ zadv <- sprintf("%02d", adv)
+ tday <- ifelse( (adv %% 2) == 0, tmon,twed)
+ tmp <- paste("Class ",zadv,sep='',", ", tday)
+ return(tmp)
+}
+library(RefManageR)
+bib <- ReadBib('D:/CloudStation/Professional/Bibliography/BibTeX_Library.bib')
+myopts <- BibOptions(bib.style = "authoryear", style="html", first.inits=FALSE, max.names = 20, check.entries=FALSE)
+```
+
 
 # Overview
 This describes the logistics and expectations for the presentations. Below is a list of the days and papers that you can select to present to the class. You must select two papers to present. Please send me your selections no later than **August 21, 2020**.
 
 
 # Potential papers
+Below is a list of papers and dates that you can select to present.
+
+
+
+### `r advdate(3)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("duggan2000", "horwitz2009", "bayindir2012")]
+``` 
+
+Note that Horwitz and Nichols (2009) and Bayindir (2012) are combined in the class presentations. So those two just count as one paper/presentation. Both of those papers are closely related and so it makes sense to present those papers together. The papers are also relatively short.
+
+
+### `r advdate(4)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dafny2005", "dranove2019")]
+``` 
+
+
+### `r advdate(5)`
+
+
+```{r, echo = FALSE, results="asis"} 
+bib["dranove2017"]
+``` 
+
+I will begin this class with a brief discussion of Dranove (1988) and some theoretical issues related to hospital cost-shifting. Then one of you will present Dranove (2017).
+
+
+### `r advdate(6)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("batty2017", "eliason2018", "geruso2020")]
+``` 
+
+
+### `r advdate(9)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("finkelstein2016","molitor2018")]
+``` 
+
+
+### `r advdate(10)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("gruber1996","clemens2014")]
+``` 
+
+
+### `r advdate(11)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("baicker2013", "clemens2017")]
+``` 
+
+
+### `r advdate(13)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("cooper2018","ketcham2012")]
+``` 
+
+
+### `r advdate(14)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("handel2013","ericson2014")]
+``` 
+
+
+### `r advdate(15)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dranove2003more","dafny2008")]
+``` 
+
+
+### `r advdate(16)`
+
+```{r, echo = FALSE, results="asis"} 
+bib["grennan2020"]
+``` 
+
+I will have a brief presentation to start the class focusing on the theory of price disclosure. Then one of you will present Grennan (2020)
+
+
+### `r advdate(19)`
+
+```{r, echo = FALSE, results="asis"} 
+bib["dranove2016"]
+``` 
+
+In addition to the student-led presentation of Dranove (2016), I will spend some time today discussing how define hospital markets.
+
+
+### `r advdate(20)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("kessler2000","cooper2017")]
+``` 
+
+
+### `r advdate(21)`
+
+```{r, echo = FALSE, results="asis"} 
+bib["ho2017"]
+``` 
+
+This is a tough paper, so it's the only one on the schedule for today.
+
+
+### `r advdate(22)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dafny2009","craig2008")]
+``` 
+
+
+### `r advdate(23)`
+
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("dafny2019","schmitt2018")]
+``` 
+
+
+### `r advdate(24)`
+
+```{r, echo = FALSE, results="asis"} 
+bib["eliason2020"]
+``` 
+
+Whoever presents today should spend a little more time talking about the dialysis industry, as this is our first (and only) exposure to that industry in this class.
+
+
+### `r advdate(25)`
+
+```{r, echo = FALSE, results="asis"} 
+bib[c("luco2020","koch2017","lin2020")]
+``` 
+
+I'll briefly discuss some theoretical issues from Luco (2020), and then we'll move to the student-led presentations for Koch (2017) and Lin (2020).
 
 
 # Expectations
-Your presentation should be around 30 minutes long and follow a standard academic seminar format. 
+Your presentation should be around 30 minutes long and follow a standard academic seminar format. For some tips on how to give an applied micro talk, look at Jesse Shapiro's notes [here](https://www.brown.edu/Research/Shapiro/pdfs/applied_micro_slides.pdf). Since this isn't **your** paper, you won't need to emphasize its contribution as much as a normal presentation, but still, your presentation should have the following components:
+1. Motivation: What is the issue being studied and why is it important?
+2. Research question: What is the main research question?
+3. Contribution: What is it that this paper is doing that is new and relevant? *Note: just doing something that hasn't been done before isn't a contribution*
+4. Preview of findings: Very quickly summarize the main point. Assume the audience is about to leave.
+5. Data: Discuss the data sources and the main variables
+6. Econometrics and identification: Present the econometric specification and the primary sources of variation that facilitate identification of the effects of interest
+7. Threats: Briefly discuss one or two main threats to the identification strategy
+8. Results: What are the main findings (in more detail than the preview of findings)?
+
+Regarding your delivery, the slides should be relatively minimal. **Don't** try to put everything you're going to say on the slide. You want the audience to watch and listen to you, not read the slides while you're talking. The slides are there purely to complement you (not as a substitute).
+
+Whenever possible, communicate results in a figure instead of a table. Figures are so much easier to read and quickly comprehend than a set of numbers and stars.
+
+Finally, a presentation should be more dynamic and interesting than the paper (with less emphasis on robustness and sensitivity). Have fun with it! And don't feel like you have to be stuck in a linear presentation. For example, I usually present the econometrics and data in a dynamic way, where I show the equation I'm estimating and walk through each set of coefficients and variables, highlighting them in the slides as I progress through the equation. This is a way of presenting your estimation strategy and your data more dynamically than you can do in a paper, and (in my opinion) it takes advantage of the presentation setting relative to the paper. The last thing anyone wants is for you to just rehash the paper in presentation form.
 
 
 # Grading
+Your grade will be based on 10 items, each worth 10% of the final grade. For each component, you'll receive a 0 (not present), 5 (the element is there but poorly executed), or 10 (element is there and sufficiently executed). I'll be pretty lenient between a 5 and 10, leaning toward full credit wherever possible. The 10 elements are listed below:
+1. Motivation
+2. Research question
+3. Contribution
+4. Preview of findings
+5. Data
+6. Econometrics and identification
+7. Threats
+8. Results
+9. Minimal design (not too many words on slides)
+10. At least one figure (if the paper you're presenting doesn't have a figure, you'll need to make one)

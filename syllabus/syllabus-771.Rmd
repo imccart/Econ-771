@@ -583,7 +583,7 @@ bib["eliason2020"]
 **Primary reading:**<br>
 
 ```{r, echo = FALSE, results="asis"} 
-bib[c("luco2019","koch2017","lin2020")]
+bib[c("luco2020","koch2017","lin2020")]
 ``` 
 
 **Supplemental:**<br>

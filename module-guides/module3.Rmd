@@ -60,7 +60,7 @@ Dafny and Dranove (2008) study the role of quality information on Medicare Advan
 
 ### Class 16, 10/12
 **Effects of price disclosure**<br>
-Grennan and Swanson (2020) study the effects of a "benchmarking database" in which hospitals could observe statistics on prices paid for various medical devices.
+Grennan and Swanson (2020) study the effects of a "benchmarking database" in which hospitals could observe statistics on prices paid for various medical devices. I will also start this class with a brief presentation of some of theoretical issues of price disclosure.
 
 
 ### Class 17, 10/14
