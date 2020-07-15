@@ -1,0 +1,35 @@
+---
+title: "Presentations"
+author: "Econ 771: Health Economics II"
+date: "Due: See class schedule"
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 2
+    theme: darkly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(RefManageR)
+source('paths.R')
+bib <- ReadBib(paste0(bib.path,'/BibTeX_Library.bib'))
+myopts <- BibOptions(bib.style = "authoryear", style="html", first.inits=FALSE, max.names = 20, check.entries=FALSE)
+
+```
+
+
+
+# Overview
+This describes the logistics and expectations for the presentations. Below is a list of the days and papers that you can select to present to the class. You must select two papers to present. Please send me your selections no later than **August 21, 2020**.
+
+
+# Potential papers
+
+
+# Expectations
+Your presentation should be around 30 minutes long and follow a standard academic seminar format. 
+
+
+# Grading
