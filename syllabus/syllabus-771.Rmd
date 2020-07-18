@@ -125,7 +125,7 @@ While there is no official "attendance" credit, everyone is expect to attend all
 
 # Assignments and Grading
 
-There are four main assignments throughout the semester, along with a participation component. I describe each assignment below, with much more detail provided on our [class website](https://imccart.github.io/Econ-771/).
+There are four main assignments throughout the semester, along with a participation component. I describe each assignment below, with more detail provided on our [class website](https://imccart.github.io/Econ-771/). Note that I **do not** expect or want anyone to treat these assignments as entirely separate. By that, I mean you should try to identify datasets from the exercises that you can use in your replication project, and you should try to select papers to present that use those data. At a minimum, you should present the paper that you will be replicating. With a little bit of up-front planning, you can create a lot of overlap across assignments, which will make your life much easier. 
 
 
 ## Participation

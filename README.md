@@ -44,6 +44,8 @@ We won't get to a lot of this, but the resources are here for you if anyone is i
 
 
 ## Assignments
+There are four main assignments throughout the semester, along with a participation component. More information on each assignment is listed below. Note that I **do not** expect or want anyone to treat these assignments as entirely separate. By that, I mean you should try to identify datasets from the exercises that you can use in your replication project, and you should try to select papers to present that use those data. At a minimum, you should present the paper that you will be replicating. With a little bit of up-front planning, you can create a lot of overlap across assignments, which will make your life much easier. 
+
 1. **Discussion**: Participation in our online discussions is a small portion of the grade. This is particulary important if we have to move to a fully online course again. The goal is just to incentivize you all to participate in this discussion outside of class. Your grade will be based on 10 possible discussion forums/topics. 
 
 2. **Empirical exercises**: Each course module will have an applied component where we spend some time replicating analyses from selected papers based on real-world data. These will require some of your time outside of class to get the data in working order and implement the relevant identification strategy and econometric estimator. This empirical work should heavily complement your replication project as well as your draft paper. All exercises will be assigned through GitHub classroom and will come with clear instructions on the general research question, data sources, and estimation strategies. Details of each empirical exercise are in the following links:
