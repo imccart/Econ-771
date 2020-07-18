@@ -14,22 +14,23 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stargazer, knitr, kableExtra,
                lfe, modelr, SAScii)
 
-paths...
+source('paths.R')
 
 
 # Load data ------------------------------------------------------------
 
 bench.data <- 
 pen.data <- 
-ahrf.data <- read.SAScii(paste0(ahrf.path,"AHRF2019.asc"),
-                         paste0(ahrf.path,"AHRF2019.sas")) 
+ahrf.data <- read.SAScii(fn=paste0(ahrf.path,"DATA/AHRF2019.asc"),
+                         sas_ri=paste0(ahrf.path,"DOC/AHRF2018-19.sas"),
+                         beginline=3) 
 
 
 # Call analysis and set workspace for knitr -------------------------------
 source('analysis.R')
 rm(list=c("data", "data.ind", "households", "data.hh", "zip3.choices",
           "plan.data", "product.definitions", "final.data", "hh.language"))
-save.image("workspace.Rdata")
+save.image("solutions/exercise2/workspace.Rdata")
 
 
 
