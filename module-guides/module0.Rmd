@@ -1,0 +1,52 @@
+---
+title: "Module 0"
+author: "Econ 771: Health Economics II"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+output: 
+  bookdown::html_document2:
+    toc: TRUE
+    toc_float: TRUE
+    toc_depth: 3
+    theme: darkly
+    number_sections: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(cache.path = '_cache/')
+knitr::opts_chunk$set(echo = TRUE, fig.align="center")
+```
+
+# Overview 
+This is the guide for **Module 0**, which is really just an introduction to the class. To that end, the first thing you should do for the class is read the [syllabus](https://imccart.github.io/Econ-771/syllabus.pdf).
+
+# Classroom
+Hopefully you all received my email on 7/23/2020 about the move to online classes. While I'm disappointed that we won't get to spend the semester together in-person, things aren't looking particularly great in Georgia right now, so to the extent we can reasonably keep people away from campus, we should do it. In our case, as long as we all attend the virtual class and stay engaged, I think we can transition seamlessly to an online class. 
+
+We still have our original classroom reserved -- Math and Science, N306. We may try to have an in-person meeting (for those that can make it) sometime toward the end of the semester. But that all depends on how things look in the area and how Emory responds going forward. 
+
+For now, the plan is to be fully online, including class meetings and all office hours. If anyone is already coming to campus for some reason, please let me know and maybe we can meet in person somewhere outdoors on campus. I would still love a face-to-face meeting with you whenever we get the chance.
+
+# Goals
+Hopefully this is evident from the syllabus and the landing page for the class, but my overarching goal for this class are to learn about supply-side health economics, employ some standard econometric estimators and identification strategies specifically in the context of health economics, and get some practice working with real data in a real world environment. 
+
+This last goal (real data in a real world environment) is worth a bit more explanation. Just looking at the resources for the class, it might be intimidating.
+
+<center>
+
+![](https://media.giphy.com/media/l1J9EAbtarE4QYHAY/giphy.gif)
+
+</center>
+
+But I'm using these resources for a reason. In my opinion, GitHub is critical for good version control, which is critical for replicability. AWS is a luxury to have, but getting some exposure to cloud computing is important. Plus, our AWS AMI allows us all to have access to the same data in the same file structure. Finally, while we are definitely going to use lots of different datasets for this class, I will always provide some code to help work with the data (more or less depending on how challenging the data management is). And more importantly, I'm **always** available to you for help or discussion.
+
+Ultimately, I want this class to help get you where **you** want to be, not to mold you into some version of a health economist that I have in my mind. But the only way I can help you is if I know where you want to go. So we have to work together!
+
+<center>
+
+![](https://media.giphy.com/media/QWwEdgDbYjFbfOMJ3z/giphy.gif)
+
+</center>
+
+# Slides
+Ok - now we're getting into some economics. For this, I'll move over to our [Module 0 Slides](module0-slides.html).

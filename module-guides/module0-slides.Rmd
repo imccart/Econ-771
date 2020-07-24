@@ -1,0 +1,463 @@
+---
+title: "Module 0: Introduction"
+subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
+author: Ian McCarthy | Emory University
+date: Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document: default
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, custom.css] 
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: "macros.js"
+      navigation:
+          touch: false
+---
+
+<!-- Adjust some CSS code for font size and maintain R code font size -->
+<style type="text/css">
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+</style>
+
+
+<!-- Set R options for how code chunks are displayed and load packages -->
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+opts_chunk$set(
+  fig.align="center",  
+  fig.height=3, #fig.width=6,
+  # out.width="748px", #out.length="520.75px",
+  dpi=300, #fig.path='Figs/',
+  cache=T#, echo=F, warning=F, message=F
+  )
+
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if(options$fig.callout) {
+    options$echo = FALSE
+  }
+  options
+})
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
+               scales, gganimate, gapminder, gifski, png, tufte)
+```
+
+
+# Table of contents
+
+1. [Introductions](#introductions)
+
+2. [Motivation](#welcome)
+
+3. [Software installation](#software)
+
+4. [Starting with Git and RStudio](#git_rstudio)
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: introductions
+
+# Introductions
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Let's get to know each other!
+
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: welcome
+
+# Motivation
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Health and Health Care
+
+</br>
+.center[
+  ![](https://media.giphy.com/media/1xK1QRqHENTTW/giphy.gif)
+]
+
+---
+# Health and Health Care
+
+We've made *major* improvements in life expectancy (and many other measures of health) across the world
+
+- Poverty reduction
+- Technology development and innovation
+- Technology diffusion and adoption
+- Access to better services, including health care
+
+
+---
+# Evidence of better health
+
+```{r life-exp, eval=FALSE}
+library(gapminder)
+gapminder %>%
+  group_by(year) %>%
+  summarize(lifeExp = median(lifeExp),
+            gdpMed = median(gdpPercap)) %>%
+  ggplot(aes(year,lifeExp)) + geom_line(alpha = 1/3) + theme_bw() +
+    labs(x = "Year",
+         y = "Life Expectancy (years)",
+         title = "Median life expectancy across the world")
+
+```
+.plot-callout[
+```{r life-exp-callout, ref.label="life-exp", fig.callout=TRUE}
+```
+]
+
+
+---
+# Evidence of better health
+
+```{r life-exp-full-output, ref.label="life-exp", fig.callout=TRUE}
+```
+
+
+---
+# GDP and Health
+
+```{r lifexp-gdp, eval=FALSE}
+library(gapminder)
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point(size = 1) + theme_bw() + scale_x_continuous(label = comma) +
+  labs(x = "GDP Per Capita ($US)",
+       y = "Life Expectancy (years)",
+       title = "Life expectancy and GDP")
+```
+.plot-callout[
+```{r lifexp-gdp-callout, ref.label="lifexp-gdp", fig.callout=TRUE}
+```
+]
+
+
+---
+# GDP and Health
+
+```{r lifexp-full-output, ref.label="lifexp-gdp", fig.callout=TRUE}
+```
+
+
+---
+# GDP and Health over Time
+
+```{r gganim1, message=FALSE, warning=FALSE, include=FALSE}
+anim1 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop)) +
+  geom_point(alpha = 0.5, show.legend = FALSE) +
+  scale_colour_manual(values = country_colors) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  facet_wrap(~continent) +
+  labs(title = 'Year: {frame_time}', x = 'Log GDP Per Capita ($US)', y = 'Life Expectancy (years)') +
+  transition_time(year) +
+  ease_aes('linear')
+
+anim_save("anim1.gif",anim1,
+          path="D:/CloudStation/Professional/Teaching Material/Emory/Econ 470 - Economics and Health Policy/01-Introduction/pics")
+```
+
+.center[
+  ![:scale 900px](pics/anim1.gif)
+]
+
+
+---
+# Spending and Health
+```{r include=FALSE}
+source("D:/CloudStation/Professional/Teaching Material/Emory/Econ 470 - Economics and Health Policy/01-Introduction/DartmouthAtlas.R")
+```
+
+
+```{r dartmouth, eval=FALSE, warning=FALSE}
+ggplot(data = (dartmouth.data %>% filter(Year==2015)), 
+       mapping = aes(x = Expenditures, y = Total_Mortality)) + 
+  geom_point(size = 1) + theme_bw() + scale_x_continuous(label = comma) +
+  geom_smooth(method="lm", se=FALSE, color="blue", size=1/2) +
+  labs(x = "Spending Per Capita ($US)",
+       y = "Mortality Rate",
+       title = "Mortality and Health Care Spending")
+```
+.plot-callout[
+```{r dartmouth-callout, ref.label="dartmouth", fig.callout=TRUE, warning=FALSE}
+```
+]
+
+
+---
+# Spending and Health
+
+```{r dartmouth-output, ref.label="dartmouth", fig.callout=TRUE, warning=FALSE}
+```
+
+
+---
+# Spending and Health
+
+- Does medical spending make us sicker?
+- What else might explain this relationship?
+
+.plot-callout[
+```{r dartmouth-callout, ref.label="dartmouth", fig.callout=TRUE, warning=FALSE}
+```
+]
+
+
+---
+# Goals of this course.
+
+1. Understand and implement selected methods for causal inference
+--
+<br>
+2. Along the way...data management and version control with real data
+
+--
+<br>
+3. Summarize, visualize, and explain research results
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: syllabus
+
+# Syllabus highlights
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+(Read the full document [here](https://github.com/imccart/Econ-470/blob/master/Syllabus/Econ470-Syllabus.pdf).)
+
+---
+# Why this course?
+
+1. Working with data is hard
+
+2. Health and health care are constantly changing
+
+3. $3.5 trillion, 17.9% of GDP, $10,739 per person
+
+--
+
+> *"Nobody knew health care could be so complicated"*
+> `r tufte::quote_footer('--- Donald Trump')`
+
+---
+# Structure
+
+- Very applied in nature
+
+- *Methods* for causal inference
+
+  - Selection on observables (matching, propensity scores)
+  
+  - Instrumental variables
+  
+  - Regression discontinuity
+  
+  - Difference-in-differences
+
+
+---
+# Structure
+
+- *Substantive* areas
+
+  - Hospital pricing, policy, and competition
+  
+  - Cigarette taxes and demand
+  
+  - Medicare Advantage and quality disclosure
+  
+  - Medicaid expansion and health insurance
+
+
+---
+# Structure
+
+- *Datasets* from the real world
+
+  - Hospital Cost Report Information System (HCRIS)
+  
+  - Centers for Disease Control (CDC)
+  
+  - Medicare Advantage data
+  
+  - Behavioral Risk Factor Surveillance System (BRFSS), Medicaid, Health Insurance Exchanges
+  
+  
+---
+# Assignments
+
+- Homework (x5)
+
+- Research paper (see [Research Project](assignments/project.html) for list)
+
+- Presentation
+
+---
+# Grading
+
+| Component                           | Weight |
+|:-|-:|
+| 5 × homework assignments (6% each)  | 30% |
+| Research paper                  		| 40% |
+| Presentation  						          | 30% |
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: software
+
+# Software Installation
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Software Installation
+
+1. Download [R](https://www.r-project.org/)
+
+2. Download [RStudio](https://www.rstudio.com/products/rstudio/download/preview/)
+
+3. Download [Git](https://git-scm.com/downloads)
+
+4. Create an account on [GitHub](https://github.com/)
+
+--
+
+For help and troubleshooting with Git and GitHub, take a look at Jenny Bryan's http://happygitwithr.com.
+
+
+---
+# Checklist
+
+<html>&#9745;</html> Do you have the most recent version of R?
+  ```{r}
+  version$version.string
+  ```
+
+
+<html>&#9745;</html> Do you have the most recent version of RStudio? (The [preview version](https://www.rstudio.com/products/rstudio/download/preview/) is fine.)
+  ```{r eval=FALSE}
+  RStudio.Version()$version
+  ## Requires an interactive session but should return something like "[1] ‘1.1.463’"
+  ```
+
+<html>&#9745;</html> Have you updated all of your R packages? 
+  ```{r eval=FALSE}
+  update.packages(ask = FALSE, checkBuilt = TRUE)
+  ```
+  
+---
+# Checklist
+
+- Open up the [shell](http://happygitwithr.com/shell.html#shell)
+
+- Windows users, make sure that you installed a Bash-compatible version of the shell. If you installed [Git for Windows](https://gitforwindows.org), then you should be good to go.
+
+
+---
+# Checklist
+
+<html>&#9745;</html> Which version of Git have you installed?
+  ```{r eval=FALSE}
+  git --version
+  ```
+
+<html>&#9745;</html> Did you introduce yourself to Git? (Substitute in your details.)
+  ```{r eval=FALSE}
+  git config --global user.name 'Ian McCarthy'
+  git config --global user.email 'ian.mccarthy@emory.edu'
+  git config --global --list
+  ```
+
+<html>&#9745;</html> Did you register an account in GitHub?
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: git_rstudio
+
+# Practice with Git and RStudio
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Before next class (see http://happygitwithr.com)
+
+1. Download [R](https://www.r-project.org/)
+
+2. Download [RStudio](https://www.rstudio.com/products/rstudio/download/preview/)
+
+3. Download [Git](https://git-scm.com/downloads)
+
+4. Create an account on [GitHub](https://github.com/)
+
+5. Connect RStudio to Git and GitHub
+
+6. Start/clone/fork a repository for this class 
+
+
+---
+# Setting things up
+
+Now we're going to clone a GitHub repository (repo) using RStudio.
+
+.center[
+  ![:scale 800px](pics/GitHub_RStudio_Demo.gif)
+]
+
+
+---
+# Some common mistakes for windows users
+
+- Windows folders are *not* files...there is no content without a file. You can't commit or push changes without content.
+
+- Let RStudio/GitHub create the directory (main folder) for you.
+
+- If you're working across devices on your own repo, be sure to pull before starting and push afterward.
+
+- Avoid spaces in file names. Avoid them at all costs. *DO NOT PUT SPACES IN YOUR FILE NAMES.*
+
+>*"A space in a file name is a space in your soul."*
+
+
+---
+# Ideal workflow
+
+Until you are a Git(Hub) expert...
+
+1. Start project on GitHub (fork from another repo if needed)
+
+2. Clone to desktop with RStudio
+
+3. See http://happygitwithr.com for instructions on linking your local repo with a new upstream remote
+
