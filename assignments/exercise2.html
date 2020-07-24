@@ -1557,8 +1557,8 @@ div.tocify {
 <h1>Resources and data</h1>
 <p>The data for this assignment comes from two sources:</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Medicare Advantage Data</strong>: The Centers for Medicare and Medicaid services provides a ton of Medicare Advantage data. My <a href="https://github.com/imccart/Medicare-Advantage">Medicare Advantage GitHub Repo</a> should help for those interested in building a comprehensive MA dataset. For this exercise, we’ll just use the data on MA penetration and benchmark rates. The raw data are available on our AWS AMI in the “Medicare Advantage” folder.</p></li>
-<li><p><strong>Area Health Resources Files</strong>: We’ll use the <a href="https://data.hrsa.gov/topics/health-workforce/ahrf">AHRF</a> to form county-level measures of healthcare utilization and expenditures. We could also use the HCRIS from exercise 1 to create something on our own, but we’ll stick with the AHRF so that we get exposure to another common dataset.</p></li>
+<li><p><strong>Medicare Advantage Data</strong>: The Centers for Medicare and Medicaid services provides a ton of Medicare Advantage data. My <a href="https://github.com/imccart/Medicare-Advantage">Medicare Advantage GitHub Repo</a> should help for those interested in building a comprehensive MA dataset. For this exercise, we’ll just use the data on MA penetration and benchmark rates. The raw data are available on our AWS AMI in the “Medicare Advantage” folder, and my GitHub repo has designated code files for each of these two data sources. To make things simpler, you can just use the December penetration data from each year rather than reading in all months of data and averaging. But you’re welcome to do it either way.</p></li>
+<li><p><strong>Area Health Resources Files</strong>: We’ll use the <a href="https://data.hrsa.gov/topics/health-workforce/ahrf">AHRF</a> to form county-level measures of healthcare expenditures. We could also use the HCRIS from exercise 1 to create something on our own, but we’ll stick with the AHRF so that we get exposure to another common dataset. Please use the “standardized, risk-adjusted per capita Medicare cost” as our county-level measure of expenditure. <em>hint: you should look into the <code>SAScii</code> package to help read the ascii data into <code>R</code> using the <code>SAS</code> input file.</em></p></li>
 </ol>
 </div>
 <div id="questions" class="section level1">
@@ -1566,11 +1566,10 @@ div.tocify {
 <p>In your GitHub repository, please be sure to clearly address/answer the following questions.</p>
 <ol style="list-style-type: decimal">
 <li><p>Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of the Medicare Advantage penetration rate, benchmark payments, and utilization measures.</p></li>
-<li><p>Plot the mean county-level utilization against the mean MA penetration rate over time.</p></li>
-<li><p>Form predicted MA payments using MA benchmark rates, mirroring the analysis of Baicker, Chernew, and Robbins (2013). Plot the mean predicted MA payments over time.</p></li>
-<li><p>Using the predicted MA payments as an IV for MA penetration rates, estimate the effects of MA penetration on utilization.</p></li>
+<li><p>Plot the mean county-level utilization against the mean MA penetration rate for each year (just one scatter plot with the mean of each variable by year).</p></li>
+<li><p>Using the MA benchmark as an IV for MA penetration rates, estimate the effects of MA penetration on utilization. This is analogous to the specification in Baicker, Chernew, and Robbins (2013).</p></li>
 <li><p>Present the “first stage” and “reduced form” results of your IV estimates in Part 4.</p></li>
-<li><p>Present selected specification/robustness checks of your IV and discuss two weakness of this identification strategy.</p></li>
+<li><p>Present selected specification/robustness checks of your IV and discuss two weaknesses of this identification strategy.</p></li>
 </ol>
 </div>
 
