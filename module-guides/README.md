@@ -17,4 +17,3 @@ The course is divided into a few distinct topic areas. In each area, we'll discu
 ### Module 4. [Mergers and healthcare competition](module-guides/module4.html)
 
 ### Module 5. [Key issues for health insurance markets](module-guides/module5.html)
-We won't get to a lot of this, but the resources are here for you if anyone is interested.
