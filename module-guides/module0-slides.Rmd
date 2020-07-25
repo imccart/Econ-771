@@ -77,8 +77,22 @@ name: introductions
 
 
 ---
-# Let's get to know each other!
+# Mad libs ice breaker
 
+We need some ideas:
+
+- name
+- area of study
+- book
+- food
+- fear
+- liquid
+- gift
+- area of study
+
+---
+
+[---(name)---] was excited to start school! Today, they were going to learn about [---(area of study)---]. They stayed up all night reading [---(book)---] and eating [---(food)---]. Now they are tired. They fall asleep in class, and dream about [---(fear)---]. They are awoken when the professor throws [---(liquid)---] at their desk. Feeling bad for sleeping, they give the professor a [---(gift)---], apologize, and are careful to never sleep in class again. Now everyone is happy to learn more about [---(area of study)---].
 
 
 
@@ -178,7 +192,7 @@ anim1 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop)) +
   ease_aes('linear')
 
 anim_save("anim1.gif",anim1,
-          path="D:/CloudStation/Professional/Teaching Material/Emory/Econ 470 - Economics and Health Policy/01-Introduction/pics")
+          path="pics")
 ```
 
 .center[
@@ -189,7 +203,7 @@ anim_save("anim1.gif",anim1,
 ---
 # Spending and Health
 ```{r include=FALSE}
-source("D:/CloudStation/Professional/Teaching Material/Emory/Econ 470 - Economics and Health Policy/01-Introduction/DartmouthAtlas.R")
+source('module-guides/DartmouthAtlas.R')
 ```
 
 

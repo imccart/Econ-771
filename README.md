@@ -1,6 +1,3 @@
----
----
-
 This is a PhD course in Health Economics, taught by [Ian McCarthy](http://ianmccarthyecon.com) at Emory University. Before going much further, please be sure to read the full [syllabus](syllabus/syllabus-771.pdf), which provides more details on class policies and learning objectives. 
 
 This ReadMe file is the landing page for our class website. Below, I provide details on resources, course logistics, assignments, and the course schedule. This site is very much a work in progress, so be sure to check back regularly for updates.
