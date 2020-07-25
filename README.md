@@ -2,6 +2,23 @@ This is a PhD course in Health Economics, taught by [Ian McCarthy](http://ianmcc
 
 This ReadMe file is the landing page for our class website. Use the navigation bar above to access details on general resources, course outline, assignments, and the syllabus. This site is very much a work in progress, so be sure to check back regularly for updates.
 
+## Course Objectives
+
+I have five central goals for this course:
+
+1. Synthesize the current literature in each of the main areas of health economics covered in this class
+
+2. Apply standard causal inference techniques in the area of healthcare
+
+3. Provide constructive criticism of academic work in this area
+
+4. Organize real-world data with up-to-date workflow and versioning tools
+
+5. Develop your own preliminary research in some area of health economics
+
+There are more specific learning outcomes for each module described on the relevant module's page of our class website, accessible [here](https://imccart.github.io/Econ-771/module-guides/).
+
+
 
 ## Acknowledgements
 This class (and in particular the *R Markdown* formatting and animations) have benefitted significantly from several people who have been generous enough to make their website and other programs available to the public. Some of those people include:
