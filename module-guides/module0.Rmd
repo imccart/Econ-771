@@ -49,4 +49,4 @@ Ultimately, I want this class to help get you where **you** want to be, not to m
 </center>
 
 # Slides
-Ok - now we're getting into some economics. For this, I'll move over to our [Module 0 Slides](module0-slides.html).
+Ok - now we're getting into some economics. For this, I'll move over to our [Introduction Slides](intro-slides.html).

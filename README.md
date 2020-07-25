@@ -1,9 +1,16 @@
+## Course Overview
+
 This is a PhD course in Health Economics, taught by [Ian McCarthy](http://ianmccarthyecon.com) at Emory University. Before going much further, please be sure to read the full [syllabus](syllabus/syllabus-771.pdf), which provides more details on class policies and learning objectives. 
+
+This course explores the industrial organization of healthcare markets in the U.S. We will focus on the following areas: hospital ownership and production, physician agency, quality disclosure, and hospital competition. If we have time, we will briefly cover some issues on health insurance markets. The class is effectively designed as a combination of empirical IO and causal inference, with applications to healthcare. As such, we will also examine several econometric tools and causal inference identification strategies. These methods will be introduced as needed throughout the course.
+
+Supply-side health economics is a rapidly growing field with many new developments, particularly in the areas of bargaining in two-sided markets and physician learning. Some of these recent developments use tools from network analysis and machine learning, which we unfortunately do not have time to cover in this course. I've also chosen specific topics that overlap most with my own research --- the upside here is that I can speak somewhat confidently about the literature and empirical studies in this area, but the downside is that some very interesting areas of health economics are not studied. For example, we will largely ignore issues of the prescription drug market, medical devices, and physician labor supply. My hope is that the content that we do cover will provide a springboard for those interested in these other important areas.
 
 This ReadMe file is the landing page for our class website. Use the navigation bar above to access details on general resources, course outline, assignments, and the syllabus. This site is very much a work in progress, so be sure to check back regularly for updates.
 
-## Course Objectives
 
+
+## Course Objectives
 I have five central goals for this course:
 
 1. Synthesize the current literature in each of the main areas of health economics covered in this class

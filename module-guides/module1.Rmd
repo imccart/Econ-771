@@ -32,7 +32,6 @@ This is the guide for **Module 1**, which covers hospital objective functions an
 1. Selection on observables (not really an identification strategy...more of an assumption to facilitate causal inference with purely observational data)
 2. Difference-in-differences and parallel trends
 3. Event studies and time varying treatment effects
-4. Clustering with few treated groups
 
 
 # Main datasets
@@ -46,9 +45,14 @@ This is the guide for **Module 1**, which covers hospital objective functions an
 
 # Schedule
 
+Below is a preliminary schedule of classes and specific papers we'll cover. This matches the list of papers in the syllabus, just with a little more detail. Links to slides (where available) are included for each class. 
+
+
 ### Class 2, 8/24
 **Theoretical models of not-for-profits**<br>
 I'll present some details on models of the not-for-profit hospital from Dranove (1988), Newhouse (1970), and Pauly (1978). These are theoretical papers proposing different models of hospital behaviors, such as a purely utility maximizing firm or a physician's owned cooperative. We'll also discuss some institutional details of the hospital market and the prevalence of private not-for-profit hospitals.
+
+
 
 
 ### Class 3, 8/26
