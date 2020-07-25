@@ -15,7 +15,7 @@ email: "ian.mccarthy@emory.edu"
 web: "imccart.github.io/Econ-771/"
 officehours: "W 09:30-11:30 a.m."
 office: "*online*"
-classroom: "Math and Science, N306"
+classroom: "*online*"
 classhours: "TuTh 9:40-10:55 a.m."
 
 fontfamily: mathpazo

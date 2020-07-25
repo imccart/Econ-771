@@ -28,7 +28,7 @@ To get the most out of this class, we need to use a handful of tools. Some of th
 The course is divided into a few distinct topic areas. In each area, we'll discuss a handful of papers and finish each module with an empirical exercise using real-world data. The empirical work is designed to replicate or at least approximate many of the key identification strategies and econometric approaches in the literature. Follow the link to each module for more detailed information about each section of the course, including a list of resources, learning objectives, and daily schedule. Each module page will also contain the slides relevant for each class. Be sure to check the *OneNote* notebook for any annotated notes from each class, accessible via our *OneNote classroom*. 
 
 
-### Module 0. Motivation and expectations for the class
+### Module 0. [Motivation and expectations for the class](module-guides/module0.html)
 
 ### Module 1. [The hospital objective function and financial incentives](module-guides/module1.html)
 
