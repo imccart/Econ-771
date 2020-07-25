@@ -61,7 +61,7 @@ Supply-side health economics is a rapidly growing field with many new developmen
 
 # Learning Outcomes
 
-I have four central goals for this course:
+I have five central goals for this course:
 
 1. Synthesize the current literature in each of the main areas of health economics covered in this class
 
@@ -69,7 +69,9 @@ I have four central goals for this course:
 
 3. Provide constructive criticism of academic work in this area
 
-4. Develop your own preliminary research in some area of health economics
+4. Organize real-world data with up-to-date workflow and versioning tools
+
+5. Develop your own preliminary research in some area of health economics
 
 There are more specific learning outcomes for each module described on the relevant module's page of our class website, accessible [here](https://imccart.github.io/Econ-771/).
 
