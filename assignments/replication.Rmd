@@ -33,7 +33,9 @@ You have until the final exam date to submit your replication (**December 11, 20
 
 
 # Potential papers
-Here is a list of papers that I think are sufficiently replicable using publicly available data. No paper on this list is entirely replicable because they all use a combination of different datasets. There's a more detailed rubric in the next section where I describe the expectations of your replication exercise. Here, I just note how you can go about the replication for any given paper. These papers are listed in order of appearance in the class schedule.
+Here is a list of papers that I think are sufficiently replicable using publicly available data. No paper on this list is entirely replicable because they all use a combination of different datasets. There's a more detailed rubric in the next section where I describe the expectations of your replication exercise. Here, I just note how you can go about the replication for any given paper. These papers are listed in order of appearance in the class schedule. 
+
+You are also welcome to select your own paper, but you need to be sure that it is replicable. Sometimes papers seems easy to replicate but end up being impossible due to some specific proprietary data they have.
 
 
 ---
@@ -42,7 +44,7 @@ Here is a list of papers that I think are sufficiently replicable using publicly
 bib["duggan2000"]
 ``` 
 
-This is replicable with historic IPPS data that allow you to proxy for a hospital's share of Medicaid or uninsured patients.
+This is replicable with historic IPPS data that allow you to proxy for a hospital's share of Medicaid or uninsured patients; however, data on hospital disproportionate share isn't readily available before 1994. That's the first year the variable is populated in the historic IPPS data.
 
 ---
 
@@ -52,13 +54,6 @@ bib["horwitz2009"]
 
 This is largely reproducible with data from the American Hospital Association (AHA). We have access to these data through the Wharton Research Data Center, but there are some restrictions. So we'll just need to chat first before you proceed with this paper as your replication choice.
 
----
-
-```{r, echo = FALSE, results="asis"} 
-bib["dafny2005"]
-``` 
-
-You can use the case mix index from the IPPS files to proxy for DRG coding. It's not perfect, but again, the point is to work with read data using a published paper as your guide.
 
 ---
 
@@ -66,7 +61,7 @@ You can use the case mix index from the IPPS files to proxy for DRG coding. It's
 bib["dranove2019"]
 ``` 
 
-This is also doable if you use a different measure of physician practice ownership from the AHA surveys.
+This is also doable if you use a different measure of physician practice ownership from the AHA surveys. For access to the AHA data, just get in touch with me and we can try to get you set up with an Emory account.
 
 
 ---
@@ -75,7 +70,7 @@ This is also doable if you use a different measure of physician practice ownersh
 bib["dranove2017"]
 ``` 
 
-Reproducible with the Hospital Cost Report data.
+Reproducible with the Hospital Cost Report data, [HCRIS](https://github.com/imccart/HCRIS).
 
 
 ---

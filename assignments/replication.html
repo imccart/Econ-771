@@ -1557,6 +1557,7 @@ div.tocify {
 <div id="potential-papers" class="section level1">
 <h1>Potential papers</h1>
 <p>Here is a list of papers that I think are sufficiently replicable using publicly available data. No paper on this list is entirely replicable because they all use a combination of different datasets. There’s a more detailed rubric in the next section where I describe the expectations of your replication exercise. Here, I just note how you can go about the replication for any given paper. These papers are listed in order of appearance in the class schedule.</p>
+<p>You are also welcome to select your own paper, but you need to be sure that it is replicable. Sometimes papers seems easy to replicate but end up being impossible due to some specific proprietary data they have.</p>
 <hr />
 <p>
 <cite>Duggan, Mark
@@ -1564,7 +1565,7 @@ div.tocify {
 “Hospital Ownership and Public Medical Spending”.
 In: <em>Quarterly Journal of Economics</em> 115.4, pp. 1343-1373.</cite>
 </p>
-<p>This is replicable with historic IPPS data that allow you to proxy for a hospital’s share of Medicaid or uninsured patients.</p>
+<p>This is replicable with historic IPPS data that allow you to proxy for a hospital’s share of Medicaid or uninsured patients; however, data on hospital disproportionate share isn’t readily available before 1994. That’s the first year the variable is populated in the historic IPPS data.</p>
 <hr />
 <p>
 <cite>Horwitz, Jill R and Austin Nichols
@@ -1575,20 +1576,12 @@ In: <em>Journal of health economics</em> 28.5, pp. 924–937.</cite>
 <p>This is largely reproducible with data from the American Hospital Association (AHA). We have access to these data through the Wharton Research Data Center, but there are some restrictions. So we’ll just need to chat first before you proceed with this paper as your replication choice.</p>
 <hr />
 <p>
-<cite>Dafny, Leemore S.
-(2005).
-“How Do Hospitals Respond to Price Changes?”
-In: <em>American Economic Review</em> 95.5, pp. 1525–1547.</cite>
-</p>
-<p>You can use the case mix index from the IPPS files to proxy for DRG coding. It’s not perfect, but again, the point is to work with read data using a published paper as your guide.</p>
-<hr />
-<p>
 <cite>Dranove, David and Christopher Ody
 (2019).
 “Employed for higher pay? How Medicare facility fees affect hospital employment of physicians”.
 In: <em>American Economics Journal: Economic Policy</em> 11.4, pp. 249–271.</cite>
 </p>
-<p>This is also doable if you use a different measure of physician practice ownership from the AHA surveys.</p>
+<p>This is also doable if you use a different measure of physician practice ownership from the AHA surveys. For access to the AHA data, just get in touch with me and we can try to get you set up with an Emory account.</p>
 <hr />
 <p>
 <cite>Dranove, David, Craig Garthwaite, and Christopher Ody
@@ -1596,7 +1589,7 @@ In: <em>American Economics Journal: Economic Policy</em> 11.4, pp. 249–271.</
 “How do nonprofits respond to negative wealth shocks? The impact of the 2008 stock market collapse on hospitals”.
 In: <em>The Rand Journal of Economics</em> 48.2, pp. 485–525.</cite>
 </p>
-<p>Reproducible with the Hospital Cost Report data.</p>
+<p>Reproducible with the Hospital Cost Report data, <a href="https://github.com/imccart/HCRIS">HCRIS</a>.</p>
 <hr />
 <p>
 <cite>Geruso, Michael and Timothy Layton
