@@ -319,7 +319,9 @@ anim_save("anim5.gif",anim5,
 
 2. <span>&#36;</span>3.5 trillion, 17.9% of GDP, <span>&#36;</span>10,739 per person
 
-3. U.S. health care is uniquely inefficient in many ways
+3. Coronavirus shows interconnected web of economics, health policy, public policy, public health
+
+4. U.S. health care is uniquely inefficient in many ways
 
 
 ---
@@ -340,6 +342,16 @@ Lots of interesting economic issues in health care (not all unique to the U.S.):
 6. Adverse selection (asymmetric information between patients and insurers)
 
 
+---
+# What about this class specifically?
+
+1. Overlap with industrial organization and health care
+
+2. Data challenges and opportunities
+
+3. Good blend of microeconomic theory and applied empirical micro
+
+
 <!-- New Section -->
 ---
 class: inverse, center, middle
@@ -349,30 +361,27 @@ name: syllabus
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
 
-(Read the full document [here](https://github.com/imccart/Econ-470/blob/master/Syllabus/Econ470-Syllabus.pdf).)
+(Read the full document [here](https://imccart.github.io/Econ-771/syllabus.pdf))
 
----
-# Why this course?
-
-1. Working with data is hard
-
-2. Health and health care are constantly changing
-
-3. $3.5 trillion, 17.9% of GDP, $10,739 per person
-
---
-
-> *"Nobody knew health care could be so complicated"*
-> `r tufte::quote_footer('--- Donald Trump')`
 
 ---
 # Structure
 
-- Very applied in nature
+- *Substantive* areas
 
-- *Methods* for causal inference
+  - Hospital ownership and production
+  
+  - Physician agency
+  
+  - Information disclosure and choice
+  
+  - Competition and industrial organization
 
-  - Selection on observables (matching, propensity scores)
+
+---
+# Structure
+
+- *Applying* canonical methods for causal inference
   
   - Instrumental variables
   
@@ -384,48 +393,53 @@ name: syllabus
 ---
 # Structure
 
-- *Substantive* areas
-
-  - Hospital pricing, policy, and competition
-  
-  - Cigarette taxes and demand
-  
-  - Medicare Advantage and quality disclosure
-  
-  - Medicaid expansion and health insurance
-
-
----
-# Structure
-
 - *Datasets* from the real world
 
   - Hospital Cost Report Information System (HCRIS)
   
-  - Centers for Disease Control (CDC)
+  - Inpatient Prospective Payment System (IPPS) Final Rule Files
   
-  - Medicare Advantage data
+  - Provider of Services (POS) files
   
-  - Behavioral Risk Factor Surveillance System (BRFSS), Medicaid, Health Insurance Exchanges
+  - Provider Utilization and Payment Public Use Files (PUF)
+  
+  - Medicare Advantage Insurance Data
+  
+---
+# Structure
+
+- Practical *workflow* for replicable work
+
+  - Git and GitHub
+  
+  - Practice with cloud computing
+  
+  - Extracting and managing raw data
   
   
 ---
 # Assignments
 
-- Homework (x5)
+- Empirical exercises (x4)
 
-- Research paper (see [Research Project](assignments/project.html) for list)
+- Presentation (x2)
 
-- Presentation
+- Lit review or draft paper
+
+- Replication
+
+- Discussion
 
 ---
 # Grading
 
 | Component                           | Weight |
 |:-|-:|
-| 5 × homework assignments (6% each)  | 30% |
-| Research paper                  		| 40% |
-| Presentation  						          | 30% |
+| Online discussions                  | 5%  |
+| 4 × empirical exercies (5% each)    | 20% |
+| 2 x presentations (10% each)        | 20% |
+| Lit review/draft paper              | 25% |
+| Replication                     		| 30% |
 
 
 
