@@ -51,7 +51,8 @@ knitr::opts_hooks$set(fig.callout = function(options) {
 
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
-               scales, gganimate, gapminder, gifski, png, tufte)
+               scales, gganimate, gapminder, gifski, png, tufte, plotly, OECD,
+               ggrepel)
 ```
 
 
@@ -192,7 +193,7 @@ anim1 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop)) +
   ease_aes('linear')
 
 anim_save("anim1.gif",anim1,
-          path="pics")
+          path="/pics")
 ```
 
 .center[
@@ -201,57 +202,142 @@ anim_save("anim1.gif",anim1,
 
 
 ---
-# Spending and Health
+# But the US is unique
+```{r us-gap, message=FALSE, warning=FALSE, include=FALSE}
+mycolors <- c("US" = "red", "other" = "grey50")
+anim2 <- gapminder %>% filter(country %in% c("Canada", "France", "Germany", "Italy", "Japan", "United Kingdom", "United States")) %>%
+  mutate(highlight = ifelse(country=="United States", "US", "other")) %>%
+  ggplot(aes(gdpPercap, lifeExp, size = pop)) +
+  geom_point(alpha = 0.5, show.legend = FALSE, aes(color=highlight)) +
+  scale_color_manual("U.S.", values = mycolors) +
+  scale_size(range = c(2, 12)) +
+  scale_x_comma(limits=c(0,55000)) + 
+  labs(title = 'Year: {frame_time}', x = 'GDP Per Capita ($US)', y = 'Life Expectancy (years)') +
+  transition_time(year) +
+  ease_aes('linear')
+
+anim_save("anim2.gif",anim2,
+          path="/pics")
+```
+
+.center[
+  ![:scale 900px](pics/anim2.gif)
+]
+
+
+
+---
+# Health care spending
 ```{r include=FALSE}
-source('module-guides/DartmouthAtlas.R')
+search_dataset("health",get_datasets())
+oecd.str1 <- get_data_structure("SHA")
+oecd.str2 <- get_data_structure("HEALTH_STAT")
+oecd.exp <- get_dataset("SHA", filter=list("HFTOT", "HCTOT", "HPTOT", "PARPIB"))
+oecd.health <- get_dataset("HEALTH_STAT", filter=list(c("MATIINFA","MATIMATM")))
+
+health.dat <- oecd.health %>%
+  filter(COU %in% c("USA", "GBR", "CAN", "FRA", "DEU", "ITA", "JPN")) %>%
+  select(VAR, year = obsTime, value = obsValue, country = COU)
+health.dat <- pivot_wider(health.dat, id_cols = c("year", "country"),
+                          names_from = VAR, 
+                          values_from = value) %>%
+  rename(mort_inf = MATIINFA, mort_mat = MATIMATM)
+
+exp.dat <- oecd.exp %>%
+  filter(LOCATION %in% c("USA", "GBR", "CAN", "FRA", "DEU", "ITA", "JPN")) %>%
+  select(year = obsTime, tot_exp = obsValue, country = LOCATION)
+
+oecd.dat <- health.dat %>%
+  left_join(exp.dat, by=c("year", "country")) %>%
+  mutate(year=as.integer(year))
+
+```
+
+```{r spend, echo=FALSE, message=FALSE, warning=FALSE}
+oecd.dat %>% filter(year>=1970) %>%
+  ggplot(aes(x=year,y=tot_exp,color=country)) + 
+  geom_line(show.legend = FALSE) + theme_bw() +
+  geom_text_repel(data = oecd.dat %>% filter(year == 2014), 
+            aes(label = country,
+                x = year + 1,
+                y = tot_exp),
+            show.legend = FALSE) +
+  guides(linecolor=FALSE) +
+  labs(
+    x="Year",
+    y="Spending as Share of GDP",
+    title="Health Care Spending over Time"
+  ) + xlim(1970, 2017)
 ```
 
 
-```{r dartmouth, eval=FALSE, warning=FALSE}
-ggplot(data = (dartmouth.data %>% filter(Year==2015)), 
-       mapping = aes(x = Expenditures, y = Total_Mortality)) + 
-  geom_point(size = 1) + theme_bw() + scale_x_continuous(label = comma) +
-  geom_smooth(method="lm", se=FALSE, color="blue", size=1/2) +
-  labs(x = "Spending Per Capita ($US)",
-       y = "Mortality Rate",
-       title = "Mortality and Health Care Spending")
+
+
+
+---
+# Spending and infant mortality
+```{r spend-inf-mort, message=FALSE, warning=FALSE, include=FALSE}
+anim4 <- oecd.dat %>% filter(year>=1970) %>% group_by(country) %>% fill(c(tot_exp, mort_inf), .direction="updown") %>%
+  ggplot(aes(tot_exp, mort_inf, label=country)) +
+  geom_text(aes(size=3), show.legend=FALSE) + theme_bw() + 
+  labs(title = 'Year: {frame_time}', x = 'Health Care Spending (%GDP)', y = 'Infant Mortality') +
+  transition_time(year) +
+  ease_aes('linear')
+anim_save("anim4.gif",anim4,
+          path="D:/CloudStation/Professional/Teaching Material/Emory/Econ  - Health Care Markets/01-Introduction/pics")
 ```
-.plot-callout[
-```{r dartmouth-callout, ref.label="dartmouth", fig.callout=TRUE, warning=FALSE}
-```
+
+.center[
+  ![:scale 900px](pics/anim4.gif)
 ]
 
 
----
-# Spending and Health
-
-```{r dartmouth-output, ref.label="dartmouth", fig.callout=TRUE, warning=FALSE}
-```
-
 
 ---
-# Spending and Health
-
-- Does medical spending make us sicker?
-- What else might explain this relationship?
-
-.plot-callout[
-```{r dartmouth-callout, ref.label="dartmouth", fig.callout=TRUE, warning=FALSE}
+# Spending and maternal mortality
+```{r spend-mat-mort, message=FALSE, warning=FALSE, include=FALSE}
+anim5 <- oecd.dat %>% filter(year>=1970 & year<=2012) %>% group_by(country) %>% fill(c(tot_exp, mort_mat), .direction="updown") %>%
+  ggplot(aes(tot_exp, mort_mat, label=country)) +
+  geom_text(aes(size=3), show.legend=FALSE) + theme_bw() + 
+  labs(title = 'Year: {frame_time}', x = 'Health Care Spending (%GDP)', y = 'Maternal Mortality') +
+  transition_time(year) +
+  ease_aes('linear')
+anim_save("anim5.gif",anim5,
+          path="D:/CloudStation/Professional/Teaching Material/Emory/Econ 372 - Health Care Markets/01-Introduction/pics")
 ```
+
+.center[
+  ![:scale 900px](pics/anim5.gif)
 ]
 
 
+
 ---
-# Goals of this course.
+# Why study health care
 
-1. Understand and implement selected methods for causal inference
---
-<br>
-2. Along the way...data management and version control with real data
+1. Health and health care are constantly changing
 
---
-<br>
-3. Summarize, visualize, and explain research results
+2. <span>&#36;</span>3.5 trillion, 17.9% of GDP, <span>&#36;</span>10,739 per person
+
+3. U.S. health care is uniquely inefficient in many ways
+
+
+---
+# Economic issues in health care
+
+Lots of interesting economic issues in health care (not all unique to the U.S.):
+
+1. Extremely heterogeneous products
+
+2. Asymmetric information between patients and physicians
+
+3. Unobservable quality (experience good)
+
+4. Unpredictable need (inability to shop in many cases)
+
+5. Distortion of incentives due to insurance
+
+6. Adverse selection (asymmetric information between patients and insurers)
 
 
 <!-- New Section -->
