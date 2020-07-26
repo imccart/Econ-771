@@ -6,9 +6,15 @@ This course explores the industrial organization of healthcare markets in the U.
 
 Supply-side health economics is a rapidly growing field with many new developments, particularly in the areas of bargaining in two-sided markets and physician learning. Some of these recent developments use tools from network analysis and machine learning, which we unfortunately do not have time to cover in this course. I've also chosen specific topics that overlap most with my own research --- the upside here is that I can speak somewhat confidently about the literature and empirical studies in this area, but the downside is that some very interesting areas of health economics are not studied. For example, we will largely ignore issues of the prescription drug market, medical devices, and physician labor supply. My hope is that the content that we do cover will provide a springboard for those interested in these other important areas.
 
-This ReadMe file is the landing page for our class website. Use the navigation bar above to access details on general resources, course outline, assignments, and the syllabus. If you're accessing this directly on GitHub, then you won't see the navigation functionality. Please redirect to our GitHub Pages link, [Econ 771 Website](https://imccart.github.io/Econ-771). This site is very much a work in progress, so be sure to check back regularly for updates.
+This ReadMe file is the landing page for our class website. Use the navigation bar above or the links below to access details on resources, course outline, assignments, and the syllabus. This site is very much a work in progress, so be sure to check back regularly for updates.
 
+### [Resources](resources/)
 
+### [Course Outline](module-guides/)
+
+### [Assignments](assignments/)
+
+### [Syllabus](syllabus/syllabus-771.pdf)
 
 ## Course Objectives
 I have five central goals for this course:
