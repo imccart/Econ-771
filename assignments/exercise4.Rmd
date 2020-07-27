@@ -29,7 +29,7 @@ The data for this assignment comes from three sources:
 
 2. **Provider of Services files**: These data are available from [NBER POS](https://data.nber.org/data/provider-of-services.html) as well as at [Adam Sacarny's GitHub repo](https://github.com/asacarny/provider-of-services). I've also made these data available on our shared AWS AMI in the "POS" folder. Use these data to get information on hospital ownership type.
 
-3. **Hospital Market GitHub Repo**: John Graves has an excellent GitHub repository detailing the issues in measuring hospital markets. You can access that reop [here](https://github.com/graveja0/health-care-markets).
+3. **Hospital Market GitHub Repo**: John Graves has an excellent GitHub repository detailing the issues in measuring hospital markets. You can access that repo [here](https://github.com/graveja0/health-care-markets). To replicate some of his work using the community detection algorithm, you'll need to use the [Hospital Service Area Files](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Hospital-Service-Area-File/index). The link takes you to the CMS website where you can download the data directly. I've also put these data in the "HSAF" folder on our AWS AMI.
 
 
 # Questions

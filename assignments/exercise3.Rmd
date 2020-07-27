@@ -23,7 +23,7 @@ You will "turn in" your repository to me with your answers and all supporting do
 
 
 # Resources and data
-The data for this assignment comes from the AEJ: Policy website, where Keith Ericson's complete dataset is available. The data are available [here](https://www.aeaweb.org/articles?id=10.1257/pol.6.1.38). I've also uploaded the replication files to our AWS AMI under the folder "Ericson (2014)".
+The data for this assignment comes from the AEJ: Policy website, where Keith Ericson's complete dataset is available. The data are available [here](https://www.aeaweb.org/articles?id=10.1257/pol.6.1.38). I've also uploaded the replication files to our AWS AMI under the folder "Ericson 2014 Replication Data".
 
 # Questions
 In your GitHub repository, please be sure to clearly address/answer the following questions.
