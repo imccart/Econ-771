@@ -8,13 +8,10 @@ Supply-side health economics is a rapidly growing field with many new developmen
 
 This ReadMe file is the landing page for our class website. Use the navigation bar above or the links below to access details on resources, course outline, assignments, and the syllabus. This site is very much a work in progress, so be sure to check back regularly for updates.
 
-### [Resources](resources/)
-
-### [Course Outline](module-guides/)
-
-### [Assignments](assignments/)
-
-### [Syllabus](syllabus/syllabus-771.pdf)
+  - [Resources](resources/)
+  - [Course Outline](module-guides/)
+  - [Assignments](assignments/)
+  - [Syllabus](syllabus/syllabus-771.pdf)
 
 ## Course Objectives
 I have five central goals for this course:

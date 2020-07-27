@@ -92,8 +92,9 @@ We need some ideas:
 - area of study
 
 ---
+# Mad libs
 
-[---(name)---] was excited to start school! Today, they were going to learn about [---(area of study)---]. They stayed up all night reading [---(book)---] and eating [---(food)---]. Now they are tired. They fall asleep in class, and dream about [---(fear)---]. They are awoken when the professor throws [---(liquid)---] at their desk. Feeling bad for sleeping, they give the professor a [---(gift)---], apologize, and are careful to never sleep in class again. Now everyone is happy to learn more about [---(area of study)---].
+*(name)* was excited to start school! Today, they were going to learn about *(area of study)*. They stayed up all night reading *(book)* and eating *(food)*. Now they are tired. They fall asleep in class, and dream about *(fear)*. They are awoken when the professor throws *(liquid)* at their desk. Feeling bad for sleeping, they give the professor a *(gift)*, apologize, and are careful to never sleep in class again. Now everyone is happy to learn more about *(area of study)*.
 
 
 
@@ -193,7 +194,7 @@ anim1 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop)) +
   ease_aes('linear')
 
 anim_save("anim1.gif",anim1,
-          path="/pics")
+          path="D:/CloudStation/Professional/Teaching Material/Emory/Econ 771 - PhD Health Econ II/module-guides/pics")
 ```
 
 .center[
@@ -217,7 +218,7 @@ anim2 <- gapminder %>% filter(country %in% c("Canada", "France", "Germany", "Ita
   ease_aes('linear')
 
 anim_save("anim2.gif",anim2,
-          path="/pics")
+          path="D:/CloudStation/Professional/Teaching Material/Emory/Econ 771 - PhD Health Econ II/module-guides/pics")
 ```
 
 .center[
@@ -284,7 +285,7 @@ anim4 <- oecd.dat %>% filter(year>=1970) %>% group_by(country) %>% fill(c(tot_ex
   transition_time(year) +
   ease_aes('linear')
 anim_save("anim4.gif",anim4,
-          path="D:/CloudStation/Professional/Teaching Material/Emory/Econ  - Health Care Markets/01-Introduction/pics")
+          path="D:/CloudStation/Professional/Teaching Material/Emory/Econ 771 - PhD Health Econ II/module-guides/pics")
 ```
 
 .center[
@@ -303,7 +304,7 @@ anim5 <- oecd.dat %>% filter(year>=1970 & year<=2012) %>% group_by(country) %>% 
   transition_time(year) +
   ease_aes('linear')
 anim_save("anim5.gif",anim5,
-          path="D:/CloudStation/Professional/Teaching Material/Emory/Econ 372 - Health Care Markets/01-Introduction/pics")
+          path="D:/CloudStation/Professional/Teaching Material/Emory/Econ 771 - PhD Health Econ II/module-guides/pics")
 ```
 
 .center[
