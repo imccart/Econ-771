@@ -110,7 +110,7 @@ name: welcome
 
 
 ---
-# Health and Health Care
+# Health and Healthcare
 
 </br>
 .center[
@@ -118,14 +118,14 @@ name: welcome
 ]
 
 ---
-# Health and Health Care
+# Health and Healthcare
 
 We've made *major* improvements in life expectancy (and many other measures of health) across the world
 
 - Poverty reduction
 - Technology development and innovation
 - Technology diffusion and adoption
-- Access to better services, including health care
+- Access to better services, including healthcare
 
 
 ---
@@ -229,7 +229,7 @@ anim_save("anim2.gif",anim2,
 
 
 ---
-# Health care spending
+# Healthcare spending
 ```{r include=FALSE}
 search_dataset("health",get_datasets())
 oecd.str1 <- get_data_structure("SHA")
@@ -268,7 +268,7 @@ oecd.dat %>% filter(year>=1970) %>%
   labs(
     x="Year",
     y="Spending as Share of GDP",
-    title="Health Care Spending over Time"
+    title="Healthcare Spending over Time"
   ) + xlim(1970, 2017)
 ```
 
@@ -282,7 +282,7 @@ oecd.dat %>% filter(year>=1970) %>%
 anim4 <- oecd.dat %>% filter(year>=1970) %>% group_by(country) %>% fill(c(tot_exp, mort_inf), .direction="updown") %>%
   ggplot(aes(tot_exp, mort_inf, label=country)) +
   geom_text(aes(size=3), show.legend=FALSE) + theme_bw() + 
-  labs(title = 'Year: {frame_time}', x = 'Health Care Spending (%GDP)', y = 'Infant Mortality') +
+  labs(title = 'Year: {frame_time}', x = 'Healthcare Spending (%GDP)', y = 'Infant Mortality') +
   transition_time(year) +
   ease_aes('linear')
 anim_save("anim4.gif",anim4,
@@ -301,7 +301,7 @@ anim_save("anim4.gif",anim4,
 anim5 <- oecd.dat %>% filter(year>=1970 & year<=2012) %>% group_by(country) %>% fill(c(tot_exp, mort_mat), .direction="updown") %>%
   ggplot(aes(tot_exp, mort_mat, label=country)) +
   geom_text(aes(size=3), show.legend=FALSE) + theme_bw() + 
-  labs(title = 'Year: {frame_time}', x = 'Health Care Spending (%GDP)', y = 'Maternal Mortality') +
+  labs(title = 'Year: {frame_time}', x = 'Healthcare Spending (%GDP)', y = 'Maternal Mortality') +
   transition_time(year) +
   ease_aes('linear')
 anim_save("anim5.gif",anim5,
@@ -315,21 +315,21 @@ anim_save("anim5.gif",anim5,
 
 
 ---
-# Why study health care
+# Why study healthcare
 
-1. Health and health care are constantly changing
+1. Health and healthcare are constantly changing
 
 2. <span>&#36;</span>3.5 trillion, 17.9% of GDP, <span>&#36;</span>10,739 per person
 
 3. Coronavirus shows interconnected web of economics, health policy, public policy, public health
 
-4. U.S. health care is uniquely inefficient in many ways
+4. U.S. healthcare is uniquely inefficient in many ways
 
 
 ---
-# Economic issues in health care
+# Economic issues in healthcare
 
-Lots of interesting economic issues in health care (not all unique to the U.S.):
+Lots of interesting economic issues in healthcare (not all unique to the U.S.):
 
 1. Extremely heterogeneous products
 
@@ -347,7 +347,7 @@ Lots of interesting economic issues in health care (not all unique to the U.S.):
 ---
 # What about this class specifically?
 
-1. Overlap with industrial organization and health care
+1. Overlap with industrial organization and healthcare
 
 2. Data challenges and opportunities
 

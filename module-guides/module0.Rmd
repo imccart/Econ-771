@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align="center")
 ```
 
 # Overview 
-This is the guide for **Module 0**, which is really just an introduction to the class. To that end, the first thing you should do for the class is read the [syllabus](https://imccart.github.io/Econ-771/syllabus.pdf).
+This is the guide for **Module 0**, which is really just an introduction to the class. To that end, the first thing you should do for the class is read the [syllabus](https://imccart.github.io/Econ-771/syllabus/syllabus.pdf).
 
 # Classroom
 Hopefully you all received my email on 7/23/2020 about the move to online classes. While I'm disappointed that we won't get to spend the semester together in-person, things aren't looking particularly great in Georgia right now, so to the extent we can reasonably keep people away from campus, we should do it. In our case, as long as we all attend the virtual class and stay engaged, I think we can transition seamlessly to an online class. 
@@ -28,7 +28,7 @@ We still have our original classroom reserved -- Math and Science, N306. We may 
 For now, the plan is to be fully online, including class meetings and all office hours. If anyone is already coming to campus for some reason, please let me know and maybe we can meet in person somewhere outdoors on campus. I would still love a face-to-face meeting with you whenever we get the chance.
 
 # Goals
-Hopefully this is evident from the syllabus and the landing page for the class, but my overarching goal for this class are to learn about supply-side health economics, employ some standard econometric estimators and identification strategies specifically in the context of health economics, and get some practice working with real data in a real world environment. 
+Hopefully this is evident from the syllabus and the landing page for the class, but my overarching goals for this class are to learn about supply-side health economics, employ some standard econometric estimators and identification strategies specifically in the context of health economics, and get some practice working with real data in a real world environment. 
 
 This last goal (real data in a real world environment) is worth a bit more explanation. Just looking at the resources for the class, it might be intimidating.
 
