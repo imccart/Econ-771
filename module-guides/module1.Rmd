@@ -52,7 +52,7 @@ Below is a preliminary schedule of classes and specific papers we'll cover. This
 **Theoretical models of not-for-profits**<br>
 I'll present some details on models of the not-for-profit hospital from Dranove (1988), Newhouse (1970), and Pauly (1978). These are theoretical papers proposing different models of hospital behaviors, such as a purely utility maximizing firm or a physician's owned cooperative. We'll also discuss some institutional details of the hospital market and the prevalence of private not-for-profit hospitals.
 
-- [Slides](slides-class2.html)
+- [Slides](slides-class2.html) on hospital objective functions and not-for-profits
 
 
 ### Class 3, 8/26

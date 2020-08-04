@@ -1,10 +1,17 @@
 ---
-title: "Module 0: Introduction"
+title: "Module 1: What is the Hospital Objective Function?"
 subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
 author: Ian McCarthy | Emory University
 date: Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{amsmath}
+  - \usepackage{pgf}
+  - \usepackage[xcolor=pst]{pstricks}
+  - \usepackage{pgfshade}
+  - \usepackage{pdftools}
 output:
-  html_document: default
+#  html_document: default (toggle on for "simplified" view)
   xaringan::moon_reader:
     css: [default, metropolis, metropolis-fonts, custom.css] 
     lib_dir: libs
@@ -58,18 +65,312 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
 
 # Table of contents
 
-1. [Introductions](#introductions)
+1. [Motivation](#motivation)
+
+2. [Not-for-profit Hospitals](#nfp)
+
+3. [For profit Hospitals](#fp)
+
+4. [Cost-shifting](#costshift)
+
+5. [Physicians' Cooperative](#coop)
 
 
 <!-- New Section -->
 ---
 class: inverse, center, middle
-name: introductions
+name: motivation
 
-# Introductions
+# Motivation
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
 
 
 ---
-# a slide
+# Ownership types
+
+1. Private not-for-profit: About 60%
+
+2. For-profit: About 20%
+
+3. State and local gov't: About 20%
+
+<br>
+<div class="smalltext">Source: <a href="https://www.aha.org/statistics/fast-facts-us-hospitals">AHA Fast Facts</a></div>
+
+
+---
+# Policy effects
+
+Understanding how hospitals might respond to changes in policy or how they will strategically respond to each other requires that we know something about their objective function.
+
+1. All for profit?
+
+2. Profit motive with some charitable "mission"?
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: nfp
+
+# Not-for-profit Hospitals
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+
+
+
+---
+# Non-profit hospitals in theory
+
+- Hospital assumed to maximize some objective function, $u(q,z)$, subject to a production constraint
+
+- $q$ denotes quantity of care and $z$ denotes quality of care
+
+- Production is constrained by the break-even condition
+
+
+
+
+
+---
+# Non-profit hospitals in theory, Newhouse (1970)
+
+```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-nfp1}
+\begin{tikzpicture}[scale=.6]
+\draw [thick] (0,0) -- (8,0);
+\draw [thick] (0,0) -- (0,5);
+\node [right] at (8,0) {$x$};
+\node [above] at (0,5) {\$};
+\draw [thick] (1.5,4.6) -- (7.4,1.3);
+\node [left] at (7.2,1.2) {$D_{H}$};
+\draw [thick] (1,3.4) -- (5.3,1);
+\node [left] at (5,1) {$D_{L}$};
+\draw (.5,3.5) to [out=300,in=200] (6,2.5);
+\node [below] at (.5,3.2) {$AC_{L}$};
+\draw (.8,5) to [out=300,in=200] (7.2,3.5);
+\node [below] at (7,3.4) {$AC_{H}$};
+\draw[dashed](3.5,2)--(3.5,0);
+\draw [fill] (3.5,2) circle [radius =0.05];
+\draw[dashed](4.4,3)--(4.4,0);
+\draw [fill] (4.4,3) circle [radius =0.05];
+\end{tikzpicture}
+```
+
+
+
+---
+# Non-profit hospitals in theory, Newhouse (1970)
+
+```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-nfp2}
+\begin{tikzpicture}[scale=.6]
+\draw [thick] (0,0) -- (8,0);
+\draw [thick] (0,0) -- (0,7);
+\node [right] at (8,0) {$x$};
+\node [above] at (0,7) {\$};
+\draw [thick] (2.5,5.6) -- (7.8,2.5);
+\node [left] at (7.8,2.5) {$D_{HH}$};
+\draw [thick] (1.5,4.6) -- (7.4,1.3);
+\node [left] at (7.2,1.2) {$D_{H}$};
+\draw [thick] (1,3.4) -- (5.3,1);
+\node [left] at (5,1) {$D_{L}$};
+\draw (.5,3.5) to [out=300,in=200] (6,2.5);
+\node [below] at (.5,3.2) {$AC_{L}$};
+\draw (.8,5) to [out=300,in=200] (7.2,3.5);
+\node [above] at (7,3.6) {$AC_{H}$};
+\draw (1.1,6) to [out=300,in=200] (7,5.5);
+\node [above] at (7,5.6) {$AC_{HH}$};
+\draw [fill] (3.5,2) circle [radius =0.05];
+\draw [fill] (4.4,3) circle [radius =0.05];
+\draw [fill] (4.05,4.75) circle [radius =0.05];
+\draw [very thick] (1.8,1) .. controls (4,2) and (5.5,3.2) .. (3.5,5.5);
+\end{tikzpicture}
+```
+
+
+
+
+---
+# Non-profit hospitals in practice
+
+- Profits must be re-invested into the hospital
+
+- Must show "community benefit" (no consensus definition...includes uncompensated care, services to Medicaid, and certain specialized services that are generally unprofitable)
+
+- No taxes! and tax-free bonds
+
+
+---
+# Non-profit hospitals and tax benefits
+- <span>&#36;</span>24.6 billion in tax exemptions in 2011
+
+- <span>&#36;</span>62.4 billion in "community benefits"<br>
+
+- [Washington Post Article](https://www.washingtonpost.com/national/health-science/value-of-tax-breaks-for-nonprofit-hospitals-doubled-in-a-decade/2015/06/17/4162c640-1450-11e5-9ddc-e3353542100c_story.html?utm_term=.4f877a72a09f)<br>
+
+--
+
+What do you think? Are these community benefits measured appropriately?
+
+
+
+
+---
+# What is a non-profit hospital?
+The real question is...what is the hospital's objective function?
+
+- For-profit in disguise
+- Output maximizers
+- Tax-benefit maximizers
+- Social welfare maximizers<br>
+
+--
+
+Most empirical evidence doesn't find much of a difference between FP and NFP hospitals, except FPs have higher prices. Why is that?
+
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: fp
+
+# For Profit Hospitals
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# For-profit hospitals
+These are easier to study theoretically...just a standard profit maximizing firm.
+
+- $\pi=P(q)q - C(q),$ where $q$ denotes quantity of care
+
+- Firm has some market power and so faces a downward sloping demand curve
+
+
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: costshift
+
+# Cost Shifting
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# What is cost-shifting?
+
+The process by which hospitals increase prices for private insurance patients in response to lower reimbursements from other patients
+
+
+---
+# Theory of cost-shifting, Dranove (1988)
+
+Objective is to maximize some function of profits and quantity of care provided, denoted by $$U\left( \pi_{j} = \pi_{i,j} + \pi_{g,j},D_{i,j}, D_{g,j} \right),$$
+where $\pi_{j}$ denotes total profits for hospital $j$ and $D_{i,j}$ denotes hospital demand from insurer $i$. 
+
+- $p_{j}$ is exogenous and determined by a public payer 
+- hospital sets price for private insurance customers, $p_{i}$
+
+
+---
+# Theory of cost-shifting, Dranove (1988)
+The hospital chooses $p_{i}$ such that $$\frac{\partial U}{\partial p_{i}} = U_{1} \pi_{1}^{i} + U_{2} \frac{\partial D_{i}}{\partial p_{i}}=0,$$
+where $U_{1}$ denotes the derivative of $U(\cdot)$ with respect to its first argument and similarly for $U_{2}$.
+
+
+---
+# Theory of cost-shifting, Dranove (1988)
+How does the choice of $p_{i}$ change with $p_{j}$? $$\frac{\mathrm{d}p_{i}}{\mathrm{d}p_{j}} = - \frac{U_{11}\pi_{1}^{i}\pi_{1}^{j} + \frac{\partial D_{i}}{\partial p_{i}}U_{12}\pi_{1}^{j}}{\frac{\partial^{2} U}{\partial p_{i}^{2}}}$$
+
+
+
+---
+# Cost-shifting in practice
+
+- Can it happen? Not theoretically supported if hospitals are for-profit. Supported if something other than profits actually drives a hospital's decisions
+
+
+- Does it happen? Empirically, some evidence of cost-shifting but likely small with heterogeneous effects
+
+
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: coop
+
+# Physicians' Cooperative
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Hospitals as a physicians' cooperative
+
+- Physicians as the owners of the hospital
+
+- Divide operational profits among themselves
+
+- In practice: physician owned hospital or simply medical staff of the hospital with some control over physician admitting privileges
+
+
+---
+# Physicians' cooperative objective function
+
+Physicians maximize income, $$y_{m} = \frac{1}{m}\left(px - wL - cK\right),$$ where $L$ is the amount of non-physician labor, $w$ is the wage of those employees, $K$ is the capital purchased for price $c$, and $p x$ reflects the total revenue (to both the hospital and physician) based on a quantity of $x$ and price of $p$
+
+
+---
+# Physicians' cooperative graphically
+
+```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-coop}
+\begin{tikzpicture}[scale=.6]
+\draw [thick] (0,0) -- (8,0);
+\draw [thick] (0,0) -- (0,7);
+\node [right] at (8,0) {$m$};
+\node [above] at (0,7) {\$};
+\draw (1,6) to [out=340,in=100] (5,1);
+\draw (1,1) .. controls (3,5) and (5.5,4) .. (7,1);
+\node [above] at (2,6) {\footnotesize{$MRP_{m}=\frac{\partial x}{\partial m}\left(p + x \frac{\partial p}{\partial x}\right)$}};
+\node [right] at (7,1) {$y_{m}=\frac{px - cK - wL}{m}$};
+\draw[dashed](4,3.6)--(4,0);
+\node [below] at (4,0) {$m^{*}$};
+\end{tikzpicture}
+```
+
+
+
+---
+# Physicians' cooperative with physician supply
+
+```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-coop2}
+\begin{tikzpicture}[scale=.6]
+\draw [thick] (0,0) -- (8,0);
+\draw [thick] (0,0) -- (0,7);
+\draw (2,1) -- (4.5,6);
+\node [right] at (8,0) {$m$};
+\node [above] at (0,7) {\$};
+\draw (1,6) to [out=340,in=100] (5,1);
+\draw (1,1) .. controls (3,5) and (5.5,4) .. (7,1);
+\node [above] at (2,6) {$MRP_{m}$};
+\node [right] at (7,1) {$y_{m}$};
+\node [right] at (4.5,6) {$s_{L}$};
+\draw[dashed](4,3.6)--(4,0);
+\node [below] at (4,0) {$m^{*}$};
+\draw[dashed](3.25,3.5)--(3.25,0);
+\node [below] at (3.25,0) {$m^{0}$};
+\end{tikzpicture}
+```
+
