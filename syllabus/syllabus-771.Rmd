@@ -180,7 +180,7 @@ Please organize your folders in a useful way. The way I organize things (though 
 
 It's good to start developing some organization practices that work best for you. It's extremely easy to forget what you were doing on a project once you have several things going at once, especially when you wait for 6-8 months after submitting a paper for publication. The last thing you want is to not be able to replicate your own work!
 
-I will provide a set of papers from which you can choose to replicate, but you are also free to select your own. You need to get approval from me on a paper to replicate by **Friday, September 4**. Final replications are due no later than **Friday, December 11, 2020**.
+I will provide a set of papers from which you can choose to replicate, but you are also free to select your own. You need to get approval from me on a paper to replicate by **Friday, September 4**. Final replications are due no later than **Thursday, December 10, 2020**.
 
 
 ## Due dates
@@ -190,7 +190,7 @@ This section is just to highlight the most important dates on which an assignmen
   - **August 21**: Send me the references for the 2 papers that you would like to present throughout the semester. Only one student can present each paper, so this is first-come first-served.
   - **September 4**: Send me the name of the paper you'd like to replicate for the main class project.
   - **Friday, November 13**: Due date for literature review or draft paper.
-  - **Friday, December 11**: Due date for the replication.
+  - **Thursday, December 10**: Due date for the replication.
   - Empirical exercises due one week after the end of each module 
 
 

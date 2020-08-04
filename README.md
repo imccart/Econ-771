@@ -28,6 +28,16 @@ I have five central goals for this course:
 
 There are more specific learning outcomes for each module described on the relevant module's page of our class website, accessible [here](https://imccart.github.io/Econ-771/module-guides/).
 
+## Important Dates
+These dates are listed in the syllabus and in the [assignments](assignments/) link, but they are listed below as well just to highlight the main due dates for this semester:
+
+- **August 21**: Send me the references for the 2 papers that you'd like to present. This is first-come first-served.
+
+- **September 4**: Send me the name of the paper you'd like to replicate for the main class project.
+
+- **November 13**: Due date for literature review or draft paper.
+
+- **December 10**: Due date for replication. This is the date of our scheduled final exam for the class.
 
 
 ## Acknowledgements
