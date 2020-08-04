@@ -52,6 +52,3 @@ This class (and in particular the *R Markdown* formatting and animations) have b
 4. [Jenny Bryan](https://jennybryan.org/) has some incredible resources for people learning *R* and *GitHub*. Her and Jim Hester's [Happy Git and GitHub with R](https://happygitwithr.com/) is a great reference.
 
 5. [Steven Miller](http://svmiller.com/) genrously posted his `R Markdown` syllabus template, which I'm using for this class as well.
-
-
-Comment from AWS!
