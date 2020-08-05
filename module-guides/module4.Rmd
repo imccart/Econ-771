@@ -43,47 +43,47 @@ This is the guide for **Module 4**, the last module of the class. Over these las
 
 # Schedule
 
-### Class 18, 10/19
+### Class 19, 10/22
 **Competition in price and quality**<br>
 No student presentations today. Instead, I'll present some basics on the nature of competition when firms set both prices and quality. The main takeaway--theory doesn't tell us much about the effects of competition in this case. It really depends on the dimension by which customers are most responsive (price or quality).
 
-### Class 19, 10/21
+### Class 20, 10/27
 **Measuring hospital market power**<br>
 Today's class is about how we measure market power. The only paper for today is Dranove (2016), which provides a nice comparison of different measures in the literature.
 
 
-### Class 20, 10/26
+### Class 21, 10/29
 **Evidence from "structure-conduct-performance" studies**<br>
 Kessler and McClellan (2000) is one of the first healthcare studies in this literature. I label it as a "structure-conduct-performance" study because it takes a reduced form approach and attempts to capture the "structure" of the market with some summary statistic, assumes some conduct results from the structure, and then examins the outcome (or "performance"). This was a standard empirical approach in the early days of industrial organization. 
 
 Cooper et al. (2019) provides an excellent set of summary statistics and regression analysis of hospital pricing and industrial organization of healthcare markets. Their analysis is not necessarily causal but is an important set of empirical facts nonetheless. 
 
 
-### Class 21, 10/28
+### Class 22, 11/3
 **Competition in a bargaining model**<br>
 Ho and Lee (2017) is not the first paper to present a bargaining model and estimate the structure IO model with data; however, this is one of the most complete models of the insurer/hospital bargaining process and is therefore the one we'll focus on in this class.
 
 
-### Class 22, 11/2
+### Class 23, 11/5
 **Evidence from mergers and closures**<br>
 Dafny (2009) looks specifically at the effects of a hospital merger on hospital prices. As opposed to the "structure-conduct-performance" approach, this analysis compares markets in which there was a merger to those in which there was no merger and examines the relative changes in prices. 
 
 
-### Class 23, 11/4
+### Class 24, 11/10
 **Evidence from out-of-market mergers**<br>
 Dafny, Ho, and Lee (2019) examines the effects of "cross-market" mergers (i.e., hospital A in Atlanta mergers with hospital B in Savannah). They investigate a few potential mechanisms from such mergers, ultimately settling on the "common consumer" mechanism in which insurers negotiate with both hospitals so that the merger provides the joined system with more bargaining leverage even though the hospital markets themselves (Atlanta and Savannah, in our example) are distinct. Schmitt (2018) also considers out-of-market mergers; however, he considers them in the context of changing the extent to which different hospitals compete in other markets. In other words, his analysis uses out-of-market mergers as an event that changes the "pairwise overlaps" of hospitals in an otherwise unrelated market. 
 
-### Class 24, 11/9
+### Class 25, 11/12
 **Mergers and acquisitions in dialysis**<br>
 So far, we've focused exclusively on hospital markets, but there are some very interesting studies done on other aspects of healthcare. Eliason et al. (2020) is one such study on the dialysis industry.
 
-### Class 25, 11/11
+### Class 26, 11/17
 **Vertical integration between hospitals and physicians**<br>
 One of the biggest changes to the U.S. healthcare delivery system in the past 20 years is the relationships between physicians and hospitals. Around 2000, less than 5% of all physician practices were owned by a hospital. Today, over 1/3rd of physician practices are owned by hospital systems. Given the physician's important role as an agent to the patient, this change in the physician/hospital relationship has potentially important consequences for the amount and quality of care delivered. Also, in a bargaining context, this change in physician/hospital relationships has important consequences for prices.  Koch, Wendling, and Wilson (2017) examines the effects of physician/hospital integration on the quantity of care. Lin, McCarthy, and Richards (2020) examines the effects of physician/hospital integration on hospital prices.
 
-### Class 26, 11/16
-**Workshop day!**<br>
-Today we'll work on the fourth (and final) empirical assignment in class. For this assignment, instead of considering a causal inference strategy, we're going to think about how to measure hospital markets and how to estimate demand for hospital services. See [exercise 4](https://imccart.github.io/Econ-771/assignments/exercise2.html) for more details on this assignment. The assignment is due by **Friday, November 20th**.
+### Class 27-28, 11/19 and 11/24
+**Workshop days!**<br>
+We'll work on the fourth (and final) empirical assignment in class. For this assignment, instead of considering a causal inference strategy, we're going to think about how to measure hospital markets and how to estimate demand for hospital services. See [exercise 4](https://imccart.github.io/Econ-771/assignments/exercise4.html) for more details on this assignment. The assignment is due by **Tuesday, November 24th**.
 
 
 

@@ -43,29 +43,29 @@ This is the guide for **Module 3**, which covers healthcare decision-making and 
 
 # Schedule
 
-### Class 13, 9/30
+### Class 14, 10/6
 **Poor decisions in healthcare and health insurance**<br>
 The first paper for today, Chernew et al. (2018), is a working paper that I think highlights the questionable value of information disclosure efforts in healthcare. They show that patients don't really shop for services even when they could save a lot of money without sacrificing quality or travel time. Referring physicians instead have the largest effects on imaging choice. On the other hand, the second paper from Ketcham et al. (2012) shows that people do appear to learn about healthcare spending over time and adjust health insurance plans to better match their needs. This is important in the context of other static studies of plan choice, where authors find that people are very bad at initially selecting an insurance plan.
 
 
-### Class 14, 10/5
+### Class 15, 10/8
 **Inertia in health insurance choice**<br>
 Handel (2013) documents the role of interia in health insurance choice, showing that inertia is a major factor in insurance choice and that policies to reduce intertia may exacerbate existing problems of adverse selection. In other words, maybe inertia isn't quite so bad. Ericson (2014) takes inertia as given and considers how firms may employ an "invest-then-harvest" strategy whereby premiums are set low to attract customers and then raised once a sufficient level of market share is reached. 
 
 
-### Class 15, 10/7
+### Class 16, 10/13
 **Effects of quality disclosure**<br>
 Dafny and Dranove (2008) study the role of quality information on Medicare Advantage enrollment decisions. They employ the Barry (1994) estimation strategy that uses market share data to recover individual utility coefficient estimates in a nested logit model. Dranove et al. (2003) examines the effect of quality information on providers (as revealed through hospital and physician report cards on mortality rates for CABG patients in New York and Pennsylvania in the early 1990s). 
 
 
-### Class 16, 10/12
+### Class 17, 10/15
 **Effects of price disclosure**<br>
 Grennan and Swanson (2020) study the effects of a "benchmarking database" in which hospitals could observe statistics on prices paid for various medical devices. I will also start this class with a brief presentation of some of theoretical issues of price disclosure.
 
 
-### Class 17, 10/14
+### Class 18, 10/20
 **Workshop day!**<br>
-Today we'll work on the third empirical assignment in class. For this assignment, we'll skip straight to the replication files available online, since this exercise involves one of the few papers with data fully publicly available. See [exercise 3](https://imccart.github.io/Econ-771/assignments/exercise2.html) for more details on this assignment. The assignment is due by **Friday, October 23rd**.
+Today we'll work on the third empirical assignment in class. For this assignment, we'll skip straight to the replication files available online, since this exercise involves one of the few papers with data fully publicly available. See [exercise 3](https://imccart.github.io/Econ-771/assignments/exercise3.html) for more details on this assignment. The assignment is due by **Friday, October 30**.
 
 
 

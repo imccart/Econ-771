@@ -11,7 +11,7 @@
 
 <meta name="author" content="Econ 771: Health Economics II" />
 
-<meta name="date" content="2020-06-24" />
+<meta name="date" content="2020-08-05" />
 
 <title>Module 2</title>
 
@@ -1543,14 +1543,73 @@ div.tocify {
 
 <h1 class="title toc-ignore">Module 2</h1>
 <h4 class="author">Econ 771: Health Economics II</h4>
-<h4 class="date">June 24, 2020</h4>
+<h4 class="date">August 05, 2020</h4>
 
 </div>
 
 
 <div id="overview" class="section level1">
 <h1>Overview</h1>
-<p>This is the guide for <strong>Module 2</strong>, which covers issues related to physician agency and treatment decisions. Check back for more updates.</p>
+<p>This is the guide for <strong>Module 2</strong>, which covers issues related to physician agency and treatment decisions.</p>
+</div>
+<div id="learning-objectives" class="section level1">
+<h1>Learning objectives</h1>
+<ol style="list-style-type: decimal">
+<li>Synthesize the literature on physician agency and differentiate between agency and “supplier-induced” demand</li>
+<li>Recognize identification strategies in applied empirical work</li>
+<li>Identify potential barriers to instrumental variables in practice</li>
+<li>Analyze real data on physician behaviors and practice characteristics using publicly available data sources</li>
+<li>Describe the physician fee schedule and how Medicare pays for Part B services</li>
+</ol>
+</div>
+<div id="econometrics-issues" class="section level1">
+<h1>Econometrics issues</h1>
+<ol style="list-style-type: decimal">
+<li>Instrumental variables and required assumptions</li>
+<li>Treatment effects with IV</li>
+<li>Using predictions as instruments</li>
+</ol>
+</div>
+<div id="main-datasets" class="section level1">
+<h1>Main datasets</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://data.medicare.gov/data/physician-compare">Physician Compare</a></li>
+<li><a href="https://data.hrsa.gov/topics/health-workforce/ahrf">Area Health Resources Files</a></li>
+<li><a href="https://github.com/imccart/Medicare-Advantage">Medicare Advantage</a></li>
+<li><a href="https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Physician-and-Other-Supplier">Provider Utilization and Payment Data</a></li>
+<li><a href="https://www.cms.gov/Regulations-and-Guidance/Administrative-Simplification/NationalProvIdentStand/DataDissemination">NPPES</a>’</li>
+<li><a href="https://www.cdc.gov/nchs/nhds/index.htm">National Hospital Discharge Survey</a></li>
+</ol>
+</div>
+<div id="schedule" class="section level1">
+<h1>Schedule</h1>
+<div id="class-9-917" class="section level3">
+<h3>Class 9, 9/17</h3>
+<p><strong>The agency problem in healthcare</strong><br>
+We typically think of agency as a contract problem in which the goal is to devise a contract that incentivizes maximum (unobservable) effort subject to relevant constraints. In the healthcare context, however, the agency problem simply reflects the different set of incentives faced by the physician versus the patient. The physician acts as an agent on behalf of the patient, but they may not act in a way that maximizes the patient’s objective function. In this class, I’ll present some basic theory of the physician agency problem and the role of fee-for-service versus capitated payment models. The lecture material is based entirely on the handbook chapter from McGuire (2000).</p>
+</div>
+<div id="class-10-922" class="section level3">
+<h3>Class 10, 9/22</h3>
+<p><strong>Supply-side variation in healthcare</strong><br>
+The literature doesn’t always discuss their analysis in the context of agency problems, but in many cases, agency problems represent the underlying mechanism for overutilization of healthcare services. Today’s papers – Finkelstein, Gentzkow, and Williams (2016) and Molitor (2018) – exploit patient or physician “movers” to examine the effects of practice styles on healthcare utilization.</p>
+<p>The underlying idea in both papers is that physicians have a certain way of practicing, regardless of patient preferences. So when patients go to a new area where physicians are more aggressive, those patients will receive more care, and when physicians join practices that are more agressive, they will begin practicing in a more agressive way. The notion of patient and physician “movers” has become a popular identification strategy in the literature, and we’ll discuss some of the merits and drawbacks of this strategy.</p>
+</div>
+<div id="class-11-924" class="section level3">
+<h3>Class 11, 9/24</h3>
+<p><strong>Physician response to payment changes</strong><br>
+The papers from 9/16 take area practice styles as given and examine how utilization or individual practice styles vary as people move in and out of different areas. For today, we’ll look at practice styles within an area and see how those practice styles change with financial incentives. Gruber and Owings (1996) is an older paper but important in the literature. It envisions healthcare services as being highly maleable by physicians and tests whether physicians encourage patients to pursue certain services when the physician suffers a negative financial shock. The more recent paper, Clemens and Gottlieb (2017), considers how Medicare payments affect physician practice styles.</p>
+</div>
+<div id="class-12-929" class="section level3">
+<h3>Class 12, 9/29</h3>
+<p><strong>Physician spillovers</strong><br>
+Today we’ll look at a couple of papers that study how changes in one healthcare segement (e.g., public insurance policies) affect other segments (e.g., commercial insurance patients). Clements and Gottlieb (2014) is about spillovers from public payment policies onto the commercial insurance market, and Baicker, Chernew, and Robbins (2013) is about spillovers from Medicare managed care (the private insurance component of Medicare) onto Medicare patients.</p>
+<p>Hopefully it’s clear from these papers how difficult it is to study healthcare in a general equilibrium setting…Medicare policies affect commercial insurers, and changes in the commercial insurance market affect how physicians treat Medicare patients. On top of that, there are practice level changes that affect physician behaviors, which of course affects patients.</p>
+</div>
+<div id="class-13-1001" class="section level3">
+<h3>Class 13, 10/01</h3>
+<p><strong>Workshop day!</strong><br>
+Today we’ll work on the second empirical assignment in class. We’ll focus on accessing the data using GitHub and AWS, cleaning the data, and implementing the relevant identification strategy. See <a href="https://imccart.github.io/Econ-771/assignments/exercise2.html">exercise 2</a> for more details on this assignment. The assignment is due by <strong>Friday, October 9th</strong>.</p>
+</div>
 </div>
 
 

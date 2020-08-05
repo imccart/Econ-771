@@ -45,25 +45,25 @@ This is the guide for **Module 2**, which covers issues related to physician age
 
 # Schedule
 
-### Class 8, 9/14
+### Class 9, 9/17
 **The agency problem in healthcare**<br>
 We typically think of agency as a contract problem in which the goal is to devise a contract that incentivizes maximum (unobservable) effort subject to relevant constraints. In the healthcare context, however, the agency problem simply reflects the different set of incentives faced by the physician versus the patient. The physician acts as an agent on behalf of the patient, but they may not act in a way that maximizes the patient's objective function. In this class, I'll present some basic theory of the physician agency problem and the role of fee-for-service versus capitated payment models. The lecture material is based entirely on the handbook chapter from McGuire (2000).
 
 
-### Class 9, 9/16
+### Class 10, 9/22
 **Supply-side variation in healthcare**<br>
 The literature doesn't always discuss their analysis in the context of agency problems, but in many cases, agency problems represent the underlying mechanism for overutilization of healthcare services. Today's papers -- Finkelstein, Gentzkow, and Williams (2016) and Molitor (2018) -- exploit patient or physician "movers" to examine the effects of practice styles on healthcare utilization. 
 
 The underlying idea in both papers is that physicians have a certain way of practicing, regardless of patient preferences. So when patients go to a new area where physicians are more aggressive, those patients will receive more care, and when physicians join practices that are more agressive, they will begin practicing in a more agressive way. The notion of patient and physician "movers" has become a popular identification strategy in the literature, and we'll discuss some of the merits and drawbacks of this strategy.
 
 
-### Class 10, 9/21
+### Class 11, 9/24
 **Physician response to payment changes**<br>
 The papers from 9/16 take area practice styles as given and examine how utilization or individual practice styles vary as people move in and out of different areas. For today, we'll look at practice styles within an area and see how those practice styles change with financial incentives. Gruber and Owings (1996) is an older paper but important in the literature. It envisions healthcare services as being highly maleable by physicians and tests whether physicians encourage patients to pursue certain services when the physician suffers a negative financial shock. The more recent paper, Clemens and Gottlieb (2017), considers how Medicare payments affect physician practice styles. 
 
 
 
-### Class 11, 9/23
+### Class 12, 9/29
 **Physician spillovers**<br>
 Today we'll look at a couple of papers that study how changes in one healthcare segement (e.g., public insurance policies) affect other segments (e.g., commercial insurance patients). Clements and Gottlieb (2014) is about spillovers from public payment policies onto the commercial insurance market, and Baicker, Chernew, and Robbins (2013) is about spillovers from Medicare managed care (the private insurance component of Medicare) onto Medicare patients. 
 
@@ -71,6 +71,6 @@ Hopefully it's clear from these papers how difficult it is to study healthcare i
 
 
 
-### Class 12, 9/28
+### Class 13, 10/01
 **Workshop day!**<br>
-Today we'll work on the second empirical assignment in class. We'll focus on accessing the data using GitHub and AWS, cleaning the data, and implementing the relevant identification strategy. See [exercise 2](https://imccart.github.io/Econ-771/assignments/exercise2.html) for more details on this assignment. The assignment is due by **Friday, October 2nd**.
+Today we'll work on the second empirical assignment in class. We'll focus on accessing the data using GitHub and AWS, cleaning the data, and implementing the relevant identification strategy. See [exercise 2](https://imccart.github.io/Econ-771/assignments/exercise2.html) for more details on this assignment. The assignment is due by **Friday, October 9th**.
