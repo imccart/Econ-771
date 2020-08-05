@@ -1555,10 +1555,11 @@ div.tocify {
 </div>
 <div id="resources-and-data" class="section level1">
 <h1>Resources and data</h1>
-<p>The data for this assignment comes from two sources:</p>
+<p>The data for this assignment comes from three sources:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Inpatient Prospective Payment System Final Rule Files</strong>: The Centers for Medicare and Medicaid services publishes these data annually, and they contain some basic information about the types of patients admitted to hospitals in a given year. The data are available on our shared AWS AMI under the “IPPS” folder. They are also available for you to download directly from the <a href="https://data.nber.org/data/cms-impact-file-hospital-inpatient-prospective-payment-system-ipps.html">NBER IPPS Data</a>. You can get the data from CMS as well, but they no longer host the historic data so the NBER link is your best option for these exercises. Use these data to get information on hospital case mix and disproportionate share information.</p></li>
 <li><p><strong>Provider of Services files</strong>: These data are available from <a href="https://data.nber.org/data/provider-of-services.html">NBER POS</a> as well as at <a href="https://github.com/asacarny/provider-of-services">Adam Sacarny’s GitHub repo</a>. I’ve also made these data available on our shared AWS AMI in the “POS” folder. Use these data to get information on hospital ownership type.</p></li>
+<li><p><strong>Medicaid Expansion</strong>: Data on which states expanded Medicaid under the ACA, and when they expanded, is available from the Kaiser Family Foundation website. For more info, see my GitHub repository, <a href="https://github.com/imccart/Insurance-Access">Insurance Access</a>.</p></li>
 </ol>
 </div>
 <div id="questions" class="section level1">
@@ -1567,8 +1568,9 @@ div.tocify {
 <ol style="list-style-type: decimal">
 <li><p>Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of the case mix index and disproportionate share across years.</p></li>
 <li><p>Create two figures showing the mean hospital disproportionate share and cmi from 1986 to 2018. Show this trend separately by hospital ownership type (private not for profit and private for profit).</p></li>
-<li><p>Approximate the analysis from Dafny (2005) using the Case Mix Index as the outcome of interest. While we don’t have the same granularity of data, we can at least test for a differential effect of the 1988 DRG change between for-profit and not-for-profit hospitals. Treating not-for-profit hospitals as “controls”, estimate this effect as a standard DD. Do we see larger responses among for-profit hospitals as in Figure 4 in Dafny (2005)?</p></li>
-<li><p>Estimate an “event study” version of the DD model from part 3.</p></li>
+<li><p>Using a simple DD identification strategy, estimate the effect of Medicaid expansion on the hospital disproportionate share percentage. Do these effects differ by profit status (i.e., re-estimate with a DDD using profit status)? Focus your analysis on the years from 2005 through 2018.</p></li>
+<li><p>Estimate an “event study” version of the DD model from part 3. Focus only on states that expanded in 2014 that those that have never expanded.</p></li>
+<li><p>Estimate another event study where you allow for differential treatment timing and incorporate all states.</p></li>
 </ol>
 </div>
 

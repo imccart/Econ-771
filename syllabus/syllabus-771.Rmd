@@ -9,7 +9,7 @@ geometry: margin=1in
 
 title: "Econ 771: Health Economics II"
 author: Ian McCarthy
-date: "8/19/2020 - 11/24/2020"
+date: "8/19/2020 - 12/10/2020"
 
 email: "ian.mccarthy@emory.edu"
 web: "imccart.github.io/Econ-771/"
@@ -35,7 +35,7 @@ knitr::opts_chunk$set(warning=F, message=F)
 
 ```{r dates_bib, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, dev='pdf')
-start <- as.Date("2020-08-19")
+start <- as.Date("2020-08-20")
 advdate <- function(adv) {
  twed <- start + 7*floor(adv/2)
  tmon <- twed-2
@@ -309,23 +309,22 @@ bib[c("gowrisankaran2019","lee2020")]
 ``` 
 
 
-### `r advdate(7)`: Working with data
+### `r advdate(7)` and `r advdate(8)`: Working with data
 
 **Causal inference with panel data**<br>
 
 - Difference-in-differences and parallel trends
 - Event studies and time-varying treatment effects
-- Inference with few treated groups
 
 **Applications and data**<br>  
 
 - Provider of Services files and Inpatient Prospective Payment System Final Rule files
-- Replicate parts of Dafny (2005)
+- Examine effects of Medicaid expansion on hospital disproportionate shares
 
 
 ## Module 2: Physician agency and treatment decisions
 
-### `r advdate(8)`: The agency problem in healthcare**
+### `r advdate(9)`: The agency problem in healthcare**
 
 **Primary reading:**<br>
 
@@ -341,7 +340,7 @@ bib[c("grossman1983","chandra2011")]
 
 
 
-### `r advdate(9)`: Supply-side variation in healthcare
+### `r advdate(10)`: Supply-side variation in healthcare
 
 **Primary reading:**<br>
 
@@ -350,7 +349,7 @@ bib[c("finkelstein2016","molitor2018")]
 ``` 
 
 
-### `r advdate(10)`: Physician response to payment changes
+### `r advdate(11)`: Physician response to payment changes
 
 **Primary reading:**<br>
 
@@ -367,7 +366,7 @@ bib[c("baker2016","gaynor2016","beckert2018")]
 
 
 
-### `r advdate(11)`: Physician spillovers
+### `r advdate(12)`: Physician spillovers
 
 **Primary reading:**<br>
 
@@ -382,7 +381,7 @@ bib[c("chandra2007","mcguire1991","glied2002","baker2003","newhouse1978","frank2
 ``` 
 
 
-### `r advdate(12)`: Working with data
+### `r advdate(13)`: Working with data
 
 **Instrumental variables**<br>
 
@@ -398,7 +397,7 @@ bib[c("chandra2007","mcguire1991","glied2002","baker2003","newhouse1978","frank2
 
 ## Module 3: Information disclosure and patient decision making
 
-### `r advdate(13)`: Poor decisions in healthcare and health insurance
+### `r advdate(14)`: Poor decisions in healthcare and health insurance
 
 **Primary reading:**<br>
 
@@ -415,7 +414,7 @@ bib[c("farrell2007","abaluck2011")]
 
 
 
-### `r advdate(14)`: Inertia in health insurance choice
+### `r advdate(15)`: Inertia in health insurance choice
 
 **Primary reading:**<br>
 
@@ -425,7 +424,7 @@ bib[c("handel2013","ericson2014")]
 
 
 
-### `r advdate(15)`: Effects of quality disclosure
+### `r advdate(16)`: Effects of quality disclosure
 
 **Primary reading:**<br>
 
@@ -442,7 +441,7 @@ bib[c("chernew1998","scanlon2002","wedig2002","jin2006","dranove2010","reid2013"
 
 
 
-### `r advdate(16)`: Effects of price disclosure
+### `r advdate(17)`: Effects of price disclosure
 
 **Primary reading:**<br>
 
@@ -451,7 +450,7 @@ bib["grennan2020"]
 ``` 
 
 
-### `r advdate(17)`: Working with data
+### `r advdate(18)`: Working with data
 
 **Regression discontinuity**<br>
 
@@ -467,7 +466,7 @@ bib["grennan2020"]
 
 ## Module 4: Healthcare competition and industrial organization
 
-### `r advdate(18)`: Competition in price and quality**
+### `r advdate(19)`: Competition in price and quality**
 
 **Primary reading:**<br>
 
@@ -486,7 +485,7 @@ bib[c("spence1975","mussa1978","hausman1994","dana2011")]
 
 
 
-### `r advdate(19)`: Measuring hospital market power
+### `r advdate(20)`: Measuring hospital market power
 
 **Primary reading:**<br>
 
@@ -503,7 +502,7 @@ bib[c("dranove1990","capps2003")]
 
 
 
-### `r advdate(20)`: Evidence from "structure-conduct-performance" studies
+### `r advdate(21)`: Evidence from "structure-conduct-performance" studies
 
 **Primary reading:**<br>
 
@@ -521,7 +520,7 @@ bib[c("dranove1992hospital","lynk1995","keeler1999")]
 
 
 
-### `r advdate(21)`: Competition in a bargaining model
+### `r advdate(22)`: Competition in a bargaining model
 
 **Primary reading:**<br>
 
@@ -538,7 +537,7 @@ bib[c("bresnahan1991","reiss2007","abraham2007","gowrisankaran2015","lewis2015")
 
 
 
-### `r advdate(22)`: Evidence from mergers and closures
+### `r advdate(23)`: Evidence from mergers and closures
 
 **Primary reading:**<br>
 
@@ -556,7 +555,7 @@ bib[c("vita2001","gaynor2003","lindrooth2003","gaynor2012rwjf")]
 
 
 
-### `r advdate(23)`: Evidence from out-of-market mergers
+### `r advdate(24)`: Evidence from out-of-market mergers
 
 **Primary reading:**<br>
 
@@ -568,7 +567,7 @@ bib[c("dafny2019","schmitt2018")]
 
 
 
-### `r advdate(24)`: Mergers and acquisitions in dialysis
+### `r advdate(25)`: Mergers and acquisitions in dialysis
 
 **Primary reading:**<br>
 
@@ -580,7 +579,7 @@ bib["eliason2020"]
 
 
 
-### `r advdate(25)`: Vertical integration between hospitals and physicians
+### `r advdate(26)`: Vertical integration between hospitals and physicians
 
 **Primary reading:**<br>
 
@@ -596,7 +595,19 @@ bib[c("burns2002","ciliberto2006","cuellar2006","baker2016","neprash2015","capps
 
 
 
-### `r advdate(26)`: Working with data
+### `r advdate(27)` and `r advdate(28)`: Working with data
+
+**Measuring markets and estimating demand**<br>
+
+- Understanding HRRs
+- Employ "community detection" algorithm for market construction
+- Estimate basic nested logit with market share data
+
+**Applications and data**<br>  
+
+- Hospital Cost Reports and Provider of Services files
+- Investigate differences in demand based on different measures of the market
+
 
 
 ## Module 5: Health insurance markets (likely won't get to this)
