@@ -13,7 +13,7 @@ There are four main assignments throughout the semester, along with a participat
   - [Exercise 3](exercise3.html): Regression Discontinuity
   - [Exercise 4](exercise4.html): Hospital markets and demand estimation
 
-3. **Presentations**: You will present two papers throughout the course of the semester. A list of potential papers and other instructions is available on the [presentations](presentation.html) page of our class website. Please inform me of your selected papers no later than **August 21, 2020**.
+3. **Presentations**: You will present two papers throughout the course of the semester. A list of potential papers and other instructions is available on the [presentations](presentation.html) page of our class website. Please inform me of your selected papers no later than **August 21, 2020**. We have a class sign-up sheet in Google Sheets where you can select your papers to present. I emailed the link to everyone on 8/10/2020, and the link is also in the assignments section of our Canvas page.
 
 4. **Literature review** (2nd year) or **draft paper** (3rd year): You will prepare a literature review or a preliminary draft paper depending on how far along you are in the PhD program. Details of these assignments are available on the [literature review](lit-review.html) and [draft paper](draft-paper.html) pages of our website. This assignment is due by **Friday, November 13, 2020**.
 
