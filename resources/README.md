@@ -17,7 +17,7 @@ To get the most out of this class, we need to use a handful of tools. Some of th
 
 6. **GroupTweet**: We'll use GroupTweet to facilitate discussions outside of normal class time. I'll set up the group and it will act as our own private Twittersphere.
 
-7. **Me!** Please reach out to me for any reason. I will answer emails as promptly as possible (definitely within 24 hours), and we can meet virtually whenever I am available. If you'd like to meet virtually, just go to [https://ian-meetings.youcanbook.me](https://ian-meetings.youcanbook.me) and find a time that works.
+7. **Me!** Please reach out to me for any reason. I will answer emails as promptly as possible (definitely within 24 hours), and we can meet virtually whenever I am available. If you'd like to meet virtually, just go to [https://mccarthy-meetings.youcanbook.me](https://mccarthy-meetings.youcanbook.me) and find a time that works.
 
 
 ## Data
