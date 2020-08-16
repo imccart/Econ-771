@@ -363,7 +363,7 @@ name: syllabus
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
 
-(Read the full document [here](https://imccart.github.io/Econ-771/syllabus.pdf))
+(Read the full document [here](https://imccart.github.io/Econ-771/syllabus/syllabus-771.pdf))
 
 
 ---
