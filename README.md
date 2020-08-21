@@ -26,7 +26,7 @@ I have five central goals for this course:
 
 5. Develop your own preliminary research in some area of health economics
 
-There are more specific learning outcomes for each module described on the relevant module's page of our class website, accessible [here](https://imccart.github.io/Econ-771/module-guides/).
+There are more specific learning outcomes for each module described on the relevant module's page of our class website, accessible [here](module-guides/).
 
 ## Important Dates
 These dates are listed in the syllabus and in the [assignments](assignments/) link, but they are listed below as well just to highlight the main due dates for this semester:

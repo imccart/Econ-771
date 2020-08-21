@@ -1,7 +1,7 @@
 ---
 title: "Module 3"
 author: "Econ 771: Health Economics II"
-date: '`r format(Sys.Date(), "%B %d, %Y")`'
+date: 'October 6 through October 20'
 output: 
   bookdown::html_document2:
     toc: TRUE

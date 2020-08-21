@@ -67,6 +67,9 @@ Presenters:
 **Response to Medicare payment changes**<br>
 This class focuses on hospital responses to Medicare payment changes. We'll discuss two responses in particular: 1) hospital "upcoding", with Dafny (2005); and hospital purchases of physician practices, in Dranove and Ody (2019). The general theme in both (and many other) papers is that hospitals respond to financial incentives and do not appear to be fully altruistic firms.
 
+Presenters:
+- Nada will present Dafny (2005)
+- Xin will present Dranove and Ody (2019)
 
 ### Class 5, 9/3
 **Hospital cost-shifting**<br>
@@ -78,6 +81,9 @@ I will briefly present the Dranove (1988) paper in the beginning of class. I'll 
 ### Class 6, 9/8
 **Response to insurance policies**<br>
 Whereas the papers on 8/31 and 9/2 deal with hospital responses to changes in Medicare payments, today's papers consider more general changes to insurance policies. The papers for today are Batty and Ippolito (2017), Eliason et al. (2018), and Geruso and Layton (2020).
+
+Presenters:
+- Alexandra will present Batty and Ippolito (2017)
 
 
 ### Class 7-8, 9/10 and 9/15
