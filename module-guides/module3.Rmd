@@ -65,7 +65,7 @@ Grennan and Swanson (2020) study the effects of a "benchmarking database" in whi
 
 ### Class 18, 10/20
 **Workshop day!**<br>
-Today we'll work on the third empirical assignment in class. For this assignment, we'll skip straight to the replication files available online, since this exercise involves one of the few papers with data fully publicly available. See [exercise 3](https://imccart.github.io/Econ-771/assignments/exercise3.html) for more details on this assignment. The assignment is due by **Friday, October 30**.
+Today we'll work on the third empirical assignment in class. For this assignment, we'll skip straight to the replication files available online, since this exercise involves one of the few papers with data fully publicly available. See [exercise 3](../assignments/exercise3.html) for more details on this assignment. The assignment is due by **Friday, October 30**.
 
 
 
