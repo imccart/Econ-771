@@ -1,7 +1,7 @@
 ---
 title: "Module 1"
 author: "Econ 771: Health Economics II"
-date: '`r format(Sys.Date(), "%B %d, %Y")`'
+date: 'August 25 through September 15'
 output: 
   bookdown::html_document2:
     toc: TRUE
@@ -52,13 +52,16 @@ Below is a preliminary schedule of classes and specific papers we'll cover. This
 **Theoretical models of not-for-profits**<br>
 I'll present some details on models of the not-for-profit hospital from Dranove (1988), Newhouse (1970), and Pauly (1978). These are theoretical papers proposing different models of hospital behaviors, such as a purely utility maximizing firm or a physician's owned cooperative. We'll also discuss some institutional details of the hospital market and the prevalence of private not-for-profit hospitals.
 
-- [Slides](slides-class2.html) on hospital objective functions and not-for-profits
+- My [slides](slides-class2.html) on hospital objective functions and not-for-profits
 
 
 ### Class 3, 8/27
 **Empirical evidence on ownership type**<br>
 Today we'll discuss some empirical work focusing on differences in behavior between for-profit versus not-for-profit hospitals. We'll cover the following papers: Duggan (2000), Horwitz and Nichols (2009), Bayindir (2012). Note that Horwitz and Nichols (2009) and Bayindir (2012) are combined in the class presentations. Both of those papers are closely related and so it makes sense to present those papers together. The papers are also relatively short.
 
+Presenters:
+- Michelle will present Bayindir (2012) and Horwitz and Nichols (2009).
+- Alexandra will present Duggan (2000)
 
 ### Class 4, 9/1
 **Response to Medicare payment changes**<br>
