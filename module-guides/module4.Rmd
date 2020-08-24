@@ -1,7 +1,7 @@
 ---
 title: "Module 4"
 author: "Econ 771: Health Economics II"
-date: '`r format(Sys.Date(), "%B %d, %Y")`'
+date: 'October 22 through November 24'
 output: 
   bookdown::html_document2:
     toc: TRUE
@@ -83,7 +83,7 @@ One of the biggest changes to the U.S. healthcare delivery system in the past 20
 
 ### Class 27-28, 11/19 and 11/24
 **Workshop days!**<br>
-We'll work on the fourth (and final) empirical assignment in class. For this assignment, instead of considering a causal inference strategy, we're going to think about how to measure hospital markets and how to estimate demand for hospital services. See [exercise 4](https://imccart.github.io/Econ-771/assignments/exercise4.html) for more details on this assignment. The assignment is due by **Tuesday, November 24th**.
+We'll work on the fourth (and final) empirical assignment in class. For this assignment, instead of considering a causal inference strategy, we're going to think about how to measure hospital markets and how to estimate demand for hospital services. See [exercise 4](../assignments/exercise4.html) for more details on this assignment. The assignment is due by **Tuesday, November 24th**.
 
 
 
