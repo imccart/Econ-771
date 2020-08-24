@@ -140,7 +140,7 @@ name: nfp
 # Non-profit hospitals in theory, Newhouse (1970)
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-nfp1}
-\begin{tikzpicture}[scale=.7]
+\begin{tikzpicture}[scale=.7, every node/.style={scale=.5}]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,5);
 \node [right] at (8,0) {$x$};
@@ -166,7 +166,7 @@ name: nfp
 # Non-profit hospitals in theory, Newhouse (1970)
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-nfp2}
-\begin{tikzpicture}[scale=.7]
+\begin{tikzpicture}[scale=.6, every node/.style={scale=.5}]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,7);
 \node [right] at (8,0) {$x$};
@@ -382,6 +382,7 @@ How does the choice of $p_{i}$ change with $p_{j}$? $$\frac{\mathrm{d}p_{i}}{\ma
 - Does it happen? Empirically, some evidence of cost-shifting but likely small with heterogeneous effects
 
 --
+
 - Some people **really** don't think cost-shifting happens, [incidental economist blog](https://theincidentaleconomist.com/wordpress/tag/cost-shifting/).
 
 
@@ -416,7 +417,7 @@ Physicians maximize income, $$y_{m} = \frac{1}{m}\left(px - wL - cK\right),$$ wh
 # Physicians' cooperative graphically
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-coop}
-\begin{tikzpicture}[scale=.5=7]
+\begin{tikzpicture}[scale=.5, every node/.style={scale=.5}]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,7);
 \node [right] at (8,0) {$m$};
@@ -436,7 +437,7 @@ Physicians maximize income, $$y_{m} = \frac{1}{m}\left(px - wL - cK\right),$$ wh
 # Physicians' cooperative with physician supply
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-coop2}
-\begin{tikzpicture}[scale=.7]
+\begin{tikzpicture}[scale=.5, every node/.style={scale=.5}]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,7);
 \draw (2,1) -- (4.5,6);
