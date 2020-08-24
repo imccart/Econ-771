@@ -140,7 +140,7 @@ name: nfp
 # Non-profit hospitals in theory, Newhouse (1970)
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-nfp1}
-\begin{tikzpicture}[scale=.5]
+\begin{tikzpicture}[scale=.7]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,5);
 \node [right] at (8,0) {$x$};
@@ -166,7 +166,7 @@ name: nfp
 # Non-profit hospitals in theory, Newhouse (1970)
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-nfp2}
-\begin{tikzpicture}[scale=.5]
+\begin{tikzpicture}[scale=.7]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,7);
 \node [right] at (8,0) {$x$};
@@ -219,6 +219,84 @@ What do you think? Are these community benefits measured appropriately?
 ---
 # An aside on hospital pricing
 
+*What is a hospital price?* A defining characteristic of hospital services is, *it's complicated!*
+
+--
+.center[
+  ![:scale 800px](pics/BillExample.jpg)
+]
+
+<div class="smalltext">Brill, Steven. 2013. "Bitter Pill: Why Medical Bills are Killing Us." *Time Magazine*.</div>
+
+---
+# An aside on hospital pricing
+
+Lots of different payers paying lots of different prices:
+- [Medicare fee-for-service prices](https://www.cms.gov/Outreach-and-Education/Medicare-Learning-Network-MLN/MLNProducts/Downloads/AcutePaymtSysfctsht.pdf)
+- [Medicaid payments](https://www.kff.org/report-section/understanding-medicaid-hospital-payments-and-the-impact-of-recent-policy-changes-issue-brief/)
+- Private insurance negotiations (including Medicare Advantage)
+- But what about the price to patients?
+
+--
+
+.center[
+Price $\neq$ charge $\neq$ cost $\neq$ patient out-of-pocket spending
+]
+
+---
+# An aside on hospital pricing
+
+.center[
+  ![:scale 600px](pics/DifferentPrices.jpg)
+]
+
+<div class="smalltext">Source: <a href="https://healthcarepricingproject.org/">Health Care Pricing Project</a></div>
+
+
+---
+# What is a hospital price?
+Not clear what exactly is negotiated...
+
+--
+.pull-left[
+### Fee-for-service
+- price per procedure
+- percentage of charges
+- markup over Medicare rates
+]
+
+--
+.pull-right[
+### Capitation
+- payment per patient
+- pay-for-performance
+- shared savings
+]
+
+---
+# An aside on hospital pricing
+
+A few stylized facts:
+
+1. Hospital services are expensive
+
+2. Prices vary dramatically across different areas
+
+3. Lack of competition is a major reason for high prices
+
+---
+# An aside on hospital pricing
+
+.pull-left[
+  ![:scale 450px](pics/HC_var_withinmkt_hip_ga_atlanta.png)
+]
+
+.pull-right[
+  ![:scale 450px](pics/HC_var_withinmkt_kmri_ga_atlanta.png)
+]
+
+<div class="smalltext">Source: <a href="https://healthcarepricingproject.org/">Health Care Pricing Project</a></div>
+
 
 ---
 # What is a non-profit hospital?
@@ -232,7 +310,6 @@ The real question is...what is the hospital's objective function?
 --
 
 Most empirical evidence doesn't find much of a difference between FP and NFP hospitals, except FPs have higher prices. Why is that?
-
 
 
 
@@ -339,7 +416,7 @@ Physicians maximize income, $$y_{m} = \frac{1}{m}\left(px - wL - cK\right),$$ wh
 # Physicians' cooperative graphically
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-coop}
-\begin{tikzpicture}[scale=.5]
+\begin{tikzpicture}[scale=.5=7]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,7);
 \node [right] at (8,0) {$m$};
@@ -359,7 +436,7 @@ Physicians maximize income, $$y_{m} = \frac{1}{m}\left(px - wL - cK\right),$$ wh
 # Physicians' cooperative with physician supply
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-coop2}
-\begin{tikzpicture}[scale=.5]
+\begin{tikzpicture}[scale=.7]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,7);
 \draw (2,1) -- (4.5,6);
