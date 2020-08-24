@@ -140,7 +140,7 @@ name: nfp
 # Non-profit hospitals in theory, Newhouse (1970)
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-nfp1}
-\begin{tikzpicture}[scale=.6]
+\begin{tikzpicture}[scale=.5]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,5);
 \node [right] at (8,0) {$x$};
@@ -166,7 +166,7 @@ name: nfp
 # Non-profit hospitals in theory, Newhouse (1970)
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-nfp2}
-\begin{tikzpicture}[scale=.6]
+\begin{tikzpicture}[scale=.5]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,7);
 \node [right] at (8,0) {$x$};
@@ -216,6 +216,8 @@ name: nfp
 What do you think? Are these community benefits measured appropriately?
 
 
+---
+# An aside on hospital pricing
 
 
 ---
@@ -302,7 +304,8 @@ How does the choice of $p_{i}$ change with $p_{j}$? $$\frac{\mathrm{d}p_{i}}{\ma
 
 - Does it happen? Empirically, some evidence of cost-shifting but likely small with heterogeneous effects
 
-
+--
+- Some people **really** don't think cost-shifting happens, [incidental economist blog](https://theincidentaleconomist.com/wordpress/tag/cost-shifting/).
 
 
 
@@ -336,7 +339,7 @@ Physicians maximize income, $$y_{m} = \frac{1}{m}\left(px - wL - cK\right),$$ wh
 # Physicians' cooperative graphically
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-coop}
-\begin{tikzpicture}[scale=.6]
+\begin{tikzpicture}[scale=.5]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,7);
 \node [right] at (8,0) {$m$};
@@ -356,7 +359,7 @@ Physicians maximize income, $$y_{m} = \frac{1}{m}\left(px - wL - cK\right),$$ wh
 # Physicians' cooperative with physician supply
 
 ```{tikz echo=FALSE, fig.ext='png', cache=TRUE, tikz-coop2}
-\begin{tikzpicture}[scale=.6]
+\begin{tikzpicture}[scale=.5]
 \draw [thick] (0,0) -- (8,0);
 \draw [thick] (0,0) -- (0,7);
 \draw (2,1) -- (4.5,6);
@@ -374,3 +377,27 @@ Physicians maximize income, $$y_{m} = \frac{1}{m}\left(px - wL - cK\right),$$ wh
 \end{tikzpicture}
 ```
 
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: takeaways
+
+# Takeaways
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Different predictions
+
+- Not-for-profit hospitals will respond differently to price changes and changes in competition
+
+- In practice, hospitals may have a blend of different objectives...very hard to predict behavior theoretically
+
+---
+# Why does this matter?
+
+A few reaons for going through this stuff:
+
+1. Understand the basic models in the literature
+2. Cost-shifting is an important policy question and a good story of bias in the literature
+3. Ultimately, identifying the "true" objective function is an empirical question (and maybe impossible)
