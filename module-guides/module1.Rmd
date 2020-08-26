@@ -61,8 +61,8 @@ Today we'll discuss some empirical work focusing on differences in behavior betw
 
 Presenters:
 
-- Michelle will present Bayindir (2012) and Horwitz and Nichols (2009).
-- Alexandra will present Duggan (2000)
+- My [slides](slides-bayindir-horwitz.html) for Bayindir (2012) and Horwitz and Nichols (2009)
+- Alexandra's [slides](slides-duggan) for Duggan (2000)
 
 ### Class 4, 9/1
 **Response to Medicare payment changes**<br>
