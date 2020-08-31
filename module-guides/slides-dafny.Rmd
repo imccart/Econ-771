@@ -1,0 +1,160 @@
+---
+title: "How do hospitals respond to price changes?"
+subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
+author: Leemore Dafny
+date: Comments by Ian McCarthy | Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{amsmath}
+  - \usepackage{pgf}
+  - \usepackage[xcolor=pst]{pstricks}
+  - \usepackage{pgfshade}
+  - \usepackage{pdftools}
+  - \usepackage{color}
+  - \usepackage{colortbl}
+  - \usepackage{xcolor}
+output:
+#  html_document: default (toggle on for "simplified" view)
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, custom.css] 
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: "macros.js"
+      navigation:
+          touch: false
+---
+
+<!-- Adjust some CSS code for font size and maintain R code font size -->
+<style type="text/css">
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+</style>
+
+
+<!-- Set R options for how code chunks are displayed and load packages -->
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+opts_chunk$set(
+  fig.align="center",  
+  fig.height=3, #fig.width=6,
+  # out.width="748px", #out.length="520.75px",
+  dpi=300, #fig.path='Figs/',
+  cache=T#, echo=F, warning=F, message=F
+  )
+
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if(options$fig.callout) {
+    options$echo = FALSE
+  }
+  options
+})
+
+```
+
+
+# Table of contents
+
+1. [Motivation](#motivation)
+
+2. [Research Design](#design)
+
+3. [Intensive Margin](#intensive)
+
+4. [Extensive Margin](#extensive)
+
+5. [Hospital-level Changes](#overall)
+
+6. [Takeaways](#conc)
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: motivation
+
+# Motivation
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Two motivating points
+
+1. Hospital responses to changes in policy or strategic responses to each other depend on their objective functions
+
+2. If not-for-profit hospitals are really "for profits in disguise", then we need to treat them as such
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: design
+
+# Research Design
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Research design
+
+- Exploit exogenous change in DRG payments in 1988
+
+--
+
+.center[
+and now for a **PPS Primer**<br>
+  ![](https://media.giphy.com/media/PLHdpauwfN2MvHcHxL/source.gif)
+]
+
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: intensive
+
+# Intensive Margin
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: extensive
+
+# Extensive Margin
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: overall
+
+# Hospital-level Changes
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: conc
+
+# Takeaways
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
