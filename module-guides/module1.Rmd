@@ -70,6 +70,7 @@ This class focuses on hospital responses to Medicare payment changes. We'll disc
 
 Presenters:
 
+- My [slides](slides-dafny.html) for Dafny (2005)
 - Xin will present Dranove and Ody (2019)
 
 ### Class 5, 9/3
