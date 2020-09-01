@@ -62,7 +62,7 @@ Today we'll discuss some empirical work focusing on differences in behavior betw
 Presenters:
 
 - My [slides](slides-bayindir-horwitz.html) for Bayindir (2012) and Horwitz and Nichols (2009)
-- Alexandra's [slides](../student-presentations/manta-20200827.md) for Duggan (2000)
+- Alexandra's [slides](../student-presentations/manta-20200827.pdf) for Duggan (2000)
 
 ### Class 4, 9/1
 **Response to Medicare payment changes**<br>
@@ -71,7 +71,7 @@ This class focuses on hospital responses to Medicare payment changes. We'll disc
 Presenters:
 
 - My [slides](slides-dafny.html) for Dafny (2005)
-- Xin will present Dranove and Ody (2019)
+- Xin's [slides](../student-presentations/xin-20200901.pdf) will present Dranove and Ody (2019)
 
 ### Class 5, 9/3
 **Hospital cost-shifting**<br>
