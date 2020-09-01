@@ -70,7 +70,6 @@ This class focuses on hospital responses to Medicare payment changes. We'll disc
 
 Presenters:
 
-- My [slides](slides-dafny.html) for Dafny (2005)
 - Xin's [slides](../student-presentations/xin-20200901.pdf) will present Dranove and Ody (2019)
 
 ### Class 5, 9/3
@@ -79,6 +78,7 @@ Today's papers are both from David Dranove (and co-authors)...Dranove (1988) and
 
 I will briefly present the Dranove (1988) paper in the beginning of class. I'll also discuss the main source of debate in this literature. Dranove et al. (2017) is the only student-led presentation for this class.
 
+- **Update:** Since we've already talked about cost-shifting, I'll use this class to talk about Dafny (2005). My slides are [here](slides-dafny.html).
 
 ### Class 6, 9/8
 **Response to insurance policies**<br>
