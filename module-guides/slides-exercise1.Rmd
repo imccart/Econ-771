@@ -1,0 +1,159 @@
+---
+title: "Empirical Exercise 1: Hospital Data and Event Studies"
+subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
+author: Ian McCarthy | Emory University
+date: Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
+header-includes: 
+  - \usepackage{graphicx}
+  - \usepackage{amsmath}
+output:
+#  html_document: default (toggle on for "simplified" view)
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, custom.css] 
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: "macros.js"
+---
+
+<!-- Adjust some CSS code for font size and maintain R code font size -->
+<style type="text/css">
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+</style>
+
+
+<!-- Set R options for how code chunks are displayed and load packages -->
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+opts_chunk$set(
+  fig.align="center",  
+  fig.height=3, #fig.width=6,
+  # out.width="748px", #out.length="520.75px",
+  dpi=300, #fig.path='Figs/',
+  cache=T#, echo=F, warning=F, message=F
+  )
+
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if(options$fig.callout) {
+    options$echo = FALSE
+  }
+  options
+})
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
+               scales, gganimate, gapminder, gifski, png, tufte, plotly, OECD,
+               ggrepel)
+```
+
+
+# Table of contents
+
+1. [Overview](#overview)
+
+2. [Data](#data)
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: overview
+
+# Overview
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Goals of this assignment
+
+1. Work with data on hospital characteristics
+2. Estimate standard DD and 2WFE model
+3. Estimate event studies
+
+--
+Plus the sub-goal for all assignments...practice your Git/GitHub workflow, version control, and replicability
+
+
+---
+# Specific "research question"
+
+What effect did the Medicaid expansion have on hospital disproportionate share?
+
+- Economics: expanding insurance should improve a hospital's finances
+- Given DSH measurement in our data, Medicaid expansion should increase DSH (why?)
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: data
+
+# Data
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Data sources
+
+1. Inpatient Prospective Payment System Final Rule Files, available [here](https://data.nber.org/data/cms-impact-file-hospital-inpatient-prospective-payment-system-ipps.html) from the NBER.
+
+2. Provider of Services files, available [here](https://data.nber.org/data/provider-of-services.html) from the NBER. 
+
+3. Medicaid expansion, available [here](https://www.kff.org/medicaid/issue-brief/status-of-state-medicaid-expansion-decisions-interactive-map/) from the Kaiser Family Foundation.
+
+
+---
+# Data workflow
+
+Some quick thoughts on workflow
+
+1. Never use absolute path names!
+
+<br>
+.center[
+  ![](https://media.giphy.com/media/3oz8xt6aO8l4UjcnXa/giphy.gif)
+]
+
+---
+count: false
+
+# Data workflow
+
+Some quick thoughts on workflow
+
+1. Never use absolute path names!
+
+2. If you use the same data across projects, try a "path" script that you add to your `.gitignore` file
+
+
+.center[
+  ![](https://media.giphy.com/media/z8rEcJ6I0hiUM/giphy.gif)
+]
+
+
+
+---
+count: false
+
+# Data workflow
+
+Some quick thoughts on workflow...
+
+1. Never use absolute path names!
+
+2. If you use the same data across projects, try a "path" script that you add to your `.gitignore` file
+
+3. 
