@@ -86,8 +86,8 @@ Whereas the papers on 8/31 and 9/2 deal with hospital responses to changes in Me
 
 Presenters:
 
-- Alexandra will present Batty and Ippolito (2017)
-- Drew will present Eliason et al. (2018)
+- Alexandra's [slides](../student-presentations/manta-20200908.pdf) for Batty and Ippolito (2017)
+- Drew's [slides](../student-presentations/drew-20200908.html) for Eliason et al. (2018)
 
 
 ### Class 7-8, 9/10 and 9/15

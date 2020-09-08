@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Strategic Patient Discharge: The Case of Long-Term Care Hospitals</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Presented by Andrew Smith" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Strategic Patient Discharge: The Case of Long-Term Care Hospitals
+## Paul J Eliason, Paul L. E. Grieco, Ryan C. McDevitt, and James W. Roberts. American Economic Review 2018, 108(11): 3232–65
+### Presented by Andrew Smith
+### 9/8/2020
+
+---
+
+
+
+
+
+
+
+        
+# Background: What is an LTCH?
+
+- Creature of IPPS
+  - ACH vs. LTCH
+  - SSO `\(\Longrightarrow\)` "Magic Day"
+
+- Explosive Growth
+  - 1980s: &lt;10
+  - As of 2018: &gt;420
+  
+- A Peculiar Institution
+
+???
+_Mostly for profit; Kindred Healthcare + Select Medical =38%; 1/3 HwH_
+---
+# Data
+
+- Claims
+  - LDS Long-Term Care Hospital PPS Expanded Modified MEDPAR
+
+- Hospital Characteristics
+  - Medicare POS
+  - AHA Guide (Supplement)
+  
+???
+_Claims:_
+_Coverage: 2002, 2004--13, 100% of medicare ben's stays_
+_Vars: DRG, medicare pymt, covered costs, length of stay, diagnosis and procedural codes, race, age, gender, type of admission, nature of discharge._
+
+---
+# Part I: Strategic Discharge?
+## Method 1: Graphs!
+.pull-left[
+![](fig1.png)
+]
+.pull-right[
+![](fig2.png)
+]
+---
+# Part I: Strategic Discharge?
+## Method 2: Survival Analysis
+`$$\Pr(discharge|t, s) = \Phi(\gamma_0 + \gamma_1t + \gamma_2t^2 + \mu_s)$$`
+`$$HR = \frac{\Phi(\gamma_0 + \gamma_1t + \gamma_2t^2 + \mu_0)}{\Phi(\gamma_0 + \gamma_1t + \gamma_2t^2 + \mu_{-1})}$$`
+`$$H_0: HR=1$$`
+---
+# Part I: Within DRG (207), Over Time
+
+.center[
+&lt;img src="fig3.png" style="width: 75%" /&gt;
+]
+
+---
+# Part I: Between Discharge Destination
+
+.center[
+&lt;img src="fig4.png" style="width: 75%" /&gt;
+]
+
+---
+# Part I: For-Profit vs. Nonprofit
+
+.pull-left[
+&lt;img src="fig5.png"/&gt;
+]
+.pull-right[
+&lt;img src="tbl4_head.png"/&gt;
+&lt;img src="tbl4a.png"/&gt;
+&lt;img src="tbl4_foot.png"/&gt;
+]
+---
+# Part I: Before vs. After Aquisition
+.pull-left[
+&lt;img src="fig6.png"/&gt;
+]
+.pull-right[
+&lt;img src="tbl4_head.png"/&gt;
+&lt;img src="tbl4b.png"/&gt;
+&lt;img src="tbl4_foot.png"/&gt;
+]
+
+---
+# Part I: HwH vs. Not HwH
+.pull-left[
+&lt;img src="fig7.png"/&gt;
+]
+.pull-right[
+&lt;img src="tbl4_head.png"/&gt;
+&lt;img src="tbl4c.png"/&gt;
+&lt;img src="tbl4_foot.png"/&gt;
+]
+
+---
+# Part I: Aditional Analyses
+.center[
+&lt;img src="tbl4_head.png"/ style="width: 75%" /&gt;
+&lt;img src="tbl4d.png"/ style="width: 75%" /&gt;
+&lt;img src="tbl4_foot.png"/ style="width: 75%" /&gt;
+]
+---
+# Part I: Summary
+.center[
+&lt;img src="Greasy.gif"/ style="width: 75%" /&gt;
+]
+---
+# Part II: Quantifying the Response
+## Method: Dynamic Structural Model
+- Behavioral Assumption
+- More Parameters Can be Estimated
+
+---
+
+# Part II: The Model
+
+LTCH's Problem:
+`$$\max \mathbb{E}\big[\sum_{t=0}^T \delta^t u_t\big]$$`
+LTCH's Flow Utility:
+
+`$$u_t=\lambda_t + \alpha p_t$$`
+---
+# Part II: The Model
+
+LTCH's Problem:
+`$$\max \mathbb{E}\big[\sum_{t=0}^T \delta^t u_t\big]$$`
+LTCH's Flow Utility:
+
+`$$u_t=\lambda_t + \alpha \color{red}{p_t}$$`
+`\(\color{red}{p_t}\)`: Marginal payment from keeping patient an extra day.
+
+![](eq3.png)
+
+---
+# Part II: The Model
+
+LTCH's Problem:
+`$$\max \mathbb{E}\big[\sum_{t=0}^Tu_t\big]$$`
+LTCH's Flow Utility:
+
+`$$u_t=\color{red}{\lambda_t} + \alpha p_t$$`
+
+`\(\color{red}{\lambda_t}\)`: The costs and nonpecuniary benefits of keeping patient an extra day.
+---
+
+# Part II: Dynamic Programming, Micro Edition
+
+Bellman Equation:
+
+`$$(4) \quad \quad V_t(\epsilon_t) = u_t + max\{\epsilon_{kt} + \delta \mathbb{E}V_{t+1}, \epsilon_{dt} \}$$`
+From the discrete choice literature.
+`$$(5) \quad \quad D_t = \Pr(\text{discharge on }t|\text{no discharge }1,..., t-1) = \frac{1}{1+e^{\delta EV_{t+1}}}$$`
+From Rust (1987)
+`$$(6) \quad \quad EV_t = u_{t+1} + log(\exp(\delta EV_{t+1})+1)$$`
+(4), (5), and (6) allow one to solvethe model via backward induction from period T to recover continuation values and discharge probabilities.
+
+---
+# Part II: Estimation
+
+1. Recover Payment Policies ( `\(\{p_t\}_t^T\)` )
+2. Parameterization
+3. Estimate Parameters Using Maximum Likelihood
+
+---
+# Part II: Estimation
+
+1. Recover Payment Policies ( `\(\{p_t\}_t^T\)` )
+
+Using observations where `\(d_{yhi} &lt;t^m_y\)`, OLS used to estimate
+
+`$$r_{ihy} = (\zeta^1_{y,DRG_i} + \zeta^2_{y, MSA} + \zeta^3_{y, type})d_{ihy} + \eta_{ihy}$$`
+- 1,874 parameters!
+- Between-hospital variation in payments: DRG mix
+
+---
+# Part II: Estimation
+1. Recover Payment Policies ( `\(\{p_t\}_t^T\)` )
+2. Parameterization
+
+Paramaterize . . . the parameters
+
+`\(\lambda_t\)` as
+`$$\lambda_{i,t} = \gamma_{0,DRG} + \gamma_{1, DRG}t + \gamma_{2, DRG}t^2 + \gamma_{3, DRG}t^3 - \beta \hat{c}_h + \psi_{\text{day of week}}$$`
+
+`\(\alpha\)` as
+`$$\alpha = \alpha_k + \alpha_z$$`
+`$$k \in \{\text{for-profit HwH, for-profit standalone, nonprofit HwH, nonprofit standalone}\}$$`
+`\(z\)` indexes patient type.
+
+---
+# Part II: Estimation
+1. Recover Payment Policies ( `\(\{p_t\}_t^T\)` )
+2. Parameterization
+3. Estimate Parameters Using Maximum Likelihood
+
+From Equation (5)
+
+`$$\Pr(d_{hi}|p_{hi},\lambda, \alpha) = D_t(p_{hi}; \theta) \prod_{\tau =1}^{d_{hi}-1}(1-D_{\tau}(p_{hi}; \theta))$$`
+An estimating equation, at long last:
+
+`$$L(\lambda, \alpha) = \prod_{i=1}^N \Pr(d_{hi}|p_{hi},\lambda, \alpha)$$`
+
+---
+
+# Part II: Estimation Results
+.center[
+![](tbl5.png)
+]
+
+---
+# Part II: Counterfactuals!
+
+.pull-left[
+1. Lump Sum ( `\(p_t=0\)` )
+2. Per-diem Scheme from MedPAC (2014)
+3. Pre-2003 Cost Plus Scheme
+]
+
+.pull-right[
+![](figA4.png)
+]
+
+---
+# Part II: Counterfactuals!
+.center[
+&lt;img src="fig8.png"/ style="width: 50%" /&gt;
+]
+---
+# Part II: Counterfactuals!
+.center[
+![](tbl6.png)
+]
+
+---
+# The End
+
+.center[
+![](plumber.jpg)
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
