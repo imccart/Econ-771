@@ -13,3 +13,8 @@
   width: 100%;
   border: 4px solid #23373B;
 }
+
+.pre {
+  height: 20pc;
+  overflow-y: scroll;
+}

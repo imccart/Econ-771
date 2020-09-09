@@ -53,7 +53,7 @@ knitr::opts_hooks$set(fig.callout = function(options) {
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
                scales, gganimate, gapminder, gifski, png, tufte, plotly, OECD,
-               ggrepel)
+               ggrepel, dtplyr, data.table)
 ```
 
 
@@ -61,7 +61,11 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
 
 1. [Overview](#overview)
 
-2. [Data](#data)
+2. [Workflow (in R)](#workflow)
+
+3. [Data](#data)
+
+4. [Analysis](#analysis)
 
 
 <!-- New Section -->
@@ -81,6 +85,7 @@ name: overview
 2. Estimate standard DD and 2WFE model
 3. Estimate event studies
 
+<br>
 --
 Plus the sub-goal for all assignments...practice your Git/GitHub workflow, version control, and replicability
 
@@ -98,21 +103,11 @@ What effect did the Medicaid expansion have on hospital disproportionate share?
 <!-- New Section -->
 ---
 class: inverse, center, middle
-name: data
+name: workflow
 
-# Data
+# Workflow in R
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
-
-
----
-# Data sources
-
-1. Inpatient Prospective Payment System Final Rule Files, available [here](https://data.nber.org/data/cms-impact-file-hospital-inpatient-prospective-payment-system-ipps.html) from the NBER.
-
-2. Provider of Services files, available [here](https://data.nber.org/data/provider-of-services.html) from the NBER. 
-
-3. Medicaid expansion, available [here](https://www.kff.org/medicaid/issue-brief/status-of-state-medicaid-expansion-decisions-interactive-map/) from the Kaiser Family Foundation.
 
 
 ---
@@ -156,4 +151,599 @@ Some quick thoughts on workflow...
 
 2. If you use the same data across projects, try a "path" script that you add to your `.gitignore` file
 
-3. 
+3. Separate your analysis and your markdown (not practical otherwise)
+
+
+---
+# My project workflow
+
+.pre[
+```
+project
+|   README.md
+|   RunRender.Rmd
+|   paper.Rmd
+|   abstract.Rmd
+|   presentation.Rmd
+|   BibTeX.tex (google drive link)
+|
+|---analysis
+|   |   _BuildFinalData.R
+|   |   _Analysis.R
+|   |   1_data1.R
+|   |   2_data2.R
+|   |   README.md (optional)
+|
+|---data
+|   |   final_dat1.Rds (or csv)
+|   |   final_dat2.Rds (or csv)
+|
+|---tables
+|   |   table1.tex
+|   |   table2.tex
+| 
+|---figures
+|   |   figure1.png
+|   |   figure2.png
+```
+]
+
+
+---
+# My assignment workflow
+
+1. Do analysis and save main objects (not full datasets) in `workspace.Rdata`
+2. Render markdown file as PDF
+
+<br>
+--
+.pre[
+````
+
+```{r, eval=FALSE}`r ''`
+---
+title: "Exercise 1 Solutions"
+author: Ian McCarthy, Econ 771
+date: Fall 2020
+geometry: "left=2cm,right=2cm,top=1cm,bottom=2cm"
+fontsize: 12pt
+subparagraph: yes
+header-includes:
+   - \usepackage{setspace}
+   - \usepackage{titlesec}
+   - \titlespacing{\title}{0pt}{\parskip}{-\parskip}
+   - \titlespacing{\section}{0pt}{12pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+   - \titlespacing{\subsection}{0pt}{12pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+   - \titlespacing{\subsubsection}{0pt}{12pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+   - \usepackage{float}
+output: 
+  bookdown::pdf_document2:
+    keep_tex: TRUE
+    toc: FALSE
+    number_sections: FALSE
+    fig_caption: yes
+bibliography: '../BibTeX_Library.bib'
+---
+
+{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stargazer, knitr, kableExtra, lfe)
+
+
+{r, include=FALSE}
+load("workspace.Rdata")
+
+
+\setstretch{1.5}
+
+# Overview
+Hello world
+
+```
+
+````
+]
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: data
+
+# Data
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Data sources
+
+1. Inpatient Prospective Payment System Final Rule Files, available [here](https://data.nber.org/data/cms-impact-file-hospital-inpatient-prospective-payment-system-ipps.html) from the NBER.
+
+2. Provider of Services files, available [here](https://data.nber.org/data/provider-of-services.html) from the NBER. 
+
+3. Medicaid expansion, available [here](https://www.kff.org/medicaid/issue-brief/status-of-state-medicaid-expansion-decisions-interactive-map/) from the Kaiser Family Foundation.
+
+
+---
+# IPPS Data
+
+Let's start with a quick look at the 1994 data
+
+.pre[
+```{r echo=TRUE, warnings=FALSE}
+source('../paths.R')
+ipps.example <- read_csv(paste0(ipps.path,"/impact1994.csv"))
+head(ipps.example)
+```
+]
+
+---
+count: false
+
+# IPPS Data
+
+Let's start with a quick look at the 1994 data
+
+.pre[
+```{r echo=TRUE, warnings=FALSE}
+glimpse(ipps.example)
+```
+]
+
+---
+# IPPS Data
+
+Data exist in three groups...
+
+1. 1986 to 1993: case mix index (CMI) and wage index
+2. 1994 to 2000: adds adjusted cases, daily census, beds, DSH percent, and provider type
+3. 2001 to 2018: change to variable name and format for provider type
+
+<br>
+--
+**provider** is the Medicare provider number and the unique hospital ID for these data
+
+---
+# POS Data
+
+Let's start with a quick look at the 1994 data
+
+.pre[
+```{r echo=TRUE, warnings=FALSE}
+pos.example <- read_csv(paste0(pos.path,"/pos1994.csv/pos1994.csv"))
+head(pos.example)
+```
+]
+
+
+---
+count: false
+
+# POS Data
+
+Let's start with a quick look at the 1994 data
+
+.pre[
+```{r echo=TRUE, warnings=FALSE}
+glimpse(pos.example)
+```
+]
+
+
+---
+# POS Data, 1984 to 1990
+
+.pre[
+```{r, eval=F}
+for (y in 1984:1990) {
+  pos.data <- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+  
+  pos.data <- pos.data %>%
+    rename(provider=prov1680,
+           own_change=prov0100,
+           beds_cert=prov0755,
+           beds_tot=prov0740,
+           name=prov0475,
+           street=prov2720,
+           city_state=prov0115,
+           zip=prov2905,
+           fac_type=prov2890,
+           own_type=prov2885,
+           term_date=prov2810) %>%
+    mutate(term_date=as.Date(as.character(term_date), format='%y%m%d'),
+           own_change=as.Date(as.character(term_date), format='%y%m%d'),
+           state=str_sub(city_state, start=-2),
+           city=str_sub(city_state, start=1, end=-2),
+           year=y) %>%
+    select(provider, category, own_change, beds_cert, beds_tot, name,
+           street, city, state, zip, term_date, fac_type, own_type, year) %>%
+    filter(provider!='000000')
+
+  assign(paste0("pos.",y),pos.data)  
+}
+```
+]
+
+---
+# POS Data, 1991
+
+.pre[
+```{r, eval=F}
+y=1991
+pos.data <- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+
+pos.data <- pos.data %>%
+  rename(category=prvdr_ctgry_cd,
+         category_sub=prvdr_ctgry_sbtyp_cd,
+         provider=prvdr_num,
+         own_change=chow_dt,
+         beds_cert=crtfd_bed_cnt,
+         beds_tot=bed_cnt,
+         name=fac_name,
+         street=st_adr,
+         city_state=prov0115,
+         zip=zip_cd,
+         fac_type=gnrl_fac_type_cd,
+         own_type=gnrl_cntl_type_cd,
+         term_date=prov2810) %>%
+  mutate(term_date=as.Date(as.character(term_date), format='%y%m%d'),
+         own_change=as.Date(as.character(term_date), format='%y%m%d'),
+         state=str_sub(city_state, start=-2),
+         city=str_sub(city_state, start=1, end=-2),
+         year=y) %>%
+  select(provider, category, category_sub, own_change, beds_cert, beds_tot, name,
+         street, city, state, zip, term_date, fac_type, own_type, year) %>%
+  filter(provider!='000000')
+```
+]
+
+
+
+---
+# POS Data, 1992 to 1993
+
+.pre[
+```{r, eval=F}
+for (y in 1992:1993) {
+  pos.data <- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+  
+  pos.data <- pos.data %>%
+    rename(category=prvdr_ctgry_cd,
+           category_sub=prvdr_ctgry_sbtyp_cd,           
+           provider=prvdr_num,
+           own_change=chow_dt,
+           beds_cert=crtfd_bed_cnt,
+           beds_tot=bed_cnt,
+           name=fac_name,
+           street=st_adr,
+           zip=zip_cd,
+           own_type=gnrl_cntl_type_cd,
+           term_date=prov2810,
+           state=state_cd) %>%
+    mutate(term_date=as.Date(as.character(term_date), format='%y%m%d'),
+           own_change=as.Date(as.character(term_date), format='%y%m%d'),
+           year=y) %>%
+    select(provider, category, category_sub, own_change, beds_cert, beds_tot, name,
+           street, city, state, zip, term_date, own_type, year)
+  
+  assign(paste0("pos.",y),pos.data)  
+}
+```
+]
+
+
+---
+# POS Data, 1994
+
+.pre[
+```{r, eval=F}
+y=1994
+pos.data <- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+pos.data <- pos.data %>%
+  rename(category=prvdr_ctgry_cd,
+         category_sub=prvdr_ctgry_sbtyp_cd,         
+         provider=prvdr_num,
+         own_change=chow_dt,
+         beds_cert=crtfd_bed_cnt,
+         beds_tot=bed_cnt,
+         name=fac_name,
+         street=st_adr,
+         zip=zip_cd,
+         own_type=gnrl_cntl_type_cd,
+         term_date=trmntn_exprtn_dt,
+         state=state_cd) %>%
+  mutate(term_date=as.Date(as.character(term_date), format='%y%m%d'),
+         own_change=as.Date(as.character(term_date), format='%y%m%d'),
+         year=y) %>%
+  select(provider, category, category_sub, own_change, beds_cert, beds_tot, name,
+         street, city, state, zip, term_date, own_type, year)
+assign(paste0("pos.",y),pos.data)
+```
+]
+
+
+---
+# POS Data, 1995 to 2010
+
+.pre[
+```{r, eval=F}
+for (y in 1995:2010) {
+  pos.data <- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+  pos.data <- pos.data %>%
+    rename(category=prvdr_ctgry_cd,
+           category_sub=prvdr_ctgry_sbtyp_cd,           
+           provider=prvdr_num,
+           own_change=chow_dt,
+           beds_cert=crtfd_bed_cnt,
+           beds_tot=bed_cnt,
+           name=fac_name,
+           street=st_adr,
+           zip=zip_cd,
+           own_type=gnrl_cntl_type_cd,
+           term_date=trmntn_exprtn_dt,
+           state=state_cd) %>%
+    mutate(term_date=as.Date(as.character(term_date), format='%Y%m%d'),
+           own_change=as.Date(as.character(term_date), format='%Y%m%d'),
+           year=y) %>%
+    select(provider, category, category_sub, own_change, beds_cert, beds_tot, name,
+           street, city, state, zip, term_date, own_type, year)
+  
+  assign(paste0("pos.",y),pos.data)  
+}
+```
+]
+
+
+---
+# POS Data, 2011 to 2018
+
+.pre[
+```{r, eval=F}
+for (y in 2011:2018) {
+  pos.data <- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+  colnames(pos.data) <- tolower(colnames(pos.data))
+  
+  pos.data <- pos.data %>%
+    rename(category=prvdr_ctgry_cd,
+           category_sub=prvdr_ctgry_sbtyp_cd,           
+           provider=prvdr_num,
+           own_change=chow_dt,
+           beds_cert=crtfd_bed_cnt,
+           beds_tot=bed_cnt,
+           name=fac_name,
+           street=st_adr,
+           zip=zip_cd,
+           city=city_name,
+           own_type=gnrl_cntl_type_cd,
+           term_date=trmntn_exprtn_dt,
+           state=state_cd) %>%
+    mutate(term_date=as.Date(as.character(term_date), format='%Y%m%d'),
+           own_change=as.Date(as.character(term_date), format='%Y%m%d'),
+           year=y) %>%
+    select(provider, category, category_sub, own_change, beds_cert, beds_tot, name,
+           street, city, state, zip, term_date, own_type, year)
+  
+  assign(paste0("pos.",y),pos.data)  
+}
+```
+]
+
+
+---
+# Medicaid expansion data
+
+- Available from Kaiser Family Foundation
+- Need to crosswalk state abbreviations with full state name
+
+---
+# Medicaid expansion data
+
+.pre[
+```{r, eval=F}
+kff.dat <- read_csv(file=paste0(kff.path,'/KFF_medicaid_expansion_2019.csv'))
+
+kff.final <- kff.dat %>%
+  mutate(expanded = (`Expansion Status` == 'Adopted and Implemented'),
+         Description = str_replace_all(Description,c("\n"='','"'='')))
+
+kff.final$splitvar <- kff.final %>% select(Description) %>% as.data.frame() %>%
+  separate(Description, sep=" ", into=c(NA, NA, NA, "date"))
+
+kff.final <- kff.final %>%
+  mutate(date_adopted = mdy(splitvar$date),
+         expand_year = year(date_adopted)) %>%
+  rename(state=State) %>%
+  left_join(state.xw, by=c("state"))
+```
+]
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: analysis
+
+# Analysis
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Summary Statistics
+
+- Generating summary statistics is easy
+- Nicely presenting summary statistics is harder (especially in R)
+- Some `R` packages to try: `vtable::sumtable()`, `modelsummary`, `stargazer`
+- My approach: manual objects and `knitr::kable()`
+
+
+---
+# Summary Statistics
+
+```{r, eval=F}
+sum.stats <- full.data %>% ungroup() %>%
+  group_by(year) %>%
+  summarize_at(c("cmi","dshpct"), list(mean, sd, min, max), na.rm=TRUE) %>%
+  filter(year>=1986) %>%
+  select(year, cmi_fn1, cmi_fn2, cmi_fn3, cmi_fn4, 
+         dshpct_fn1, dshpct_fn2, dshpct_fn3, dshpct_fn4) %>%
+  mutate_if(is.numeric, ~ifelse(abs(.) == Inf, NA, .))
+```
+
+
+---
+count: false
+
+# Summary Statistics
+
+```{r, include=F, eval=T}
+load('../solutions/exercise1/workspace.Rdata')
+```
+
+.pre[
+```{r, eval=F}
+options(knitr.kable.NA = '')
+knitr::kable(sum.stats, 
+             col.names=c("Year", "Mean", "Std. Dev.", "Min", "Max", "Mean", "Std. Dev.", "Min", "Max"),
+             digits=2,
+             caption = "Summary Statistics", 
+             booktabs = TRUE,
+             escape=F,
+             align=c("l","r","r","r","r","r","r","r","r"),
+             position="h") %>% 
+  kable_styling(full_width=F) %>%
+  add_header_above(c(" " = 1, "Case Mix Index" = 4,"Disproportionate Share" = 4))
+```
+]
+
+---
+count: false
+
+# Summary Statistics
+
+```{r, echo=F}
+options(knitr.kable.NA = '')
+knitr::kable(sum.stats, "html",
+             col.names=c("Year", "Mean", "Std. Dev.", "Min", "Max", "Mean", "Std. Dev.", "Min", "Max"),
+             digits=2,
+             caption = "Summary Statistics", 
+             booktabs = TRUE,
+             escape=F,
+             align=c("l","r","r","r","r","r","r","r","r"),
+             position="h") %>% 
+  kable_styling(full_width=F) %>%
+  add_header_above(c(" " = 1, "Case Mix Index" = 4,"Disproportionate Share" = 4))
+```
+
+---
+# Regressions
+
+Standard DD:
+
+$$DSH_{ht} = \alpha Expand_{s} + \beta 1(t\geq 2014) + \delta Expand_{s} \times 1(t\geq 2014) + \varepsilon_{ht}$$
+
+<br>
+--
+```{r, eval=F}
+dd.est <- lm(dshpct~post + expand_ever + treat, data=reg.data)
+```
+
+---
+# Regressions
+
+Two-way fixed effects:
+
+$$DSH_{ht} = \delta Profit_{h} \times (t>1988) + \lambda_{h} + \gamma_{t} + \varepsilon_{ht}$$
+
+<br>
+--
+```{r, eval=F}
+lfe.est <- felm(dshpct~treat | provider + year, data=reg.data)
+```
+
+..could also try `fixest` package.
+
+
+---
+# Event study with single treatment
+
+.pre[
+```{r, eval=F}
+event.dat <- reg.data %>%
+  mutate(expand_2005 = expand_ever*(year==2005),
+         expand_2006 = expand_ever*(year==2006),
+         expand_2007 = expand_ever*(year==2007),
+         expand_2008 = expand_ever*(year==2008),
+         expand_2009 = expand_ever*(year==2009),
+         expand_2010 = expand_ever*(year==2010),
+         expand_2011 = expand_ever*(year==2011),
+         expand_2012 = expand_ever*(year==2012),
+         expand_2013 = expand_ever*(year==2013),
+         expand_2014 = expand_ever*(year==2014),
+         expand_2015 = expand_ever*(year==2015),
+         expand_2016 = expand_ever*(year==2016),
+         expand_2017 = expand_ever*(year==2017),
+         expand_2018 = expand_ever*(year==2018))
+
+event.reg <- felm(dshpct ~ expand_2005 + expand_2006 + expand_2007 +
+                        expand_2008 + expand_2009 + expand_2010 + expand_2011 + expand_2012 + expand_2014 + 
+                        expand_2015 + expand_2016 + expand_2017 + 
+                        expand_2018 | year + provider, data=event.dat)
+
+point.est <- as_tibble(c(event.reg$coefficients[c("expand_2005","expand_2006","expand_2007",
+                                                      "expand_2008","expand_2009","expand_2010", "expand_2011",
+                                                      "expand_2012","expand_2014","expand_2015",
+                                                      "expand_2016","expand_2017","expand_2018"),]),
+                       rownames = "term")
+ci.est <- as_tibble(confint(event.reg)[c("expand_2005","expand_2006","expand_2007",
+                                             "expand_2008","expand_2009","expand_2010","expand_2011",
+                                             "expand_2012","expand_2014","expand_2015",
+                                             "expand_2016","expand_2017","expand_2018"),],
+                    rownames = "term")
+point.est <- point.est %>% rename(estimate = value)
+ci.est <- ci.est %>% rename(conf.low = `2.5 %`, conf.high = `97.5 %`)
+new.row <- tibble(
+  term = "expand_2013",
+  estimate = 0,
+  conf.low = 0,
+  conf.high = 0,
+  year = 2013
+)
+
+event.plot.dat <- point.est %>%
+  left_join(ci.est, by=c("term")) %>%
+  mutate(year = c(2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2014, 2015, 2016, 2017, 2018)) %>%
+  bind_rows(new.row) %>%
+  arrange(year)
+
+event.plot <- dwplot(event.plot.dat, 
+                     vline=geom_vline(xintercept=0, linetype=2), 
+                     order_vars = c("expand_2018","expand_2017","expand_2016",
+                                    "expand_2015","expand_2014","expand_2013",
+                                    "expand_2012","expand_2011","expand_2010",
+                                    "expand_2009","expand_2008","expand_2007",
+                                    "expand_2006","expand_2005"),
+                     whisker_args = list(color="black", size=1.1),
+                     dot_args = list(color="black")) + 
+  coord_flip() + theme_bw() + theme(legend.position = "none") +
+  labs(y = "Year",
+       x = "Estimate and 95% CI") +
+  scale_y_discrete(labels = c("expand_2005" = "2005", 
+                              "expand_2006" = "2006", 
+                              "expand_2007" = "2007", 
+                              "expand_2008" = "2008", 
+                              "expand_2009" = "2009", 
+                              "expand_2010" = "2010", 
+                              "expand_2011" = "2011", 
+                              "expand_2012" = "2012", 
+                              "expand_2013" = "2013",
+                              "expand_2014" = "2014",
+                              "expand_2015" = "2015",
+                              "expand_2016" = "2016",
+                              "expand_2017" = "2017",
+                              "expand_2018" = "2018"))
+```
+]
+
+---
+# Event study with time-varying treatment
