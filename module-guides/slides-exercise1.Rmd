@@ -9,14 +9,14 @@ header-includes:
 output:
 #  html_document: default (toggle on for "simplified" view)
   xaringan::moon_reader:
-    css: [default, metropolis, metropolis-fonts, custom.css] 
+    css: [default, metropolis, metropolis-fonts, custom.css, cols.css] 
     lib_dir: libs
     nature:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
       ratio: "16:9"
-      beforeInit: "macros.js"
+      beforeInit: [macros.js, cols_macro.js]
 ---
 
 <!-- Adjust some CSS code for font size and maintain R code font size -->
@@ -249,6 +249,147 @@ Hello world
 ]
 
 
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: id
+
+# The DD Research Design/Identification Strategy
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Setup
+Want to estimate $E[Y_{1}(1)- Y_{0}(1) | W=1]$
+
+![:col_header , Post-period, Pre-period]
+![:col_row Treated, $E(Y_{1}(1)|W=1)$, $E(Y_{0}(0)|W=1)$]
+![:col_row Control, $E(Y_{0}(1)|W=0)$, $E(Y_{0}(0)|W=0)$]
+
+<br>
+Problem: We don't see $E[Y_{0}(1)|W=1]$
+
+
+---
+# Setup
+![:col_header , Post-period, Pre-period]
+![:col_row Treated, $E(Y_{1}(1)|W=1)$, $E(Y_{0}(0)|W=1)$]
+![:col_row Control, $E(Y_{0}(1)|W=0)$, $E(Y_{0}(0)|W=0)$]
+
+<br>
+Strategy 1: Estimate $E[Y_{0}(1)|W=1]$ using $E[Y_{0}(0)|W=1]$ (before treatment outcome used to estimate post-treatment)
+
+
+---
+# Setup
+![:col_header , Post-period, Pre-period]
+![:col_row Treated, $E(Y_{1}(1)|W=1)$, $E(Y_{0}(0)|W=1)$]
+![:col_row Control, $E(Y_{0}(1)|W=0)$, $E(Y_{0}(0)|W=0)$]
+
+<br>
+Strategy 2: Estimate $E[Y_{0}(1)|W=1]$ using $E[Y_{0}(1)|W=0]$ (control group used to predict outcome for treatment)
+
+
+---
+# Setup
+![:col_header , Post-period, Pre-period]
+![:col_row Treated, $E(Y_{1}(1)|W=1)$, $E(Y_{0}(0)|W=1)$]
+![:col_row Control, $E(Y_{0}(1)|W=0)$, $E(Y_{0}(0)|W=0)$]
+
+<br>
+Strategy 3: DD estimate...
+
+<br>
+Estimate $E[Y_{1}(1)|W=1] - E[Y_{0}(1)|W=1]$ using $E[Y_{0}(1)|W=0] - E[Y_{0}(0)|W=0]$ (pre-post difference in control group used to predict difference for treatment group)
+
+---
+# Animations!
+
+.center[
+  ![:scale 900px](dd_animate.gif)
+]
+
+---
+# Estimation
+Key identifying assumption is that of *parallel trends*
+
+--
+<br>
+<br>
+$$E[Y_{0}(1) - Y_{0}(0)|W=1] = E[Y_{0}(1) - Y_{0}(0)|W=0]$$
+
+---
+# Estimation
+Sample means:<br>
+$$\begin{align}
+E[Y_{1}(1) - Y_{0}(1)|W=1] &=& \left( E[Y(1)|W=1] - E[Y(1)|W=0] \right) \\
+ & & - \left( E[Y(0)|W=1] - E[Y(0)|W=0]\right)
+\end{align}$$
+
+
+---
+# Estimation
+Regression:<br>
+$Y_{i} = \alpha + \beta W_{i} + \lambda 1(Post) + \delta W_{i} \times 1(Post) + \varepsilon$
+
+<br>
+![:col_header , After, Before, After - Before]
+![:col_row Treated, $\alpha + \beta + \lambda + \delta$, $\alpha + \beta$, $\lambda + \delta$]
+![:col_row Control, $\alpha + \lambda$, $\alpha$, $\lambda$]
+![:col_row Treated - Control, $\beta + \delta$, $\beta$, $\delta$]
+
+
+---
+# Simulated data
+```{r}
+N <- 5000
+dd.dat <- tibble(
+  w = (runif(N, 0, 1)>0.5),
+  time_pre = "pre",
+  time_post = "post"
+)
+
+dd.dat <- pivot_longer(dd.dat, c("time_pre","time_post"), values_to="time") %>%
+  select(w, time) %>%
+  mutate(t=(time=="post"),
+         y.out=1.5+3*w + 1.5*t + 6*w*t + rnorm(N*2,0,1))
+```
+
+
+---
+# Mean differences
+```{r}
+dd.means <- dd.dat %>% group_by(w, t) %>% summarize(mean_y = mean(y.out))
+knitr::kable(dd.means, col.names=c("Treated","Post","Mean"), format="html")
+```
+
+---
+# Mean differences
+In this example:
+- $E[Y(1)|W=1] - E[Y(1)|W=0]$ is `r dd.means[4,3]-dd.means[2,3]`
+- $E[Y(0)|W=1] - E[Y(0)|W=0]$ is `r dd.means[3,3]-dd.means[1,3]`
+
+<br>
+<br>
+So the ATT is `r as.numeric(dd.means[4,3])-as.numeric(dd.means[2,3]) - (as.numeric(dd.means[3,3])-as.numeric(dd.means[1,3]))`
+
+---
+# Regression estimator
+```{r}
+dd.est <- lm(y.out ~ w + t + w*t, data=dd.dat)
+summary(dd.est)
+```
+
+
+---
+# TWFE
+
+With multiple groups and multiple time periods, including fixed effects for each group and each year (*two*-way fixed effects) is a more general specification
+
+<br>
+--
+But it's still just DD. We'll come back to this shortly.
 
 
 
@@ -662,7 +803,7 @@ dd.est <- lm(dshpct~post + expand_ever + treat, data=reg.data)
 
 Two-way fixed effects:
 
-$$DSH_{ht} = \delta Profit_{h} \times (t>1988) + \lambda_{h} + \gamma_{t} + \varepsilon_{ht}$$
+$$DSH_{ht} = \delta Expand_{s} \times (t\geq 2014) + \lambda_{h} + \gamma_{t} + \varepsilon_{ht}$$
 
 <br>
 --
@@ -890,4 +1031,95 @@ name: extras
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
 
+
+---
+# Back to the TWFE estimator
+
+$Y_{it} = \alpha_{i} + \gamma_{t} + \delta W_{it} + \varepsilon_{it}$
+
+<br>
+--
+1. Show role of heterogeneous treatment effects
+2. Look at treatment timing!
+3. Discuss what we're really estimating
+4. Some new approaches
+
+
+---
+# Simulated data
+
+.pre[
+```{r}
+N <- 5000
+twfe.dat <- tibble(
+  id = seq(1:N),
+  w = as.numeric((runif(N, 0, 1)>0.5)),
+  xi = rnorm(N,0,2),
+  treat_year = sample(x=2010:2015,N,replace=T)
+)
+
+twfe.final <- twfe.dat %>%
+  mutate(year=2000)
+
+for (t in 2001:2020) {
+  twfe.dat <- twfe.dat %>%
+    mutate(year=t)
+  twfe.final <- twfe.final %>%
+    bind_rows(twfe.dat)
+}
+N_t=nrow(twfe.final)
+
+twfe.final <- twfe.final %>%
+  mutate(treat = (year>=treat_year)*w,
+         treat_year = case_when(
+           w==1 ~ treat_year,
+           w==0 ~ NA_integer_)) %>%
+  select(id, treat, w, xi, year, treat_year) %>%
+  mutate(y_out = 1.5+3*w -2*xi + 1.5*(year-2009) + 6*treat + rnorm(N_t,0,1))
+```
+]
+
+---
+# Different estimates
+
+```{r}
+summary(felm(y_out~treat|id + year, data=twfe.final))
+```
+
+
+---
+# View treatment timing
+
+The `panelView` package is a great way to see who is treated in your data and over what time periods
+
+
+---
+# What are we estimating?
+
+$Y_{it} = \alpha_{i} + \gamma_{t} + \delta W_{it} + \varepsilon_{it}$
+
+Getting a consistent estimate of $\delta$ requires:
+
+1. Correctly specified functional form
+2. **Strict** exogeneity
+  - no unobserved confounders
+  - past outcomes don't directly affect current outcome
+  - past treatments don't directly affect current outcome
+  - past outcomes don't direclty affect current treatment
+
+---
+count: false
+
+# What are we estimating?
+
+$Y_{it} = \alpha_{i} + \gamma_{t} + \delta W_{it} + \varepsilon_{it}$
+
+But what parameter is this? Is it interesting?
+
+<br>
+--
+- Only an average effect if we assume homogeneous treatment effects
+- With standard within estimator, we get a variance weighted average treatment effect
+
+      
 

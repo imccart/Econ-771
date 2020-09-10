@@ -10,6 +10,7 @@
     <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
     <script src="libs/kePrint/kePrint.js"></script>
     <link rel="stylesheet" href="custom.css" type="text/css" />
+    <link rel="stylesheet" href="cols.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -235,6 +236,205 @@ Hello world
 ]
 
 
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: id
+
+# The DD Research Design/Identification Strategy
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Setup
+Want to estimate `\(E[Y_{1}(1)- Y_{0}(1) | W=1]\)`
+
+![:col_header , Post-period, Pre-period]
+![:col_row Treated, `\(E(Y_{1}(1)|W=1)\)`, `\(E(Y_{0}(0)|W=1)\)`]
+![:col_row Control, `\(E(Y_{0}(1)|W=0)\)`, `\(E(Y_{0}(0)|W=0)\)`]
+
+&lt;br&gt;
+Problem: We don't see `\(E[Y_{0}(1)|W=1]\)`
+
+
+---
+# Setup
+![:col_header , Post-period, Pre-period]
+![:col_row Treated, `\(E(Y_{1}(1)|W=1)\)`, `\(E(Y_{0}(0)|W=1)\)`]
+![:col_row Control, `\(E(Y_{0}(1)|W=0)\)`, `\(E(Y_{0}(0)|W=0)\)`]
+
+&lt;br&gt;
+Strategy 1: Estimate `\(E[Y_{0}(1)|W=1]\)` using `\(E[Y_{0}(0)|W=1]\)` (before treatment outcome used to estimate post-treatment)
+
+
+---
+# Setup
+![:col_header , Post-period, Pre-period]
+![:col_row Treated, `\(E(Y_{1}(1)|W=1)\)`, `\(E(Y_{0}(0)|W=1)\)`]
+![:col_row Control, `\(E(Y_{0}(1)|W=0)\)`, `\(E(Y_{0}(0)|W=0)\)`]
+
+&lt;br&gt;
+Strategy 2: Estimate `\(E[Y_{0}(1)|W=1]\)` using `\(E[Y_{0}(1)|W=0]\)` (control group used to predict outcome for treatment)
+
+
+---
+# Setup
+![:col_header , Post-period, Pre-period]
+![:col_row Treated, `\(E(Y_{1}(1)|W=1)\)`, `\(E(Y_{0}(0)|W=1)\)`]
+![:col_row Control, `\(E(Y_{0}(1)|W=0)\)`, `\(E(Y_{0}(0)|W=0)\)`]
+
+&lt;br&gt;
+Strategy 3: DD estimate...
+
+&lt;br&gt;
+Estimate `\(E[Y_{1}(1)|W=1] - E[Y_{0}(1)|W=1]\)` using `\(E[Y_{0}(1)|W=0] - E[Y_{0}(0)|W=0]\)` (pre-post difference in control group used to predict difference for treatment group)
+
+---
+# Animations!
+
+.center[
+  ![:scale 900px](dd_animate.gif)
+]
+
+---
+# Estimation
+Key identifying assumption is that of *parallel trends*
+
+--
+&lt;br&gt;
+&lt;br&gt;
+`$$E[Y_{0}(1) - Y_{0}(0)|W=1] = E[Y_{0}(1) - Y_{0}(0)|W=0]$$`
+
+---
+# Estimation
+Sample means:&lt;br&gt;
+`$$\begin{align}
+E[Y_{1}(1) - Y_{0}(1)|W=1] &amp;=&amp; \left( E[Y(1)|W=1] - E[Y(1)|W=0] \right) \\
+ &amp; &amp; - \left( E[Y(0)|W=1] - E[Y(0)|W=0]\right)
+\end{align}$$`
+
+
+---
+# Estimation
+Regression:&lt;br&gt;
+`\(Y_{i} = \alpha + \beta W_{i} + \lambda 1(Post) + \delta W_{i} \times 1(Post) + \varepsilon\)`
+
+&lt;br&gt;
+![:col_header , After, Before, After - Before]
+![:col_row Treated, `\(\alpha + \beta + \lambda + \delta\)`, `\(\alpha + \beta\)`, `\(\lambda + \delta\)`]
+![:col_row Control, `\(\alpha + \lambda\)`, `\(\alpha\)`, `\(\lambda\)`]
+![:col_row Treated - Control, `\(\beta + \delta\)`, `\(\beta\)`, `\(\delta\)`]
+
+
+---
+# Simulated data
+
+```r
+N &lt;- 5000
+dd.dat &lt;- tibble(
+  w = (runif(N, 0, 1)&gt;0.5),
+  time_pre = "pre",
+  time_post = "post"
+)
+
+dd.dat &lt;- pivot_longer(dd.dat, c("time_pre","time_post"), values_to="time") %&gt;%
+  select(w, time) %&gt;%
+  mutate(t=(time=="post"),
+         y.out=1.5+3*w + 1.5*t + 6*w*t + rnorm(N*2,0,1))
+```
+
+
+---
+# Mean differences
+
+```r
+dd.means &lt;- dd.dat %&gt;% group_by(w, t) %&gt;% summarize(mean_y = mean(y.out))
+knitr::kable(dd.means, col.names=c("Treated","Post","Mean"), format="html")
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Treated &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Post &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.517604 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.993057 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; FALSE &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.490743 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; TRUE &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.992169 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# Mean differences
+In this example:
+- `\(E[Y(1)|W=1] - E[Y(1)|W=0]\)` is 8.9991118
+- `\(E[Y(0)|W=1] - E[Y(0)|W=0]\)` is 2.9731387
+
+&lt;br&gt;
+&lt;br&gt;
+So the ATT is 6.0259731
+
+---
+# Regression estimator
+
+```r
+dd.est &lt;- lm(y.out ~ w + t + w*t, data=dd.dat)
+summary(dd.est)
+```
+
+```
+## 
+## Call:
+## lm(formula = y.out ~ w + t + w * t, data = dd.dat)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.6729 -0.6800  0.0001  0.6829  3.4783 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1.51760    0.01986   76.43   &lt;2e-16 ***
+## wTRUE        2.97314    0.02820  105.44   &lt;2e-16 ***
+## tTRUE        1.47545    0.02808   52.54   &lt;2e-16 ***
+## wTRUE:tTRUE  6.02597    0.03988  151.11   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9969 on 9996 degrees of freedom
+## Multiple R-squared:  0.9422,	Adjusted R-squared:  0.9422 
+## F-statistic: 5.436e+04 on 3 and 9996 DF,  p-value: &lt; 2.2e-16
+```
+
+
+---
+# TWFE
+
+With multiple groups and multiple time periods, including fixed effects for each group and each year (*two*-way fixed effects) is a more general specification
+
+&lt;br&gt;
+--
+But it's still just DD
 
 
 
@@ -1817,7 +2017,7 @@ count: false
 # Event study with single treatment
 
 .center[
-&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 
@@ -1930,7 +2130,7 @@ count: false
 # Event study with time-varying treatment
 
 .center[
-&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 
@@ -1944,10 +2144,102 @@ name: extras
 &lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
 
 
+---
+# Back to the TWFE estimator
+
+`\(Y_{it} = \alpha_{i} + \gamma_{t} + \delta W_{it} + \varepsilon_{it}\)`
+
+&lt;br&gt;
+--
+1. Show role of heterogeneous treatment effects
+2. Look at treatment timing!
+3. Discuss what we're really estimating
+4. Some new approaches
+
+
+---
+# Simulated data
+
+```r
+N &lt;- 5000
+twfe.dat &lt;- tibble(
+  id = seq(1:N),
+  w = as.numeric((runif(N, 0, 1)&gt;0.5)),
+  xi = rnorm(N,0,2),
+  treat_year = sample(x=2010:2015,N,replace=T)
+)
+
+twfe.final &lt;- twfe.dat %&gt;%
+  mutate(year=2000)
+for (t in 2001:2020) {
+  twfe.dat &lt;- twfe.dat %&gt;%
+    mutate(year=t)
+  twfe.final &lt;- twfe.final %&gt;%
+    bind_rows(twfe.dat)
+}
+N_t=nrow(twfe.final)
+
+twfe.final &lt;- twfe.final %&gt;%
+  mutate(treat = (year&gt;=treat_year)*w) %&gt;%
+  select(id, treat, w, xi, year) %&gt;%
+  mutate(y_out = 1.5+3*w -2*xi + 1.5*(year-2009) + 6*treat + rnorm(N_t,0,1))
+```
+
+---
+# Different estimates
+
+
+```r
+felm(y_out~treat|id + year, data=twfe.final)
+```
+
+```
+## treat 
+## 5.994
+```
+
+
+---
+# View treatment timing
+
+The `panelView` package is a great way to see who is treated in your data and over what time periods
+
+
+---
+# What are we estimating?
+
+`\(Y_{it} = \alpha_{i} + \gamma_{t} + \delta W_{it} + \varepsilon_{it}\)`
+
+Getting a consistent estimate of `\(\delta\)` requires:
+
+1. Correctly specified functional form
+2. **Strict** exogeneity
+  - no unobserved confounders
+  - past outcomes don't directly affect current outcome
+  - past treatments don't directly affect current outcome
+  - past outcomes don't direclty affect current treatment
+
+---
+count: false
+
+# What are we estimating?
+
+`\(Y_{it} = \alpha_{i} + \gamma_{t} + \delta W_{it} + \varepsilon_{it}\)`
+
+But what parameter is this? Is it interesting?
+
+&lt;br&gt;
+--
+- Only an average effect if we assume homogeneous treatment effects
+- With standard within estimator, we get a variance weighted average treatment effect
+
+      
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script src="macros.js"></script>
+<script src="cols_macro.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
