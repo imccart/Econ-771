@@ -53,7 +53,8 @@ knitr::opts_hooks$set(fig.callout = function(options) {
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
                scales, gganimate, gapminder, gifski, png, tufte, plotly, OECD,
-               ggrepel, dtplyr, data.table)
+               ggrepel, dtplyr, data.table, kableExtra, plotly, cobalt, stargazer, haven, ggthemes,
+               magick, lfe, dotwhisker)
 ```
 
 
@@ -63,9 +64,13 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
 
 2. [Workflow (in R)](#workflow)
 
-3. [Data](#data)
+3. [DD Identification Strategy](#id)
 
-4. [Analysis](#analysis)
+4. [Data](#data)
+
+5. [Analysis](#analysis)
+
+6. [Extras](#extras)
 
 
 <!-- New Section -->
@@ -201,7 +206,6 @@ project
 ````
 
 ```{r, eval=FALSE}`r ''`
----
 title: "Exercise 1 Solutions"
 author: Ian McCarthy, Econ 771
 date: Fall 2020
@@ -223,7 +227,6 @@ output:
     number_sections: FALSE
     fig_caption: yes
 bibliography: '../BibTeX_Library.bib'
----
 
 {r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -244,6 +247,10 @@ Hello world
 
 ````
 ]
+
+
+
+
 
 <!-- New Section -->
 ---
@@ -600,7 +607,6 @@ count: false
 load('../solutions/exercise1/workspace.Rdata')
 ```
 
-.pre[
 ```{r, eval=F}
 options(knitr.kable.NA = '')
 knitr::kable(sum.stats, 
@@ -612,15 +618,16 @@ knitr::kable(sum.stats,
              align=c("l","r","r","r","r","r","r","r","r"),
              position="h") %>% 
   kable_styling(full_width=F) %>%
-  add_header_above(c(" " = 1, "Case Mix Index" = 4,"Disproportionate Share" = 4))
+  add_header_above(c(" " = 1, "Case Mix Index" = 4,"Disproportionate Share" = 4)) %>%
+  scroll_box(width="100%", height = "400px")
 ```
-]
 
 ---
 count: false
 
 # Summary Statistics
 
+.pre[
 ```{r, echo=F}
 options(knitr.kable.NA = '')
 knitr::kable(sum.stats, "html",
@@ -634,16 +641,18 @@ knitr::kable(sum.stats, "html",
   kable_styling(full_width=F) %>%
   add_header_above(c(" " = 1, "Case Mix Index" = 4,"Disproportionate Share" = 4))
 ```
+]
 
 ---
 # Regressions
 
 Standard DD:
 
-$$DSH_{ht} = \alpha Expand_{s} + \beta 1(t\geq 2014) + \delta Expand_{s} \times 1(t\geq 2014) + \varepsilon_{ht}$$
+$$DSH_{ht} = \alpha Expand_{s} + \beta \times 1(t\geq 2014) + \delta Expand_{s} \times 1(t\geq 2014) + \varepsilon_{ht}$$
 
 <br>
 --
+Implementing this in `R`:
 ```{r, eval=F}
 dd.est <- lm(dshpct~post + expand_ever + treat, data=reg.data)
 ```
@@ -657,6 +666,7 @@ $$DSH_{ht} = \delta Profit_{h} \times (t>1988) + \lambda_{h} + \gamma_{t} + \var
 
 <br>
 --
+Implementing this in `R`:
 ```{r, eval=F}
 lfe.est <- felm(dshpct~treat | provider + year, data=reg.data)
 ```
@@ -746,4 +756,138 @@ event.plot <- dwplot(event.plot.dat,
 ]
 
 ---
+count: false
+
+# Event study with single treatment
+
+.center[
+```{r echo=FALSE}
+event.plot
+```
+]
+
+
+---
 # Event study with time-varying treatment
+
+.pre[
+```{r, eval=F}
+reg.data2 <- full.data %>%
+  filter(year>=2005,
+         year<=2018) %>%
+  mutate(treat=case_when(
+    year>=expand_year & !is.na(expand_year) ~ 1,
+    is.na(expand_year) ~ 0,
+    year<expand_year & !is.na(expand_year) ~ 0)
+  )
+
+
+event.dat2 <- reg.data2 %>%
+  mutate(event_time=case_when(
+    !is.na(expand_year) ~ year-expand_year ,
+    is.na(expand_year) ~ -1)) %>%
+  mutate(time_m12=1*(event_time<=-12),
+         time_m11=1*(event_time==-11),
+         time_m10=1*(event_time==-10),
+         time_m9=1*(event_time==-9),
+         time_m8=1*(event_time==-8),
+         time_m7=1*(event_time==-7),
+         time_m6=1*(event_time==-6),
+         time_m5=1*(event_time==-5),
+         time_m4=1*(event_time==-4),
+         time_m3=1*(event_time==-3),
+         time_m2=1*(event_time==-2),
+         time_0=1*(event_time==0),
+         time_p1=1*(event_time==1),
+         time_p2=1*(event_time==2),
+         time_p3=1*(event_time==3),
+         time_p4=1*(event_time==4))
+
+event.reg2 <- felm(dshpct ~ time_m12 + time_m11 + time_m10 + time_m9 + time_m8 +
+                       time_m7 + time_m6 + time_m5 + time_m4 + time_m3 + time_m2 + time_0 +
+                       time_p1 + time_p2 + time_p3 + time_p4 |
+                       year + provider, data=event.dat2)
+
+point.est2 <- as_tibble(event.reg2$coefficients, rownames="term")
+point.est2 <- point.est2 %>% filter(term %in% c("time_m12","time_m11", "time_m10", "time_m9",
+                                                "time_m8", "time_m7", "time_m6", "time_m5",
+                                                "time_m4","time_m3","time_m2","time_0",
+                                                "time_p1","time_p2","time_p3","time_p4"))
+ci.est2 <- as_tibble(confint(event.reg2), rownames="term")
+ci.est2 <- ci.est2 %>% filter(term %in% c("time_m12","time_m11", "time_m10", "time_m9",
+                                          "time_m8", "time_m7", "time_m6", "time_m5",
+                                          "time_m4","time_m3","time_m2","time_0",
+                                          "time_p1","time_p2","time_p3","time_p4"))
+
+point.est2 <- point.est2 %>% rename(estimate = dshpct)
+ci.est2 <- ci.est2 %>% rename(conf.low = `2.5 %`, conf.high = `97.5 %`)
+new.row <- tibble(
+  term = "time_m1",
+  estimate = 0,
+  conf.low = 0,
+  conf.high = 0,
+  event_time = -1
+)
+
+event.plot.dat2 <- point.est2 %>%
+  left_join(ci.est2, by=c("term")) %>%
+  mutate(event_time = c(-12, -11, -10, -9, -8, -7, -6, -5, -4,-3,-2,0,1,2,3,4)) %>%
+  bind_rows(new.row) %>%
+  arrange(event_time)
+
+event.plot2 <- dwplot(event.plot.dat2, 
+                      vline=geom_vline(xintercept=0, linetype=2), 
+                      order_vars = c("time_p4","time_p3","time_p2",
+                                     "time_p1","time_0","time_m1",
+                                     "time_m2","time_m3","time_m4",
+                                     "time_m5","time_m6","time_m7",
+                                     "time_m8","time_m9","time_m10",
+                                     "time_m11","time_m12"),
+                      whisker_args = list(color="black", size=1.1),
+                      dot_args = list(color="black")) + 
+  coord_flip() + theme_bw() + theme(legend.position = "none") +
+  labs(y = "Year",
+       x = "Estimate and 95% CI") +
+  scale_y_discrete(labels = c("time_p4" = "t+4", 
+                              "time_p3" = "t+3",
+                              "time_p2" = "t+2",
+                              "time_p1" = "t+1",
+                              "time_0" = "0",
+                              "time_m1" = "t-1",
+                              "time_m2" = "t-2",
+                              "time_m3" = "t-3",
+                              "time_m4" = "t-4",
+                              "time_m5" = "t-5",
+                              "time_m6" = "t-6",
+                              "time_m7" = "t-7",
+                              "time_m8" = "t-8",
+                              "time_m9" = "t-9",
+                              "time_m10" = "t-10",
+                              "time_m11" = "t-11",
+                              "time_m12" = "t-12+"))
+```
+]
+
+
+---
+count: false
+
+# Event study with time-varying treatment
+
+.center[
+```{r echo=FALSE}
+event.plot2
+```
+]
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: extras
+
+# Extras
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+

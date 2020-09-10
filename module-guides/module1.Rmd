@@ -93,3 +93,5 @@ Presenters:
 ### Class 7-8, 9/10 and 9/15
 **Workshop days!**<br>
 We'll work on the first empirical assignment in class. We'll focus on accessing the data using GitHub and AWS, cleaning the data, and implementing the relevant identification strategy. See [exercise 1](../assignments/exercise1.html) for more details on this assignment. The assignment is due by **Friday, September 18th**.
+
+- My slides available [here](slides-exercise1.html).

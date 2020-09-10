@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Empirical Exercise 1: Hospital Data and Event Studies</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ian McCarthy | Emory University" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Empirical Exercise 1: Hospital Data and Event Studies
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#EB811B' size=1px width=0px>
+</html>
+### Ian McCarthy | Emory University
+### Econ 771
+
+---
+
+
+&lt;!-- Adjust some CSS code for font size and maintain R code font size --&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+&lt;/style&gt;
+
+
+&lt;!-- Set R options for how code chunks are displayed and load packages --&gt;
+
+
+
+# Table of contents
+
+1. [Overview](#overview)
+
+2. [Workflow (in R)](#workflow)
+
+3. [DD Identification Strategy](#id)
+
+4. [Data](#data)
+
+5. [Analysis](#analysis)
+
+6. [Extras](#extras)
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: overview
+
+# Overview
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Goals of this assignment
+
+1. Work with data on hospital characteristics
+2. Estimate standard DD and 2WFE model
+3. Estimate event studies
+
+&lt;br&gt;
+--
+Plus the sub-goal for all assignments...practice your Git/GitHub workflow, version control, and replicability
+
+
+---
+# Specific "research question"
+
+What effect did the Medicaid expansion have on hospital disproportionate share?
+
+- Economics: expanding insurance should improve a hospital's finances
+- Given DSH measurement in our data, Medicaid expansion should increase DSH (why?)
+
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: workflow
+
+# Workflow in R
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Data workflow
+
+Some quick thoughts on workflow
+
+1. Never use absolute path names!
+
+&lt;br&gt;
+.center[
+  ![](https://media.giphy.com/media/3oz8xt6aO8l4UjcnXa/giphy.gif)
+]
+
+---
+count: false
+
+# Data workflow
+
+Some quick thoughts on workflow
+
+1. Never use absolute path names!
+
+2. If you use the same data across projects, try a "path" script that you add to your `.gitignore` file
+
+
+.center[
+  ![](https://media.giphy.com/media/z8rEcJ6I0hiUM/giphy.gif)
+]
+
+
+
+---
+count: false
+
+# Data workflow
+
+Some quick thoughts on workflow...
+
+1. Never use absolute path names!
+
+2. If you use the same data across projects, try a "path" script that you add to your `.gitignore` file
+
+3. Separate your analysis and your markdown (not practical otherwise)
+
+
+---
+# My project workflow
+
+.pre[
+```
+project
+|   README.md
+|   RunRender.Rmd
+|   paper.Rmd
+|   abstract.Rmd
+|   presentation.Rmd
+|   BibTeX.tex (google drive link)
+|
+|---analysis
+|   |   _BuildFinalData.R
+|   |   _Analysis.R
+|   |   1_data1.R
+|   |   2_data2.R
+|   |   README.md (optional)
+|
+|---data
+|   |   final_dat1.Rds (or csv)
+|   |   final_dat2.Rds (or csv)
+|
+|---tables
+|   |   table1.tex
+|   |   table2.tex
+| 
+|---figures
+|   |   figure1.png
+|   |   figure2.png
+```
+]
+
+
+---
+# My assignment workflow
+
+1. Do analysis and save main objects (not full datasets) in `workspace.Rdata`
+2. Render markdown file as PDF
+
+&lt;br&gt;
+--
+.pre[
+````
+
+```{r, eval=FALSE}
+title: "Exercise 1 Solutions"
+author: Ian McCarthy, Econ 771
+date: Fall 2020
+geometry: "left=2cm,right=2cm,top=1cm,bottom=2cm"
+fontsize: 12pt
+subparagraph: yes
+header-includes:
+   - \usepackage{setspace}
+   - \usepackage{titlesec}
+   - \titlespacing{\title}{0pt}{\parskip}{-\parskip}
+   - \titlespacing{\section}{0pt}{12pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+   - \titlespacing{\subsection}{0pt}{12pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+   - \titlespacing{\subsubsection}{0pt}{12pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+   - \usepackage{float}
+output: 
+  bookdown::pdf_document2:
+    keep_tex: TRUE
+    toc: FALSE
+    number_sections: FALSE
+    fig_caption: yes
+bibliography: '../BibTeX_Library.bib'
+
+{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stargazer, knitr, kableExtra, lfe)
+
+
+{r, include=FALSE}
+load("workspace.Rdata")
+
+
+\setstretch{1.5}
+
+# Overview
+Hello world
+
+```
+
+````
+]
+
+
+
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: data
+
+# Data
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Data sources
+
+1. Inpatient Prospective Payment System Final Rule Files, available [here](https://data.nber.org/data/cms-impact-file-hospital-inpatient-prospective-payment-system-ipps.html) from the NBER.
+
+2. Provider of Services files, available [here](https://data.nber.org/data/provider-of-services.html) from the NBER. 
+
+3. Medicaid expansion, available [here](https://www.kff.org/medicaid/issue-brief/status-of-state-medicaid-expansion-decisions-interactive-map/) from the Kaiser Family Foundation.
+
+
+---
+# IPPS Data
+
+Let's start with a quick look at the 1994 data
+
+.pre[
+
+```r
+source('../paths.R')
+ipps.example &lt;- read_csv(paste0(ipps.path,"/impact1994.csv"))
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   fyend = col_logical(),
+##   premsa1990 = col_character(),
+##   prerecmsa = col_character(),
+##   postrecmsa = col_character(),
+##   msaspa = col_character(),
+##   provider = col_character(),
+##   reclass = col_character(),
+##   urgeo1990 = col_character(),
+##   urgeo = col_character(),
+##   urpsa = col_character()
+## )
+```
+
+```
+## See spec(...) for full column specifications.
+```
+
+```r
+head(ipps.example)
+```
+
+```
+## # A tibble: 6 x 38
+##     adc  beds bills tacmiv colaop colacp   coutf  cpccr dshpct dshcpg dshopg
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1   275   400 7275.   1.32      1      1 0.0470  0.038   0.325 0.0681 0.158 
+## 2    12    58  382.   1.00      1      1 0.00276 0.04    0.271 0      0     
+## 3    68   108 2087.   1.11      1      1 0.0213  0.07    0.295 0.0616 0.133 
+## 4   211   296 4475.   1.39      1      1 0.0618  0.049   0.188 0.0388 0.0497
+## 5    26    99  892.   1.05      1      1 0.00556 0.0587  0.311 0      0     
+## 6    22    45  678.   1.00      1      1 0.00975 0.051   0.424 0      0.05  
+## # ... with 27 more variables: fyend &lt;lgl&gt;, fyendstr &lt;dbl&gt;, hsp8287 &lt;dbl&gt;,
+## #   hsprate &lt;dbl&gt;, premsa1990 &lt;chr&gt;, prerecmsa &lt;chr&gt;, postrecmsa &lt;chr&gt;,
+## #   msaspa &lt;chr&gt;, opccr &lt;dbl&gt;, outf &lt;dbl&gt;, provider &lt;chr&gt;, provtype &lt;dbl&gt;,
+## #   rday &lt;dbl&gt;, reclass &lt;chr&gt;, postdiv &lt;dbl&gt;, division &lt;dbl&gt;, resbed &lt;dbl&gt;,
+## #   tchcp &lt;dbl&gt;, tchop &lt;dbl&gt;, urgeo1990 &lt;chr&gt;, urgeo &lt;chr&gt;, urpsa &lt;chr&gt;,
+## #   mcr_pct &lt;dbl&gt;, cwageindex &lt;dbl&gt;, wageindex &lt;dbl&gt;, grouperv &lt;dbl&gt;,
+## #   fyear &lt;dbl&gt;
+```
+]
+
+---
+count: false
+
+# IPPS Data
+
+Let's start with a quick look at the 1994 data
+
+.pre[
+
+```r
+glimpse(ipps.example)
+```
+
+```
+## Rows: 5,406
+## Columns: 38
+## $ adc        &lt;dbl&gt; 275, 12, 68, 211, 26, 22, 30, 58, 177, 58, 18, 81, 5, 79...
+## $ beds       &lt;dbl&gt; 400, 58, 108, 296, 99, 45, 119, 90, 262, 134, 43, 168, 9...
+## $ bills      &lt;dbl&gt; 7274.93, 382.30, 2086.89, 4475.06, 891.83, 678.41, 1200....
+## $ tacmiv     &lt;dbl&gt; 1.3226, 1.0033, 1.1147, 1.3924, 1.0548, 1.0042, 1.0810, ...
+## $ colaop     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
+## $ colacp     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,...
+## $ coutf      &lt;dbl&gt; 0.0470286, 0.0027582, 0.0213288, 0.0617545, 0.0055582, 0...
+## $ cpccr      &lt;dbl&gt; 0.03800, 0.04000, 0.07000, 0.04900, 0.05866, 0.05100, 0....
+## $ dshpct     &lt;dbl&gt; 0.3253953, 0.2713989, 0.2950295, 0.1880288, 0.3107497, 0...
+## $ dshcpg     &lt;dbl&gt; 0.0681119, 0.0000000, 0.0615642, 0.0388100, 0.0000000, 0...
+## $ dshopg     &lt;dbl&gt; 0.1575162, 0.0000000, 0.1332236, 0.0497188, 0.0000000, 0...
+## $ fyend      &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ fyendstr   &lt;dbl&gt; 91273, 91273, 91273, 92182, 91273, 91273, 92213, 91273, ...
+## $ hsp8287    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, 4142.06, NA, NA, NA,...
+## $ hsprate    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, 4142.06, NA, NA, NA,...
+## $ premsa1990 &lt;chr&gt; "2180", "01", "01", "2650", "01", "01", "2030", "01", "1...
+## $ prerecmsa  &lt;chr&gt; "2180", "01", "01", "2650", "01", "01", "2030", "01", "1...
+## $ postrecmsa &lt;chr&gt; "2180", "01", "3440", "2650", "01", "01", "2030", "3440"...
+## $ msaspa     &lt;chr&gt; "2180", "01", "3440", "2650", "01", "5240", "2030", "344...
+## $ opccr      &lt;dbl&gt; 0.4020, 0.5580, 0.4690, 0.4370, 0.4370, 0.6370, 0.4570, ...
+## $ outf       &lt;dbl&gt; 0.0471752, 0.0027689, 0.0193058, 0.0552366, 0.0051738, 0...
+## $ provider   &lt;chr&gt; "010001", "010004", "010005", "010006", "010007", "01000...
+## $ provtype   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0,...
+## $ rday       &lt;dbl&gt; 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, ...
+## $ reclass    &lt;chr&gt; "N", "N", "L", "N", "N", "R", "N", "L", "N", "N", "N", "...
+## $ postdiv    &lt;dbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,...
+## $ division   &lt;dbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,...
+## $ resbed     &lt;dbl&gt; 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, ...
+## $ tchcp      &lt;dbl&gt; 0.0000000, 0.0000000, 0.0000000, 0.0000000, 0.0000000, 0...
+## $ tchop      &lt;dbl&gt; 0.0000000, 0.0000000, 0.0000000, 0.0000000, 0.0000000, 0...
+## $ urgeo1990  &lt;chr&gt; "OURBAN", "RURAL", "RURAL", "OURBAN", "RURAL", "RURAL", ...
+## $ urgeo      &lt;chr&gt; "OURBAN", "RURAL", "RURAL", "OURBAN", "RURAL", "RURAL", ...
+## $ urpsa      &lt;chr&gt; "OURBAN", "RURAL", "OURBAN", "OURBAN", "RURAL", "OURBAN"...
+## $ mcr_pct    &lt;dbl&gt; 0.5048, 0.4754, 0.6253, 0.5405, 0.6458, 0.5074, 0.7665, ...
+## $ cwageindex &lt;dbl&gt; 0.8430229, 0.7783028, 0.8549112, 0.8366409, 0.7783028, 0...
+## $ wageindex  &lt;dbl&gt; 0.7793, 0.6935, 0.7954, 0.7707, 0.6935, 0.6935, 0.7995, ...
+## $ grouperv   &lt;dbl&gt; 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, ...
+## $ fyear      &lt;dbl&gt; 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 1994, 19...
+```
+]
+
+---
+# IPPS Data
+
+Data exist in three groups...
+
+1. 1986 to 1993: case mix index (CMI) and wage index
+2. 1994 to 2000: adds adjusted cases, daily census, beds, DSH percent, and provider type
+3. 2001 to 2018: change to variable name and format for provider type
+
+&lt;br&gt;
+--
+**provider** is the Medicare provider number and the unique hospital ID for these data
+
+---
+# POS Data
+
+Let's start with a quick look at the 1994 data
+
+.pre[
+
+```r
+pos.example &lt;- read_csv(paste0(pos.path,"/pos1994.csv/pos1994.csv"))
+```
+
+```
+## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   prvdr_ctgry_sbtyp_cd = col_character(),
+##   prvdr_ctgry_cd = col_character(),
+##   city = col_character(),
+##   cmplnc_stus_cd = col_character(),
+##   ssa_cnty_cd = col_character(),
+##   cross_ref_provider_number = col_character(),
+##   fac_name = col_character(),
+##   intrmdry_carr_cd = col_character(),
+##   intrmdry_carr_prior_cd = col_character(),
+##   prvdr_num = col_character(),
+##   prov1720 = col_character(),
+##   rgn_cd = col_character(),
+##   skltn_rec_sw = col_character(),
+##   state_cd = col_character(),
+##   ssa_state_cd = col_character(),
+##   state_rgn_cd = col_character(),
+##   st_adr = col_character(),
+##   pgm_trmntn_cd = col_character(),
+##   gnrl_cntl_type_cd = col_character(),
+##   fips_state_cd = col_character()
+##   # ... with 201 more columns
+## )
+```
+
+```
+## See spec(...) for full column specifications.
+```
+
+```
+## Warning: 363653 parsing failures.
+##  row      col           expected actual                                                                          file
+## 1196 prov0620 1/0/T/F/TRUE/FALSE 940401 'D:/CloudStation/Professional/Research Data/POS Data/pos1994.csv/pos1994.csv'
+## 1196 prov0625 1/0/T/F/TRUE/FALSE 950331 'D:/CloudStation/Professional/Research Data/POS Data/pos1994.csv/pos1994.csv'
+## 1196 prov1630 1/0/T/F/TRUE/FALSE 940331 'D:/CloudStation/Professional/Research Data/POS Data/pos1994.csv/pos1994.csv'
+## 1197 prov0620 1/0/T/F/TRUE/FALSE 941101 'D:/CloudStation/Professional/Research Data/POS Data/pos1994.csv/pos1994.csv'
+## 1197 prov0625 1/0/T/F/TRUE/FALSE 951031 'D:/CloudStation/Professional/Research Data/POS Data/pos1994.csv/pos1994.csv'
+## .... ........ .................. ...... .............................................................................
+## See problems(...) for more details.
+```
+
+```r
+head(pos.example)
+```
+
+```
+## # A tibble: 6 x 499
+##   prvdr_ctgry_sbt~ prvdr_ctgry_cd chow_cnt chow_dt city  prov0220 cmplnc_stus_cd
+##   &lt;chr&gt;            &lt;chr&gt;             &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;         
+## 1 01               01                    0      NA DOTH~       NA A             
+## 2 01               01                    0      NA BRID~       NA A             
+## 3 01               01                    0      NA BOAZ        NA A             
+## 4 01               01                    0      NA FLOR~       NA A             
+## 5 01               01                    0      NA OPP          1 A             
+## 6 01               01                    0      NA LUVE~       NA A             
+## # ... with 492 more variables: ssa_cnty_cd &lt;chr&gt;,
+## #   cross_ref_provider_number &lt;chr&gt;, prov0500 &lt;dbl&gt;, prov2740 &lt;dbl&gt;,
+## #   elgblty_sw &lt;dbl&gt;, fac_name &lt;chr&gt;, intrmdry_carr_cd &lt;chr&gt;,
+## #   orgnl_prtcptn_dt &lt;dbl&gt;, prov1615 &lt;dbl&gt;, intrmdry_carr_prior_cd &lt;chr&gt;,
+## #   prvdr_num &lt;chr&gt;, prov1720 &lt;chr&gt;, rgn_cd &lt;chr&gt;, skltn_rec_sw &lt;chr&gt;,
+## #   state_cd &lt;chr&gt;, ssa_state_cd &lt;chr&gt;, state_rgn_cd &lt;chr&gt;, st_adr &lt;chr&gt;,
+## #   phne_num &lt;dbl&gt;, pgm_trmntn_cd &lt;chr&gt;, trmntn_exprtn_dt &lt;dbl&gt;,
+## #   srvy_prpse_cd &lt;dbl&gt;, gnrl_cntl_type_cd &lt;chr&gt;, zip_cd &lt;dbl&gt;,
+## #   fips_state_cd &lt;chr&gt;, fips_cnty_cd &lt;chr&gt;, ssamsa &lt;chr&gt;, ssamsasz &lt;chr&gt;,
+## #   prov0000 &lt;dbl&gt;, prov0005 &lt;dbl&gt;, prov0010 &lt;dbl&gt;, prov0040 &lt;dbl&gt;,
+## #   prov0045 &lt;dbl&gt;, prov0050 &lt;chr&gt;, prov0055 &lt;dbl&gt;, prov0060 &lt;dbl&gt;,
+## #   bed_cnt &lt;dbl&gt;, crtfd_bed_cnt &lt;dbl&gt;, crna_cnt &lt;dbl&gt;, clia_id_number_1 &lt;chr&gt;,
+## #   clia_id_number_2 &lt;chr&gt;, clia_id_number_3 &lt;chr&gt;, clia_id_number_4 &lt;chr&gt;,
+## #   clia_id_number_5 &lt;chr&gt;, lsc_wvr_sw &lt;dbl&gt;, scope_of_srvc_wvr_sw &lt;lgl&gt;,
+## #   tchncl_prsnel_wvr_sw &lt;lgl&gt;, rn_24_hr_wvr_sw &lt;lgl&gt;,
+## #   srvy_ever_acrdtd_sw &lt;chr&gt;, srvy_ever_nacrdtd_sw &lt;chr&gt;,
+## #   srvy_ever_sb_sw &lt;chr&gt;, prov0450 &lt;dbl&gt;, dietn_cnt &lt;dbl&gt;,
+## #   fy_end_mo_day_cd &lt;chr&gt;, inhltn_thrpst_cnt &lt;dbl&gt;, lpn_lvn_cnt &lt;dbl&gt;,
+## #   mdcl_schl_afltn_cd &lt;dbl&gt;, mdcd_vndr_num &lt;chr&gt;, meet_1861_sw &lt;chr&gt;,
+## #   ocptnl_thrpst_cnt &lt;dbl&gt;, prsnel_othr_cnt &lt;dbl&gt;, prov1575 &lt;chr&gt;,
+## #   phys_thrpst_cnt &lt;dbl&gt;, physn_astnt_cnt &lt;dbl&gt;, prov1520 &lt;chr&gt;,
+## #   pgm_prtcptn_cd &lt;dbl&gt;, psych_unit_bed_cnt &lt;dbl&gt;, prov1695 &lt;dbl&gt;,
+## #   psych_unit_sw &lt;chr&gt;, psych_unit_trmntn_cd &lt;dbl&gt;,
+## #   psych_unit_trmntn_dt &lt;dbl&gt;, ovrrd_bed_cnt_sw &lt;chr&gt;, ovrrd_nrs_bed_sw &lt;chr&gt;,
+## #   ovrrd_stfg_sw &lt;chr&gt;, rn_cnt &lt;dbl&gt;, reg_phrmcst_cnt &lt;dbl&gt;,
+## #   rehab_unit_bed_cnt &lt;dbl&gt;, rehab_unit_efctv_dt &lt;dbl&gt;, rehab_unit_sw &lt;chr&gt;,
+## #   rehab_unit_trmntn_cd &lt;dbl&gt;, rehab_unit_trmntn_dt &lt;lgl&gt;,
+## #   related_provider_number &lt;chr&gt;, rsdnt_pgm_ada_aprvd_sw &lt;chr&gt;,
+## #   rsdnt_pgm_ama_aprvd_sw &lt;chr&gt;, rsdnt_pgm_aoa_aprvd_sw &lt;chr&gt;,
+## #   rsdnt_pgm_othr_aprvd_sw &lt;chr&gt;, rsdnt_physn_cnt &lt;dbl&gt;, prov2040 &lt;lgl&gt;,
+## #   acute_rnl_dlys_srvc_cd &lt;dbl&gt;, prov2065 &lt;dbl&gt;, prov2070 &lt;dbl&gt;,
+## #   prov2080 &lt;dbl&gt;, burn_care_unit_srvc_cd &lt;dbl&gt;, chrprctic_srvc_cd &lt;dbl&gt;,
+## #   crnry_care_unit_srvc_cd &lt;dbl&gt;, dntl_srvc_cd &lt;dbl&gt;, dtry_srvc_cd &lt;dbl&gt;,
+## #   prov2140 &lt;dbl&gt;, prov2160 &lt;dbl&gt;, prov2175 &lt;dbl&gt;, ...
+```
+]
+
+
+---
+count: false
+
+# POS Data
+
+Let's start with a quick look at the 1994 data
+
+.pre[
+
+```r
+glimpse(pos.example)
+```
+
+```
+## Rows: 92,894
+## Columns: 499
+## $ prvdr_ctgry_sbtyp_cd           &lt;chr&gt; "01", "01", "01", "01", "01", "01", ...
+## $ prvdr_ctgry_cd                 &lt;chr&gt; "01", "01", "01", "01", "01", "01", ...
+## $ chow_cnt                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 5, 0, ...
+## $ chow_dt                        &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ city                           &lt;chr&gt; "DOTHAN", "BRIDGEPORT", "BOAZ", "FLO...
+## $ prov0220                       &lt;dbl&gt; NA, NA, NA, NA, 1, NA, NA, NA, NA, N...
+## $ cmplnc_stus_cd                 &lt;chr&gt; "A", "A", "A", "A", "A", "A", "A", "...
+## $ ssa_cnty_cd                    &lt;chr&gt; "340", "350", "470", "380", "190", "...
+## $ cross_ref_provider_number      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0500                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2740                       &lt;dbl&gt; 940608, 941026, 940705, 940722, 9311...
+## $ elgblty_sw                     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ fac_name                       &lt;chr&gt; "SOUTHEAST ALABAMA MEDICAL CENTER", ...
+## $ intrmdry_carr_cd               &lt;chr&gt; "00010", "00010", "00010", "00010", ...
+## $ orgnl_prtcptn_dt               &lt;dbl&gt; 660701, 660701, 660701, 660701, 6607...
+## $ prov1615                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 860601, NA, ...
+## $ intrmdry_carr_prior_cd         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prvdr_num                      &lt;chr&gt; "010001", "010004", "010005", "01000...
+## $ prov1720                       &lt;chr&gt; "A", "A", "A", "A", "A", "A", "A", "...
+## $ rgn_cd                         &lt;chr&gt; "04", "04", "04", "04", "04", "04", ...
+## $ skltn_rec_sw                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ state_cd                       &lt;chr&gt; "AL", "AL", "AL", "AL", "AL", "AL", ...
+## $ ssa_state_cd                   &lt;chr&gt; "01", "01", "01", "01", "01", "01", ...
+## $ state_rgn_cd                   &lt;chr&gt; "001", "001", "001", "001", "001", "...
+## $ st_adr                         &lt;chr&gt; "1600 EAST MAIN STREET", "47005 U S ...
+## $ phne_num                       &lt;dbl&gt; 2057938850, 2054372101, 2055938310, ...
+## $ pgm_trmntn_cd                  &lt;chr&gt; "00", "00", "00", "00", "00", "00", ...
+## $ trmntn_exprtn_dt               &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ srvy_prpse_cd                  &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, ...
+## $ gnrl_cntl_type_cd              &lt;chr&gt; "08", "08", "07", "07", "02", "07", ...
+## $ zip_cd                         &lt;dbl&gt; 36301, 35740, 35957, 35631, 36467, 3...
+## $ fips_state_cd                  &lt;chr&gt; "01", "01", "01", "01", "01", "01", ...
+## $ fips_cnty_cd                   &lt;chr&gt; "069", "071", "095", "077", "039", "...
+## $ ssamsa                         &lt;chr&gt; "162", "999", "999", "193", "999", "...
+## $ ssamsasz                       &lt;chr&gt; "E", NA, NA, "E", NA, NA, "E", NA, "...
+## $ prov0000                       &lt;dbl&gt; 940326, 940214, 930319, 920323, NA, ...
+## $ prov0005                       &lt;dbl&gt; 970326, 970214, 960319, 950323, NA, ...
+## $ prov0010                       &lt;dbl&gt; 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, ...
+## $ prov0040                       &lt;dbl&gt; 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0,...
+## $ prov0045                       &lt;dbl&gt; NA, NA, NA, NA, NA, 841001, NA, NA, ...
+## $ prov0050                       &lt;chr&gt; NA, NA, NA, NA, NA, "Y", NA, NA, NA,...
+## $ prov0055                       &lt;dbl&gt; NA, NA, NA, NA, NA, 7, NA, NA, NA, N...
+## $ prov0060                       &lt;dbl&gt; NA, NA, NA, NA, NA, 871001, NA, NA, ...
+## $ bed_cnt                        &lt;dbl&gt; 400, 64, 150, 372, 99, 65, 150, 90, ...
+## $ crtfd_bed_cnt                  &lt;dbl&gt; 400, 64, 150, 372, 99, 65, 150, 90, ...
+## $ crna_cnt                       &lt;dbl&gt; 25.75, 0.00, 4.00, 3.00, 1.00, 1.50,...
+## $ clia_id_number_1               &lt;chr&gt; "01D0641723", "01D0302848", NA, "01D...
+## $ clia_id_number_2               &lt;chr&gt; NA, NA, NA, "01D0641601", NA, NA, NA...
+## $ clia_id_number_3               &lt;chr&gt; NA, NA, NA, "01D0721371", NA, NA, NA...
+## $ clia_id_number_4               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ clia_id_number_5               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ lsc_wvr_sw                     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ scope_of_srvc_wvr_sw           &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ tchncl_prsnel_wvr_sw           &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ rn_24_hr_wvr_sw                &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ srvy_ever_acrdtd_sw            &lt;chr&gt; "Y", "Y", "Y", "Y", "N", "Y", "Y", "...
+## $ srvy_ever_nacrdtd_sw           &lt;chr&gt; "N", "N", "N", "N", "Y", "N", "N", "...
+## $ srvy_ever_sb_sw                &lt;chr&gt; "N", "N", "N", "N", "Y", "Y", "N", "...
+## $ prov0450                       &lt;dbl&gt; NA, NA, 900503, 920507, NA, NA, NA, ...
+## $ dietn_cnt                      &lt;dbl&gt; 3.00, 0.25, 1.00, 4.00, 1.00, 2.00, ...
+## $ fy_end_mo_day_cd               &lt;chr&gt; "0930", "0930", "0930", "0630", "093...
+## $ inhltn_thrpst_cnt              &lt;dbl&gt; 20.00, 1.00, 4.00, 42.25, 4.00, 4.00...
+## $ lpn_lvn_cnt                    &lt;dbl&gt; 133.00, 12.50, 52.50, 134.50, 17.50,...
+## $ mdcl_schl_afltn_cd             &lt;dbl&gt; 4, 4, 4, 4, 4, 4, 4, 4, 2, 4, 4, 4, ...
+## $ mdcd_vndr_num                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ meet_1861_sw                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ocptnl_thrpst_cnt              &lt;dbl&gt; 3.00, 0.00, 0.00, 0.00, 1.00, 0.00, ...
+## $ prsnel_othr_cnt                &lt;dbl&gt; 1289.50, 90.50, 336.00, 709.50, 70.2...
+## $ prov1575                       &lt;chr&gt; "Y", "Y", "Y", "Y", "Y", "Y", "Y", "...
+## $ phys_thrpst_cnt                &lt;dbl&gt; 3.50, 0.25, 2.00, 0.25, 0.25, 0.00, ...
+## $ physn_astnt_cnt                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, ...
+## $ prov1520                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ pgm_prtcptn_cd                 &lt;dbl&gt; 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, ...
+## $ psych_unit_bed_cnt             &lt;dbl&gt; 36, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 2...
+## $ prov1695                       &lt;dbl&gt; 921001, NA, NA, NA, NA, 931001, NA, ...
+## $ psych_unit_sw                  &lt;chr&gt; "Y", NA, NA, NA, NA, "Y", NA, NA, NA...
+## $ psych_unit_trmntn_cd           &lt;dbl&gt; 0, NA, NA, NA, NA, 0, NA, NA, NA, NA...
+## $ psych_unit_trmntn_dt           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ovrrd_bed_cnt_sw               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ovrrd_nrs_bed_sw               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ovrrd_stfg_sw                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ rn_cnt                         &lt;dbl&gt; 286.75, 10.50, 109.75, 202.50, 23.75...
+## $ reg_phrmcst_cnt                &lt;dbl&gt; 14.50, 0.50, 4.00, 13.25, 1.50, 2.00...
+## $ rehab_unit_bed_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0,...
+## $ rehab_unit_efctv_dt            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, 8707...
+## $ rehab_unit_sw                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, "Y",...
+## $ rehab_unit_trmntn_cd           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, 0, N...
+## $ rehab_unit_trmntn_dt           &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ related_provider_number        &lt;chr&gt; NA, NA, NA, "010006", NA, NA, NA, NA...
+## $ rsdnt_pgm_ada_aprvd_sw         &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "...
+## $ rsdnt_pgm_ama_aprvd_sw         &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "...
+## $ rsdnt_pgm_aoa_aprvd_sw         &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "...
+## $ rsdnt_pgm_othr_aprvd_sw        &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "...
+## $ rsdnt_physn_cnt                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0,...
+## $ prov2040                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ acute_rnl_dlys_srvc_cd         &lt;dbl&gt; 2, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0, ...
+## $ prov2065                       &lt;dbl&gt; 0, 0, 0, 1, 0, 1, 0, 0, 2, 1, 0, 1, ...
+## $ prov2070                       &lt;dbl&gt; 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 3, ...
+## $ prov2080                       &lt;dbl&gt; 0, 2, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, ...
+## $ burn_care_unit_srvc_cd         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ chrprctic_srvc_cd              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ crnry_care_unit_srvc_cd        &lt;dbl&gt; 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, ...
+## $ dntl_srvc_cd                   &lt;dbl&gt; 0, 0, 0, 1, 3, 1, 0, 0, 1, 0, 0, 0, ...
+## $ dtry_srvc_cd                   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, ...
+## $ prov2140                       &lt;dbl&gt; 1, 3, 1, 1, 3, 1, 1, 1, 1, 1, 1, 3, ...
+## $ prov2160                       &lt;dbl&gt; 1, 0, 0, 2, 2, 0, 0, 1, 1, 1, 1, 0, ...
+## $ prov2175                       &lt;dbl&gt; 0, 2, 0, 2, 0, 0, 2, 0, 2, 0, 0, 3, ...
+## $ ip_srgcl_srvc_cd               &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ icu_srvc_cd                    &lt;dbl&gt; 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, ...
+## $ prov2205                       &lt;dbl&gt; 1, 2, 2, 1, 2, 1, 1, 0, 1, 1, 2, 1, ...
+## $ prov2210                       &lt;dbl&gt; 1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ prov2215                       &lt;dbl&gt; 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, ...
+## $ neontl_nrsry_srvc_cd           &lt;dbl&gt; 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, ...
+## $ nuclr_mdcn_srvc_cd             &lt;dbl&gt; 1, 1, 1, 1, 3, 1, 2, 1, 1, 1, 0, 1, ...
+## $ ob_srvc_cd                     &lt;dbl&gt; 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, ...
+## $ ot_srvc_cd                     &lt;dbl&gt; 1, 0, 0, 2, 1, 0, 0, 0, 2, 0, 0, 3, ...
+## $ open_hrt_srgry_srvc_cd         &lt;dbl&gt; 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, ...
+## $ oprtg_room_srvc_cd             &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ optmtrc_srvc_cd                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, ...
+## $ prov2310                       &lt;dbl&gt; 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ orgn_trnsplnt_srvc_cd          &lt;dbl&gt; 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ op_srvc_cd                     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, ...
+## $ op_srgry_unit_srvc_cd          &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ ped_srvc_cd                    &lt;dbl&gt; 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 2, ...
+## $ phrmcy_srvc_cd                 &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, ...
+## $ pt_srvc_cd                     &lt;dbl&gt; 1, 3, 1, 1, 1, 0, 1, 1, 1, 1, 0, 3, ...
+## $ pstoprtv_rcvry_srvc_cd         &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ psych_srvc_cd                  &lt;dbl&gt; 1, 0, 0, 1, 0, 1, 0, 0, 3, 0, 0, 1, ...
+## $ prov2440                       &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ dgnstc_rdlgy_srvc_cd           &lt;dbl&gt; 1, 0, 0, 1, 0, 0, 0, 0, 2, 1, 2, 1, ...
+## $ prov2450                       &lt;dbl&gt; 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, ...
+## $ prov2470                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ shck_trma_srvc_cd              &lt;dbl&gt; 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ scl_srvc_cd                    &lt;dbl&gt; 1, 3, 1, 1, 0, 1, 1, 1, 1, 1, 2, 1, ...
+## $ spch_pthlgy_srvc_cd            &lt;dbl&gt; 1, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 3, ...
+## $ sb_sw                          &lt;chr&gt; "N", "N", "N", "N", "Y", "Y", "N", "...
+## $ sb_size_cd                     &lt;dbl&gt; NA, NA, NA, NA, 2, 2, NA, 2, NA, NA,...
+## $ gnrl_fac_type_cd               &lt;chr&gt; "01", "01", "01", "01", "01", "01", ...
+## $ npp_type_cd                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ actvty_profnl_cntrct_cnt       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ actvty_profnl_fttm_cnt         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ actvty_profnl_prtm_cnt         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ profnl_admin_cntrct_cnt        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ profnl_admin_fltm_cnt          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ profnl_admin_prtm_cnt          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0030                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ nrs_aide_cntrct_cnt            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ nrs_aide_fltm_cnt              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ nrs_aide_prtm_cnt              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mdcr_snf_bed_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mdcd_snf_bed_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mdcr_mdcd_snf_bed_cnt          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0110                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ bed_per_room_wvr_sw            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ room_size_wvr_sw               &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ rn_7_day_wvr_sw                &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0785                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0790                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0795                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ dietn_cntrct_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ dietn_fltm_cnt                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ dietn_prtm_cnt                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ exprmt_rsrch_cndctd_sw         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ food_srvc_cntrct_cnt           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ food_srvc_fltm_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ food_srvc_prtm_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0925                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ hsekpng_fltm_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ hsekpng_prtm_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ lpn_lvn_cntrct_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ lpn_lvn_fttm_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ lpn_lvn_prtm_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ ltc_cross_ref_provider_number  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ mdcl_drctr_cntrct_cnt          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mdcl_drctr_fltm_cnt            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mdcl_drctr_prtm_cnt            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mentl_hlth_srvc_cntrct_cnt     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mentl_hlth_srvc_fltm_cnt       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mentl_hlth_srvc_prtm_cnt       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mlt_fac_org_name               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ mlt_ownd_fac_org_sw            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1035                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1040                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ ocptnl_thrpst_prtm_cnt         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ ot_aide_cntrct_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ ot_aide_fltm_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ ot_aide_prtm_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ orgnz_fmly_mbr_grp_sw          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ orgnz_rsdnt_grp_sw             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ stf_othr_cntrct_cnt            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ stf_othr_fltm_cnt              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ stf_othr_prtm_cnt              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ physn_othr_cntrct_cnt          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ physn_othr_fltm_cnt            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ physn_othr_prtm_cnt            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ phrmcst_cntrct_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ phrmcst_fltm_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ phrmcst_prtm_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ phys_thrpst_cntrct_cnt         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ phys_thrpst_fltm_cnt           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ phys_thrpst_prtm_cnt           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ pt_aide_cntrct_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ pt_aide_fltm_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ pt_aide_prtm_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ physn_ext_cntrct_cnt           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ physn_ext_fltm_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ physn_ext_prtm_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ pdtrst_cntrct_cnt              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ pdtrst_fltm_cnt                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ pdtrst_prtm_cnt                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ chow_prior_dt                  &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ rscnd_suspnsn_prior_dt         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prvdr_bsd_fac_sw               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ rn_cntrct_cnt                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ rn_fltm_cnt                    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ rn_prtm_cnt                    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ rscnd_suspnsn_dt               &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ scl_workr_cntrct_cnt           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ scl_workr_fttm_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ scl_workr_prtm_cnt             &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ aids_bed_cnt                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ alzhmr_bed_cnt                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ dlys_bed_cnt                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ dsbl_chldrn_bed_cnt            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ head_trma_bed_cnt              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ hntgtn_dease_bed_cnt           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ hospc_bed_cnt                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ rehab_bed_cnt                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ vntltr_bed_cnt                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ spch_pthlgst_cntrct_cnt        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ spch_pthlgst_fltm_cnt          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ spch_pthlgst_prtm_cnt          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ actvty_ofsite_rsdnt_sw         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ actvty_onst_nrsdnt_sw          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ actvty_onst_rsdnt_sw           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov3525                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov3520                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov3515                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ cl_srvc_ofsite_rsdnt_sw        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ cl_srvc_onst_nrsdnt_sw         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ cl_srvc_onst_rsdnt_sw          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ dntl_srvc_ofsite_rsdnt_sw      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ dntl_srvc_onst_rsdnt_sw        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ dtry_ofsite_rsdnt_sw           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ dtry_onst_nrsdnt_sw            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ dtry_onst_rsdnt_sw             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ hsekpng_srvc_onst_nrsdnt_sw    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ hsekpng_srvc_ofsite_rsdnt_sw   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ hsekpng_srvc_onst_rsdnt_sw     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ mentl_hlth_ofsite_rsdnt_sw     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ mentl_hlth_onst_nrsdnt_sw      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ mentl_hlth_onst_rsdnt_sw       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ nrsng_srvc_ofsite_rsdnt_sw     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ nrsng_srvc_onst_nrsdnt_sw      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ nrsng_srvc_onst_rsdnt_sw       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ot_srvc_ofsite_rsdnt_sw        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ot_srvc_onst_nrsdnt_sw         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ot_srvc_onst_rsdnt_sw          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ phrmcy_srvc_ofsite_rsdnt_sw    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ phrmcy_srvc_onst_nrsdnt_sw     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ phrmcy_srvc_onst_rsdnt_sw      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov3300                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov3295                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov3290                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ pt_ofsite_rsdnt_sw             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ pt_onst_nrsdnt_sw              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ pt_onst_rsdnt_sw               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ physn_srvc_ofsite_nrsdnt_sw    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ physn_srvc_onst_nrsdnt_sw      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ physn_srvc_onst_rsdnt_sw       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ pdtry_srvc_ofsite_rsdnt_sw     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ pdtry_srvc_onst_nrsdnt_sw      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ pdtry_srvc_onst_rsdnt_sw       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov3405                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ scl_work_srvc_onst_nrsdnt_sw   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ scl_work_srvc_onst_rsdnt_sw    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ spch_pthlgy_ofsite_rsdnt_sw    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ spch_pthlgy_onst_nrsdnt_sw     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ spch_pthlgy_onst_rsdnt_sw      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ vctnl_srvc_ofsite_rsdnt_sw     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ vctnl_srvc_onst_nrsdnt_sw      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ vctnl_srvc_onst_rsdnt_sw       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ dgnstc_xray_ofsite_rsdnt_sw    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ dgnstc_xray_onst_nrsdnt_sw     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ hha_trng_pgm_cd                &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ brnch_oprtn_sw                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ brnch_cnt                      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ chow_sw                        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ hha_qlfyd_opt_spch_sw          &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ hh_aide_cnt                    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mdcr_hospc_sw                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ medicare_hospice_provider_num  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ medicare_medicaid_prvdr_number &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ phys_thrpst_stf_cnt            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ scl_workr_cnt                  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ spch_pthlgst_audlgst_cnt       &lt;dbl&gt; 2.00, 0.00, 0.00, 0.00, 0.00, 0.00, ...
+## $ prov2075                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2155                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ intrn_rsdnt_srvc_cd            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ mdcl_scl_srvc_cd               &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ nrsng_srvc_cd                  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ntrtnl_gdnc_srvc_cd            &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ othr_srvc_cd                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2520                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ vctnl_gdnc_srvc_cd             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2725                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1530                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1240                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov2615                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0615                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0775                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0765                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0770                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0880                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0885                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0895                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0900                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0875                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0890                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov2085                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0830                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0835                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0840                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0845                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0825                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0850                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1275                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1285                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1290                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1295                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1300                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1305                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1280                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1310                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1315                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1320                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1345                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1330                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1325                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1335                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1340                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1350                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1355                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1360                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1365                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1370                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1375                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1245                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1260                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1265                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1380                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1255                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1250                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1385                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1390                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1395                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1400                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1410                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1405                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1865                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1870                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1875                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1880                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1885                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1890                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1895                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1900                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1910                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1915                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1920                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1925                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1930                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1935                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1940                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1945                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1950                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1955                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1960                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1965                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1970                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1975                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1980                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1985                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1990                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1995                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2000                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2005                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2010                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2015                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2020                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ drctr_qualn_cd                 &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ tchnlgst_asct_dgr_cnt          &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ tchnlgst_bs_ba_dgr_cnt         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ tchnlgst_2_yr_rdlgc_cnt        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1685                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ phys_thrpst_arngmt_cnt         &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ spch_pthlgst_arngmt_cnt        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ spch_pthlgst_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov2500                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0070                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0090                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0235                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0250                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0275                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ esrd_ntwrk_num                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0470                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0265                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1600                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1590                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1595                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1760                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1765                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1580                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1585                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1770                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1775                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2030                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2025                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2035                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2705                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ hmdlys_stn_esrd_cnt            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov1235                       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ dlys_stn_cnt                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov2870                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ mr_bed_cnt                     &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ drct_care_prsnel_cnt           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ prov0620                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0625                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0630                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1630                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov1635                       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ emplee_cnt                     &lt;dbl&gt; 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, ...
+## $ fed_pgm_sprt_sw                &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ nrs_prctnr_cnt                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ parent_provider_number         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ physn_cnt                      &lt;dbl&gt; 17.0, 1.0, 7.0, 0.0, 1.5, 0.0, 0.0, ...
+## $ fed_pgm_name                   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ mdcr_prtcptn_op_pt_spch_sw     &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ot_2_srvc_cd                   &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ot_3_srvc_cd                   &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ orthtc_prsthtc_srvc_cd         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ orthtc_prsthtc_2_srvc_cd       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ orthtc_prsthtc_3_srvc_cd       &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ pt_2_srvc_cd                   &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ pt_3_srvc_cd                   &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ physn_srvc_cd                  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ physn_2_srvc_cd                &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ physn_3_srvc_cd                &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ psychlgcl_srvc_cd              &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ psychlgcl_2_srvc_cd            &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ psychlgcl_3_srvc_cd            &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ rsprtry_care_srvc_cd           &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ rsprtry_care_2_srvc_cd         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ rsprtry_care_3_srvc_cd         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ scl_2_srvc_cd                  &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ scl_3_srvc_cd                  &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ spch_pthlgy_2_srvc_cd          &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ spch_pthlgy_3_srvc_cd          &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0415                       &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0550                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0565                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ oprtg_room_cnt                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ crdvsclr_srgry_sw              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ft_srgry_sw                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov2150                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ nrlgcl_srgry_sw                &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ob_gyn_srgry_sw                &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ opthmlgy_srgry_sw              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ oral_srgry_sw                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ orthpdc_srgry_sw               &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ otlrynglgy_srgry_sw            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ plstc_srgry_sw                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ thorc_srgry_sw                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ urlgy_srgry_sw                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ ekg_srvc_cd                    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ lab_srvc_cd                    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ rdlgy_srvc_cd                  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ prov0015                       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ cnslr_emplee_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ cnslr_vlntr_cnt                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ hh_aid_vlntr_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ hmmkr_emplee_cnt               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ hmmkr_vlntr_cnt                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ lpn_lvn_vlntr_cnt              &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ mdcl_scl_workr_cnt             &lt;dbl&gt; 4.00, 0.25, 3.00, 7.25, 0.00, 1.00, ...
+## $ mdcl_scl_workr_vlntr_cnt       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ physn_vlntr_cnt                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ rn_vlntr_cnt                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ cnslng_srvc_cd                 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ hh_aide_srvc_cd                &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ hmmkr_srvc_cd                  &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ mdcl_suply_srvc_cd             &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ shrt_term_ip_srvc_cd           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ vlntr_othr_cnt                 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ vlntr_cnt                      &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...
+## $ fed_fundd_fqhc_sw              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ fqhc_approved_rhc_provider_num &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ fqhc_aprvd_rhc_sw              &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
+## $ year                           &lt;dbl&gt; 1994, 1994, 1994, 1994, 1994, 1994, ...
+```
+]
+
+
+---
+# POS Data, 1984 to 1990
+
+.pre[
+
+```r
+for (y in 1984:1990) {
+  pos.data &lt;- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+  
+  pos.data &lt;- pos.data %&gt;%
+    rename(provider=prov1680,
+           own_change=prov0100,
+           beds_cert=prov0755,
+           beds_tot=prov0740,
+           name=prov0475,
+           street=prov2720,
+           city_state=prov0115,
+           zip=prov2905,
+           fac_type=prov2890,
+           own_type=prov2885,
+           term_date=prov2810) %&gt;%
+    mutate(term_date=as.Date(as.character(term_date), format='%y%m%d'),
+           own_change=as.Date(as.character(term_date), format='%y%m%d'),
+           state=str_sub(city_state, start=-2),
+           city=str_sub(city_state, start=1, end=-2),
+           year=y) %&gt;%
+    select(provider, category, own_change, beds_cert, beds_tot, name,
+           street, city, state, zip, term_date, fac_type, own_type, year) %&gt;%
+    filter(provider!='000000')
+
+  assign(paste0("pos.",y),pos.data)  
+}
+```
+]
+
+---
+# POS Data, 1991
+
+.pre[
+
+```r
+y=1991
+pos.data &lt;- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+
+pos.data &lt;- pos.data %&gt;%
+  rename(category=prvdr_ctgry_cd,
+         category_sub=prvdr_ctgry_sbtyp_cd,
+         provider=prvdr_num,
+         own_change=chow_dt,
+         beds_cert=crtfd_bed_cnt,
+         beds_tot=bed_cnt,
+         name=fac_name,
+         street=st_adr,
+         city_state=prov0115,
+         zip=zip_cd,
+         fac_type=gnrl_fac_type_cd,
+         own_type=gnrl_cntl_type_cd,
+         term_date=prov2810) %&gt;%
+  mutate(term_date=as.Date(as.character(term_date), format='%y%m%d'),
+         own_change=as.Date(as.character(term_date), format='%y%m%d'),
+         state=str_sub(city_state, start=-2),
+         city=str_sub(city_state, start=1, end=-2),
+         year=y) %&gt;%
+  select(provider, category, category_sub, own_change, beds_cert, beds_tot, name,
+         street, city, state, zip, term_date, fac_type, own_type, year) %&gt;%
+  filter(provider!='000000')
+```
+]
+
+
+
+---
+# POS Data, 1992 to 1993
+
+.pre[
+
+```r
+for (y in 1992:1993) {
+  pos.data &lt;- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+  
+  pos.data &lt;- pos.data %&gt;%
+    rename(category=prvdr_ctgry_cd,
+           category_sub=prvdr_ctgry_sbtyp_cd,           
+           provider=prvdr_num,
+           own_change=chow_dt,
+           beds_cert=crtfd_bed_cnt,
+           beds_tot=bed_cnt,
+           name=fac_name,
+           street=st_adr,
+           zip=zip_cd,
+           own_type=gnrl_cntl_type_cd,
+           term_date=prov2810,
+           state=state_cd) %&gt;%
+    mutate(term_date=as.Date(as.character(term_date), format='%y%m%d'),
+           own_change=as.Date(as.character(term_date), format='%y%m%d'),
+           year=y) %&gt;%
+    select(provider, category, category_sub, own_change, beds_cert, beds_tot, name,
+           street, city, state, zip, term_date, own_type, year)
+  
+  assign(paste0("pos.",y),pos.data)  
+}
+```
+]
+
+
+---
+# POS Data, 1994
+
+.pre[
+
+```r
+y=1994
+pos.data &lt;- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+pos.data &lt;- pos.data %&gt;%
+  rename(category=prvdr_ctgry_cd,
+         category_sub=prvdr_ctgry_sbtyp_cd,         
+         provider=prvdr_num,
+         own_change=chow_dt,
+         beds_cert=crtfd_bed_cnt,
+         beds_tot=bed_cnt,
+         name=fac_name,
+         street=st_adr,
+         zip=zip_cd,
+         own_type=gnrl_cntl_type_cd,
+         term_date=trmntn_exprtn_dt,
+         state=state_cd) %&gt;%
+  mutate(term_date=as.Date(as.character(term_date), format='%y%m%d'),
+         own_change=as.Date(as.character(term_date), format='%y%m%d'),
+         year=y) %&gt;%
+  select(provider, category, category_sub, own_change, beds_cert, beds_tot, name,
+         street, city, state, zip, term_date, own_type, year)
+assign(paste0("pos.",y),pos.data)
+```
+]
+
+
+---
+# POS Data, 1995 to 2010
+
+.pre[
+
+```r
+for (y in 1995:2010) {
+  pos.data &lt;- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+  pos.data &lt;- pos.data %&gt;%
+    rename(category=prvdr_ctgry_cd,
+           category_sub=prvdr_ctgry_sbtyp_cd,           
+           provider=prvdr_num,
+           own_change=chow_dt,
+           beds_cert=crtfd_bed_cnt,
+           beds_tot=bed_cnt,
+           name=fac_name,
+           street=st_adr,
+           zip=zip_cd,
+           own_type=gnrl_cntl_type_cd,
+           term_date=trmntn_exprtn_dt,
+           state=state_cd) %&gt;%
+    mutate(term_date=as.Date(as.character(term_date), format='%Y%m%d'),
+           own_change=as.Date(as.character(term_date), format='%Y%m%d'),
+           year=y) %&gt;%
+    select(provider, category, category_sub, own_change, beds_cert, beds_tot, name,
+           street, city, state, zip, term_date, own_type, year)
+  
+  assign(paste0("pos.",y),pos.data)  
+}
+```
+]
+
+
+---
+# POS Data, 2011 to 2018
+
+.pre[
+
+```r
+for (y in 2011:2018) {
+  pos.data &lt;- read_csv(paste0(pos.path,"/pos",y,".csv/pos",y,".csv"))
+  colnames(pos.data) &lt;- tolower(colnames(pos.data))
+  
+  pos.data &lt;- pos.data %&gt;%
+    rename(category=prvdr_ctgry_cd,
+           category_sub=prvdr_ctgry_sbtyp_cd,           
+           provider=prvdr_num,
+           own_change=chow_dt,
+           beds_cert=crtfd_bed_cnt,
+           beds_tot=bed_cnt,
+           name=fac_name,
+           street=st_adr,
+           zip=zip_cd,
+           city=city_name,
+           own_type=gnrl_cntl_type_cd,
+           term_date=trmntn_exprtn_dt,
+           state=state_cd) %&gt;%
+    mutate(term_date=as.Date(as.character(term_date), format='%Y%m%d'),
+           own_change=as.Date(as.character(term_date), format='%Y%m%d'),
+           year=y) %&gt;%
+    select(provider, category, category_sub, own_change, beds_cert, beds_tot, name,
+           street, city, state, zip, term_date, own_type, year)
+  
+  assign(paste0("pos.",y),pos.data)  
+}
+```
+]
+
+
+---
+# Medicaid expansion data
+
+- Available from Kaiser Family Foundation
+- Need to crosswalk state abbreviations with full state name
+
+---
+# Medicaid expansion data
+
+.pre[
+
+```r
+kff.dat &lt;- read_csv(file=paste0(kff.path,'/KFF_medicaid_expansion_2019.csv'))
+
+kff.final &lt;- kff.dat %&gt;%
+  mutate(expanded = (`Expansion Status` == 'Adopted and Implemented'),
+         Description = str_replace_all(Description,c("\n"='','"'='')))
+
+kff.final$splitvar &lt;- kff.final %&gt;% select(Description) %&gt;% as.data.frame() %&gt;%
+  separate(Description, sep=" ", into=c(NA, NA, NA, "date"))
+
+kff.final &lt;- kff.final %&gt;%
+  mutate(date_adopted = mdy(splitvar$date),
+         expand_year = year(date_adopted)) %&gt;%
+  rename(state=State) %&gt;%
+  left_join(state.xw, by=c("state"))
+```
+]
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: analysis
+
+# Analysis
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Summary Statistics
+
+- Generating summary statistics is easy
+- Nicely presenting summary statistics is harder (especially in R)
+- Some `R` packages to try: `vtable::sumtable()`, `modelsummary`, `stargazer`
+- My approach: manual objects and `knitr::kable()`
+
+
+---
+# Summary Statistics
+
+
+```r
+sum.stats &lt;- full.data %&gt;% ungroup() %&gt;%
+  group_by(year) %&gt;%
+  summarize_at(c("cmi","dshpct"), list(mean, sd, min, max), na.rm=TRUE) %&gt;%
+  filter(year&gt;=1986) %&gt;%
+  select(year, cmi_fn1, cmi_fn2, cmi_fn3, cmi_fn4, 
+         dshpct_fn1, dshpct_fn2, dshpct_fn3, dshpct_fn4) %&gt;%
+  mutate_if(is.numeric, ~ifelse(abs(.) == Inf, NA, .))
+```
+
+
+---
+count: false
+
+# Summary Statistics
+
+
+
+
+```r
+options(knitr.kable.NA = '')
+knitr::kable(sum.stats, 
+             col.names=c("Year", "Mean", "Std. Dev.", "Min", "Max", "Mean", "Std. Dev.", "Min", "Max"),
+             digits=2,
+             caption = "Summary Statistics", 
+             booktabs = TRUE,
+             escape=F,
+             align=c("l","r","r","r","r","r","r","r","r"),
+             position="h") %&gt;% 
+  kable_styling(full_width=F) %&gt;%
+  add_header_above(c(" " = 1, "Case Mix Index" = 4,"Disproportionate Share" = 4)) %&gt;%
+  scroll_box(width="100%", height = "400px")
+```
+
+---
+count: false
+
+# Summary Statistics
+
+.pre[
+&lt;table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Summary Statistics&lt;/caption&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="border-bottom:hidden" colspan="1"&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Case Mix Index&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Disproportionate Share&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Std. Dev. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Min &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Max &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Std. Dev. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Min &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Max &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1986 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.59 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.23 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1987 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.72 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1988 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1989 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1990 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1991 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.50 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.75 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1992 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.23 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.48 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1993 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.47 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1994 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.72 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.23 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.60 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1995 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.22 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.41 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.87 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.66 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1996 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.64 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1997 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.41 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.67 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.28 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1998 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.40 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.40 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.93 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.33 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.35 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16.34 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.30 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.71 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.28 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2001 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.83 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.52 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2002 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.23 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.29 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2003 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.39 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.99 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.34 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2004 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.40 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.02 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.32 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2005 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.36 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.53 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2006 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.36 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.07 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2007 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.36 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.41 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.52 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2008 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.36 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.45 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2009 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.36 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.58 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.74 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.41 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.34 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.50 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.74 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.75 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2012 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.45 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2013 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.46 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.59 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.76 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.19 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2014 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.48 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.35 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2015 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.51 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.35 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.97 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2016 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.53 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.36 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.59 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.36 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.49 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2017 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.54 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.97 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2018 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.58 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.88 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.19 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+# Regressions
+
+Standard DD:
+
+`$$DSH_{ht} = \alpha Expand_{s} + \beta \times 1(t\geq 2014) + \delta Expand_{s} \times 1(t\geq 2014) + \varepsilon_{ht}$$`
+
+&lt;br&gt;
+--
+Implementing this in `R`:
+
+```r
+dd.est &lt;- lm(dshpct~post + expand_ever + treat, data=reg.data)
+```
+
+---
+# Regressions
+
+Two-way fixed effects:
+
+`$$DSH_{ht} = \delta Profit_{h} \times (t&gt;1988) + \lambda_{h} + \gamma_{t} + \varepsilon_{ht}$$`
+
+&lt;br&gt;
+--
+Implementing this in `R`:
+
+```r
+lfe.est &lt;- felm(dshpct~treat | provider + year, data=reg.data)
+```
+
+..could also try `fixest` package.
+
+
+---
+# Event study with single treatment
+
+.pre[
+
+```r
+event.dat &lt;- reg.data %&gt;%
+  mutate(expand_2005 = expand_ever*(year==2005),
+         expand_2006 = expand_ever*(year==2006),
+         expand_2007 = expand_ever*(year==2007),
+         expand_2008 = expand_ever*(year==2008),
+         expand_2009 = expand_ever*(year==2009),
+         expand_2010 = expand_ever*(year==2010),
+         expand_2011 = expand_ever*(year==2011),
+         expand_2012 = expand_ever*(year==2012),
+         expand_2013 = expand_ever*(year==2013),
+         expand_2014 = expand_ever*(year==2014),
+         expand_2015 = expand_ever*(year==2015),
+         expand_2016 = expand_ever*(year==2016),
+         expand_2017 = expand_ever*(year==2017),
+         expand_2018 = expand_ever*(year==2018))
+
+event.reg &lt;- felm(dshpct ~ expand_2005 + expand_2006 + expand_2007 +
+                        expand_2008 + expand_2009 + expand_2010 + expand_2011 + expand_2012 + expand_2014 + 
+                        expand_2015 + expand_2016 + expand_2017 + 
+                        expand_2018 | year + provider, data=event.dat)
+
+point.est &lt;- as_tibble(c(event.reg$coefficients[c("expand_2005","expand_2006","expand_2007",
+                                                      "expand_2008","expand_2009","expand_2010", "expand_2011",
+                                                      "expand_2012","expand_2014","expand_2015",
+                                                      "expand_2016","expand_2017","expand_2018"),]),
+                       rownames = "term")
+ci.est &lt;- as_tibble(confint(event.reg)[c("expand_2005","expand_2006","expand_2007",
+                                             "expand_2008","expand_2009","expand_2010","expand_2011",
+                                             "expand_2012","expand_2014","expand_2015",
+                                             "expand_2016","expand_2017","expand_2018"),],
+                    rownames = "term")
+point.est &lt;- point.est %&gt;% rename(estimate = value)
+ci.est &lt;- ci.est %&gt;% rename(conf.low = `2.5 %`, conf.high = `97.5 %`)
+new.row &lt;- tibble(
+  term = "expand_2013",
+  estimate = 0,
+  conf.low = 0,
+  conf.high = 0,
+  year = 2013
+)
+
+event.plot.dat &lt;- point.est %&gt;%
+  left_join(ci.est, by=c("term")) %&gt;%
+  mutate(year = c(2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2014, 2015, 2016, 2017, 2018)) %&gt;%
+  bind_rows(new.row) %&gt;%
+  arrange(year)
+
+event.plot &lt;- dwplot(event.plot.dat, 
+                     vline=geom_vline(xintercept=0, linetype=2), 
+                     order_vars = c("expand_2018","expand_2017","expand_2016",
+                                    "expand_2015","expand_2014","expand_2013",
+                                    "expand_2012","expand_2011","expand_2010",
+                                    "expand_2009","expand_2008","expand_2007",
+                                    "expand_2006","expand_2005"),
+                     whisker_args = list(color="black", size=1.1),
+                     dot_args = list(color="black")) + 
+  coord_flip() + theme_bw() + theme(legend.position = "none") +
+  labs(y = "Year",
+       x = "Estimate and 95% CI") +
+  scale_y_discrete(labels = c("expand_2005" = "2005", 
+                              "expand_2006" = "2006", 
+                              "expand_2007" = "2007", 
+                              "expand_2008" = "2008", 
+                              "expand_2009" = "2009", 
+                              "expand_2010" = "2010", 
+                              "expand_2011" = "2011", 
+                              "expand_2012" = "2012", 
+                              "expand_2013" = "2013",
+                              "expand_2014" = "2014",
+                              "expand_2015" = "2015",
+                              "expand_2016" = "2016",
+                              "expand_2017" = "2017",
+                              "expand_2018" = "2018"))
+```
+]
+
+---
+count: false
+
+# Event study with single treatment
+
+.center[
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+# Event study with time-varying treatment
+
+.pre[
+
+```r
+reg.data2 &lt;- full.data %&gt;%
+  filter(year&gt;=2005,
+         year&lt;=2018) %&gt;%
+  mutate(treat=case_when(
+    year&gt;=expand_year &amp; !is.na(expand_year) ~ 1,
+    is.na(expand_year) ~ 0,
+    year&lt;expand_year &amp; !is.na(expand_year) ~ 0)
+  )
+
+
+event.dat2 &lt;- reg.data2 %&gt;%
+  mutate(event_time=case_when(
+    !is.na(expand_year) ~ year-expand_year ,
+    is.na(expand_year) ~ -1)) %&gt;%
+  mutate(time_m12=1*(event_time&lt;=-12),
+         time_m11=1*(event_time==-11),
+         time_m10=1*(event_time==-10),
+         time_m9=1*(event_time==-9),
+         time_m8=1*(event_time==-8),
+         time_m7=1*(event_time==-7),
+         time_m6=1*(event_time==-6),
+         time_m5=1*(event_time==-5),
+         time_m4=1*(event_time==-4),
+         time_m3=1*(event_time==-3),
+         time_m2=1*(event_time==-2),
+         time_0=1*(event_time==0),
+         time_p1=1*(event_time==1),
+         time_p2=1*(event_time==2),
+         time_p3=1*(event_time==3),
+         time_p4=1*(event_time==4))
+
+event.reg2 &lt;- felm(dshpct ~ time_m12 + time_m11 + time_m10 + time_m9 + time_m8 +
+                       time_m7 + time_m6 + time_m5 + time_m4 + time_m3 + time_m2 + time_0 +
+                       time_p1 + time_p2 + time_p3 + time_p4 |
+                       year + provider, data=event.dat2)
+
+point.est2 &lt;- as_tibble(event.reg2$coefficients, rownames="term")
+point.est2 &lt;- point.est2 %&gt;% filter(term %in% c("time_m12","time_m11", "time_m10", "time_m9",
+                                                "time_m8", "time_m7", "time_m6", "time_m5",
+                                                "time_m4","time_m3","time_m2","time_0",
+                                                "time_p1","time_p2","time_p3","time_p4"))
+ci.est2 &lt;- as_tibble(confint(event.reg2), rownames="term")
+ci.est2 &lt;- ci.est2 %&gt;% filter(term %in% c("time_m12","time_m11", "time_m10", "time_m9",
+                                          "time_m8", "time_m7", "time_m6", "time_m5",
+                                          "time_m4","time_m3","time_m2","time_0",
+                                          "time_p1","time_p2","time_p3","time_p4"))
+
+point.est2 &lt;- point.est2 %&gt;% rename(estimate = dshpct)
+ci.est2 &lt;- ci.est2 %&gt;% rename(conf.low = `2.5 %`, conf.high = `97.5 %`)
+new.row &lt;- tibble(
+  term = "time_m1",
+  estimate = 0,
+  conf.low = 0,
+  conf.high = 0,
+  event_time = -1
+)
+
+event.plot.dat2 &lt;- point.est2 %&gt;%
+  left_join(ci.est2, by=c("term")) %&gt;%
+  mutate(event_time = c(-12, -11, -10, -9, -8, -7, -6, -5, -4,-3,-2,0,1,2,3,4)) %&gt;%
+  bind_rows(new.row) %&gt;%
+  arrange(event_time)
+
+event.plot2 &lt;- dwplot(event.plot.dat2, 
+                      vline=geom_vline(xintercept=0, linetype=2), 
+                      order_vars = c("time_p4","time_p3","time_p2",
+                                     "time_p1","time_0","time_m1",
+                                     "time_m2","time_m3","time_m4",
+                                     "time_m5","time_m6","time_m7",
+                                     "time_m8","time_m9","time_m10",
+                                     "time_m11","time_m12"),
+                      whisker_args = list(color="black", size=1.1),
+                      dot_args = list(color="black")) + 
+  coord_flip() + theme_bw() + theme(legend.position = "none") +
+  labs(y = "Year",
+       x = "Estimate and 95% CI") +
+  scale_y_discrete(labels = c("time_p4" = "t+4", 
+                              "time_p3" = "t+3",
+                              "time_p2" = "t+2",
+                              "time_p1" = "t+1",
+                              "time_0" = "0",
+                              "time_m1" = "t-1",
+                              "time_m2" = "t-2",
+                              "time_m3" = "t-3",
+                              "time_m4" = "t-4",
+                              "time_m5" = "t-5",
+                              "time_m6" = "t-6",
+                              "time_m7" = "t-7",
+                              "time_m8" = "t-8",
+                              "time_m9" = "t-9",
+                              "time_m10" = "t-10",
+                              "time_m11" = "t-11",
+                              "time_m12" = "t-12+"))
+```
+]
+
+
+---
+count: false
+
+# Event study with time-varying treatment
+
+.center[
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: extras
+
+# Extras
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
