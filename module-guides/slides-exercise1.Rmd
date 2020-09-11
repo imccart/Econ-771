@@ -376,11 +376,12 @@ So the ATT is `r as.numeric(dd.means[4,3])-as.numeric(dd.means[2,3]) - (as.numer
 
 ---
 # Regression estimator
+.pre[
 ```{r}
 dd.est <- lm(y.out ~ w + t + w*t, data=dd.dat)
 summary(dd.est)
 ```
-
+]
 
 ---
 # TWFE
@@ -1039,10 +1040,10 @@ $Y_{it} = \alpha_{i} + \gamma_{t} + \delta W_{it} + \varepsilon_{it}$
 
 <br>
 --
-1. Show role of heterogeneous treatment effects
-2. Look at treatment timing!
-3. Discuss what we're really estimating
-4. Some new approaches
+
+1. Some simple simulations
+2. Discuss what we're really estimating
+3. Some new approaches and tools
 
 
 ---
@@ -1079,19 +1080,42 @@ twfe.final <- twfe.final %>%
 ```
 ]
 
----
-# Different estimates
 
+---
+# DD versus TWFE
+Focus on a specific treatment group and compare DD/TWFE estimates
+
+```{r, include=T, echo=F}
+twfe.2010 <- twfe.final %>% mutate(post=(year>=2010)) %>% filter(is.na(treat_year) | treat_year==2010)
+```
+
+.pull-left[
+.pre[
+```{r}
+summary(lm(y_out~treat + w + post, data=twfe.2010))
+```
+]
+
+]
+
+.pull-right[
+.pre[
+```{r}
+summary(felm(y_out~treat|id + year, data=twfe.2010))
+```
+]
+
+]
+
+
+---
+# Allow treatment timing to vary
+
+.pre[
 ```{r}
 summary(felm(y_out~treat|id + year, data=twfe.final))
 ```
-
-
----
-# View treatment timing
-
-The `panelView` package is a great way to see who is treated in your data and over what time periods
-
+]
 
 ---
 # What are we estimating?
@@ -1118,8 +1142,63 @@ But what parameter is this? Is it interesting?
 
 <br>
 --
+
 - Only an average effect if we assume homogeneous treatment effects
-- With standard within estimator, we get a variance weighted average treatment effect
+- Using standard within estimator, we get a variance weighted average treatment effect
 
-      
+---
+# What does "heterogeneous" treatment effects mean
 
+.pull-left[
+**Across Units**
+
+- TWFE estimator still recovers the ATT **if** heterogeneities are random
+- selective treatment timing is not allowed **at all** (even if time-invariant)
+- why? correlation means variance weights on ATT no longer equal to OLS
+
+]
+
+.pull-right[
+**Across Time** (dynamic effects)
+
+- Not allowed in baseline TWFE
+- Event study will help if this is the only source of heterogeneity
+
+]
+
+---
+# What can we do?
+
+1. Pay attention to treatment timing
+
+
+---
+count:false
+
+# What can we do?
+
+1. Pay attention to treatment timing
+
+The `panelView` package is a great way to see who is treated in your data and over what time periods.
+
+
+---
+count:false
+
+# What can we do?
+
+1. Pay attention to treatment timing
+2. Estimate event studies for specific treatment groups
+
+
+---
+count:false
+
+# What can we do?
+
+1. Pay attention to treatment timing
+2. Estimate event studies for specific treatment groups
+3. Consider recent approaches in:
+  - [Goodman-Bacon (2019)](https://cdn.vanderbilt.edu/vu-my/wp-content/uploads/sites/2318/2019/07/29170757/ddtiming_7_29_2019.pdf), `bacondecomp` in Stata and R
+  - [de Chaisemartin and D'Haultfoeuille (2020)](https://www.aeaweb.org/articles?id=10.1257/aer.20181169), `twowayfeweights`, `fuzzy_did`, and `did_multiplegt` in Stata. R packages apparently [on the way](https://twitter.com/CdeChaisemartin/status/1263506539718914049)
+  - [Callaway and Sant'Anna (2019)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3148250), `did` package in R. Also check out Sant'Anna and Zhou's "doubly-robust" DD estimator package, `drdid`

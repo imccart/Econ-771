@@ -397,6 +397,7 @@ So the ATT is 6.0259731
 
 ---
 # Regression estimator
+.pre[
 
 ```r
 dd.est &lt;- lm(y.out ~ w + t + w*t, data=dd.dat)
@@ -425,7 +426,7 @@ summary(dd.est)
 ## Multiple R-squared:  0.9422,	Adjusted R-squared:  0.9422 
 ## F-statistic: 5.436e+04 on 3 and 9996 DF,  p-value: &lt; 2.2e-16
 ```
-
+]
 
 ---
 # TWFE
@@ -434,7 +435,7 @@ With multiple groups and multiple time periods, including fixed effects for each
 
 &lt;br&gt;
 --
-But it's still just DD
+But it's still just DD. We'll come back to this shortly.
 
 
 
@@ -1916,7 +1917,7 @@ dd.est &lt;- lm(dshpct~post + expand_ever + treat, data=reg.data)
 
 Two-way fixed effects:
 
-`$$DSH_{ht} = \delta Profit_{h} \times (t&gt;1988) + \lambda_{h} + \gamma_{t} + \varepsilon_{ht}$$`
+`$$DSH_{ht} = \delta Expand_{s} \times (t\geq 2014) + \lambda_{h} + \gamma_{t} + \varepsilon_{ht}$$`
 
 &lt;br&gt;
 --
@@ -2151,14 +2152,16 @@ name: extras
 
 &lt;br&gt;
 --
-1. Show role of heterogeneous treatment effects
-2. Look at treatment timing!
-3. Discuss what we're really estimating
-4. Some new approaches
+
+1. Some simple simulations
+2. Discuss what we're really estimating
+3. Some new approaches and tools
 
 
 ---
 # Simulated data
+
+.pre[
 
 ```r
 N &lt;- 5000
@@ -2171,6 +2174,7 @@ twfe.dat &lt;- tibble(
 
 twfe.final &lt;- twfe.dat %&gt;%
   mutate(year=2000)
+
 for (t in 2001:2020) {
   twfe.dat &lt;- twfe.dat %&gt;%
     mutate(year=t)
@@ -2180,30 +2184,119 @@ for (t in 2001:2020) {
 N_t=nrow(twfe.final)
 
 twfe.final &lt;- twfe.final %&gt;%
-  mutate(treat = (year&gt;=treat_year)*w) %&gt;%
-  select(id, treat, w, xi, year) %&gt;%
+  mutate(treat = (year&gt;=treat_year)*w,
+         treat_year = case_when(
+           w==1 ~ treat_year,
+           w==0 ~ NA_integer_)) %&gt;%
+  select(id, treat, w, xi, year, treat_year) %&gt;%
   mutate(y_out = 1.5+3*w -2*xi + 1.5*(year-2009) + 6*treat + rnorm(N_t,0,1))
 ```
+]
+
 
 ---
-# Different estimates
+# DD versus TWFE
+Focus on a specific treatment group and compare DD/TWFE estimates
 
+
+
+.pull-left[
+.pre[
 
 ```r
-felm(y_out~treat|id + year, data=twfe.final)
+summary(lm(y_out~treat + w + post, data=twfe.2010))
 ```
 
 ```
-## treat 
-## 5.994
+## 
+## Call:
+## lm(formula = y_out ~ treat + w + post, data = twfe.2010)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -24.5719  -4.4047   0.0184   4.4433  20.4054 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -5.25819    0.03878 -135.59   &lt;2e-16 ***
+## treat        5.98535    0.14850   40.30   &lt;2e-16 ***
+## w            2.96443    0.10748   27.58   &lt;2e-16 ***
+## postTRUE    15.74445    0.05358  293.83   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 6.171 on 61127 degrees of freedom
+## Multiple R-squared:  0.6582,	Adjusted R-squared:  0.6582 
+## F-statistic: 3.924e+04 on 3 and 61127 DF,  p-value: &lt; 2.2e-16
 ```
+]
+
+]
+
+.pull-right[
+.pre[
+
+```r
+summary(felm(y_out~treat|id + year, data=twfe.2010))
+```
+
+```
+## 
+## Call:
+##    felm(formula = y_out ~ treat | id + year, data = twfe.2010) 
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.1320 -0.6593 -0.0011  0.6607  4.0777 
+## 
+## Coefficients:
+##       Estimate Std. Error t value Pr(&gt;|t|)    
+## treat  5.98535    0.02423     247   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.007 on 58199 degrees of freedom
+## Multiple R-squared(full model): 0.9913   Adjusted R-squared: 0.9909 
+## Multiple R-squared(proj model): 0.5117   Adjusted R-squared: 0.4871 
+## F-statistic(full model): 2271 on 2931 and 58199 DF, p-value: &lt; 2.2e-16 
+## F-statistic(proj model): 6.1e+04 on 1 and 58199 DF, p-value: &lt; 2.2e-16
+```
+]
+
+]
 
 
 ---
-# View treatment timing
+# Allow treatment timing to vary
 
-The `panelView` package is a great way to see who is treated in your data and over what time periods
+.pre[
 
+```r
+summary(felm(y_out~treat|id + year, data=twfe.final))
+```
+
+```
+## 
+## Call:
+##    felm(formula = y_out ~ treat | id + year, data = twfe.final) 
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.2621 -0.6601  0.0002  0.6605  4.0634 
+## 
+## Coefficients:
+##       Estimate Std. Error t value Pr(&gt;|t|)    
+## treat  5.99450    0.01187   505.1   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.003 on 99979 degrees of freedom
+## Multiple R-squared(full model): 0.9928   Adjusted R-squared: 0.9924 
+## Multiple R-squared(proj model): 0.7185   Adjusted R-squared: 0.7043 
+## F-statistic(full model): 2745 on 5020 and 99979 DF, p-value: &lt; 2.2e-16 
+## F-statistic(proj model): 2.552e+05 on 1 and 99979 DF, p-value: &lt; 2.2e-16
+```
+]
 
 ---
 # What are we estimating?
@@ -2230,11 +2323,66 @@ But what parameter is this? Is it interesting?
 
 &lt;br&gt;
 --
+
 - Only an average effect if we assume homogeneous treatment effects
-- With standard within estimator, we get a variance weighted average treatment effect
+- Using standard within estimator, we get a variance weighted average treatment effect
 
-      
+---
+# What does "heterogeneous" treatment effects mean
 
+.pull-left[
+**Across Units**
+
+- TWFE estimator still recovers the ATT **if** heterogeneities are random
+- selective treatment timing is not allowed **at all** (even if time-invariant)
+- why? correlation means variance weights on ATT no longer equal to OLS
+
+]
+
+.pull-right[
+**Across Time** (dynamic effects)
+
+- Not allowed in baseline TWFE
+- Event study will help if this is the only source of heterogeneity
+
+]
+
+---
+# What can we do?
+
+1. Pay attention to treatment timing
+
+
+---
+count:false
+
+# What can we do?
+
+1. Pay attention to treatment timing
+
+The `panelView` package is a great way to see who is treated in your data and over what time periods.
+
+
+---
+count:false
+
+# What can we do?
+
+1. Pay attention to treatment timing
+2. Estimate event studies for specific treatment groups
+
+
+---
+count:false
+
+# What can we do?
+
+1. Pay attention to treatment timing
+2. Estimate event studies for specific treatment groups
+3. Consider recent approaches in:
+  - [Goodman-Bacon (2019)](https://cdn.vanderbilt.edu/vu-my/wp-content/uploads/sites/2318/2019/07/29170757/ddtiming_7_29_2019.pdf), `bacondecomp` in Stata and R
+  - [de Chaisemartin and D'Haultfoeuille (2020)](https://www.aeaweb.org/articles?id=10.1257/aer.20181169), `twowayfeweights`, `fuzzy_did`, and `did_multiplegt` in Stata. R packages apparently [on the way](https://twitter.com/CdeChaisemartin/status/1263506539718914049)
+  - [Callaway and Sant'Anna (2019)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3148250), `did` package in R. Also check out Sant'Anna and Zhou's "doubly-robust" DD estimator package, `drdid`
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
