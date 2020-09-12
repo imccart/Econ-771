@@ -2348,6 +2348,50 @@ But what parameter is this? Is it interesting?
 ]
 
 ---
+# Back to our estimation
+
+`\(Y_{it} = \alpha_{i} + \gamma_{t} + \delta W_{it} + \varepsilon_{it}\)`
+
+&lt;br&gt;
+--
+
+Goodman-Bacon (2019) shows that `\(\delta\)` can be decomposed as follows:
+
+`\(\hat{\delta} = \text{ATT}_{vw} + \text{CT}_{vw} - \Delta \text{ATT}\)`
+
+---
+# Understanding TWFE
+
+`\(\hat{\delta} = \color{red}{\text{VW-ATT}} + \text{VW-CT} - \Delta \text{ATT}\)`
+
+- variance-weighted average treatment effect (on the treated)
+- `\(=\)` ATT only if weights are equal to variance of treatment dummy
+- not the case with any selection into treatment
+
+
+---
+count: false
+
+# Understanding TWFE
+
+`\(\hat{\delta} = \text{VW-ATT} + \color{red}{\text{VW-CT}} - \Delta \text{ATT}\)`
+
+- variance-weighted common trends
+- `\(= 0\)` if parallel trends assumption holds
+
+---
+count: false
+
+# Understanding TWFE
+
+`\(\hat{\delta} = \text{VW-ATT} + \text{VW-CT} - \color{red}{\Delta \text{ATT}}\)`
+
+- offset to treatment effects using early treated units as control for future treated
+- only matters with heterogeneous effects across units and variable treatmen timing
+
+
+
+---
 # What can we do?
 
 1. Pay attention to treatment timing
@@ -2361,6 +2405,38 @@ count:false
 1. Pay attention to treatment timing
 
 The `panelView` package is a great way to see who is treated in your data and over what time periods.
+
+
+---
+count:false
+
+# What can we do?
+
+1. Pay attention to treatment timing
+
+
+
+
+```
+FALSE Specified labels in the order of: Under Control, Under Treatment.
+```
+
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+count:false
+
+# What can we do?
+
+1. Pay attention to treatment timing
+
+
+
+```
+FALSE Specified labels in the order of: Controls, Treated (Pre), Treated (Post).
+```
+
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -2383,6 +2459,83 @@ count:false
   - [Goodman-Bacon (2019)](https://cdn.vanderbilt.edu/vu-my/wp-content/uploads/sites/2318/2019/07/29170757/ddtiming_7_29_2019.pdf), `bacondecomp` in Stata and R
   - [de Chaisemartin and D'Haultfoeuille (2020)](https://www.aeaweb.org/articles?id=10.1257/aer.20181169), `twowayfeweights`, `fuzzy_did`, and `did_multiplegt` in Stata. R packages apparently [on the way](https://twitter.com/CdeChaisemartin/status/1263506539718914049)
   - [Callaway and Sant'Anna (2019)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3148250), `did` package in R. Also check out Sant'Anna and Zhou's "doubly-robust" DD estimator package, `drdid`
+  - Abraham and Sun (2020)
+  
+---
+count: false
+
+# Bacon Decomposition
+
+
+```r
+library(bacondecomp)
+```
+
+```
+## Warning: package 'bacondecomp' was built under R version 3.6.3
+```
+
+```r
+df.bacon &lt;- bacon(y_out~treat, data=pview.final, id_var="id", time_var="year")
+```
+
+```
+##                       type  weight avg_est
+## 1 Earlier vs Later Treated 0.06314 5.49289
+## 2 Later vs Earlier Treated 0.03958 5.58405
+## 3     Treated vs Untreated 0.89728 6.07294
+```
+
+```r
+df.bacon
+```
+
+```
+##    treated untreated estimate       weight                     type
+## 2     2012     99999 5.713642 0.1261800168     Treated vs Untreated
+## 3     2011     99999 5.756501 0.1285166838     Treated vs Untreated
+## 4     2015     99999 6.289442 0.2103000280     Treated vs Untreated
+## 5     2013     99999 5.881235 0.0607533414     Treated vs Untreated
+## 6     2014     99999 6.431087 0.1144966819     Treated vs Untreated
+## 7     2010     99999 6.116181 0.2570333676     Treated vs Untreated
+## 10    2011      2012 5.931407 0.0010281335 Earlier vs Later Treated
+## 11    2015      2012 6.367655 0.0033648004 Later vs Earlier Treated
+## 12    2013      2012 5.758111 0.0003738667 Later vs Earlier Treated
+## 13    2014      2012 7.215479 0.0013085335 Later vs Earlier Treated
+## 14    2010      2012 5.669939 0.0037386672 Earlier vs Later Treated
+## 16    2012      2011 5.837811 0.0008412001 Later vs Earlier Treated
+## 18    2015      2011 5.327973 0.0044864006 Later vs Earlier Treated
+## 19    2013      2011 4.486508 0.0007477334 Later vs Earlier Treated
+## 20    2014      2011 6.097970 0.0019628003 Later vs Earlier Treated
+## 21    2010      2011 5.544842 0.0018693336 Earlier vs Later Treated
+## 23    2012      2015 5.609467 0.0067296009 Earlier vs Later Treated
+## 24    2011      2015 5.080898 0.0082250678 Earlier vs Later Treated
+## 26    2013      2015 3.773113 0.0024301337 Earlier vs Later Treated
+## 27    2014      2015 4.700346 0.0026170670 Earlier vs Later Treated
+## 28    2010      2015 5.734908 0.0186933358 Earlier vs Later Treated
+## 30    2012      2013 5.491956 0.0005608001 Earlier vs Later Treated
+## 31    2011      2013 4.301979 0.0010281335 Earlier vs Later Treated
+## 32    2015      2013 3.756708 0.0011216001 Later vs Earlier Treated
+## 34    2014      2013 6.061137 0.0003271334 Later vs Earlier Treated
+## 35    2010      2013 4.374021 0.0028040004 Earlier vs Later Treated
+## 37    2012      2014 6.448427 0.0022432003 Earlier vs Later Treated
+## 38    2011      2014 5.549884 0.0030844004 Earlier vs Later Treated
+## 39    2015      2014 4.340593 0.0011216001 Later vs Earlier Treated
+## 40    2013      2014 5.581629 0.0006075334 Earlier vs Later Treated
+## 42    2010      2014 6.176680 0.0074773343 Earlier vs Later Treated
+## 44    2012      2010 5.104688 0.0033648004 Later vs Earlier Treated
+## 45    2011      2010 5.031159 0.0018693336 Later vs Earlier Treated
+## 46    2015      2010 5.639037 0.0112160015 Later vs Earlier Treated
+## 47    2013      2010 4.322027 0.0022432003 Later vs Earlier Treated
+## 48    2014      2010 6.359629 0.0052341340 Later vs Earlier Treated
+```
+
+---
+count: false
+
+# Bacon Decomposition
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

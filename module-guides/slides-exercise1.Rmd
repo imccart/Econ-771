@@ -1205,7 +1205,8 @@ count: false
 
 $\hat{\delta} = \text{VW-ATT} + \text{VW-CT} - \color{red}{\Delta \text{ATT}}$
 
-- offset to treatment effects using early treated units as control for future treated and vice versa
+- offset to treatment effects using early treated units as control for future treated
+- only matters with heterogeneous effects across units and variable treatmen timing
 
 
 
@@ -1262,9 +1263,30 @@ pview.final <- pview.final %>%
 
 ```
 
-```{r, echo=F}
-panelView()
+```{r, echo=F, warning=F, message=F, comment=F}
+library(panelView)
+panelView(y_out~treat, data=data.frame(pview.final), index=c("id","year"),
+          xlab="Year", ylab="ID",
+          by.timing=TRUE, legend.labs=c("No Expansion", "Expansion"),
+          background="white", cex.main=14, cex.axis=7, cex.lab=12, cex.legend=12)
 ```
+
+---
+count:false
+
+# What can we do?
+
+1. Pay attention to treatment timing
+
+
+```{r, echo=F, warning=F, message=F, comment=F}
+panelView(y_out~treat, data=data.frame(pview.final), index=c("id","year"),
+          xlab="Year", ylab="ID",
+          by.timing=TRUE, legend.labs=c("Never Expanded", "Pre-Expansion", "Post-Expansion"),
+          background="white", cex.main=14, cex.axis=7, cex.lab=12, cex.legend=12,
+          pre.post=TRUE)
+```
+
 
 ---
 count:false
@@ -1292,3 +1314,22 @@ count:false
 count: false
 
 # Bacon Decomposition
+
+```{r}
+library(bacondecomp)
+df.bacon <- bacon(y_out~treat, data=pview.final, id_var="id", time_var="year")
+df.bacon
+```
+
+---
+count: false
+
+# Bacon Decomposition
+
+```{r, include=F}
+ggplot(df.bacon) +
+  aes(x = weight, y = estimate, shape = factor(type)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  labs(x = "Weight", y = "Estimate", shape = "Type")  
+```
