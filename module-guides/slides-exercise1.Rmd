@@ -1184,7 +1184,29 @@ $\hat{\delta} = \text{ATT}_{vw} + \text{CT}_{vw} - \Delta \text{ATT}$
 $\hat{\delta} = \color{red}{\text{VW-ATT}} + \text{VW-CT} - \Delta \text{ATT}$
 
 - variance-weighted average treatment effect (on the treated)
-- 
+- $=$ ATT only if weights are equal to variance of treatment dummy
+- not the case with any selection into treatment
+
+
+---
+count: false
+
+# Understanding TWFE
+
+$\hat{\delta} = \text{VW-ATT} + \color{red}{\text{VW-CT}} - \Delta \text{ATT}$
+
+- variance-weighted common trends
+- $= 0$ if parallel trends assumption holds
+
+---
+count: false
+
+# Understanding TWFE
+
+$\hat{\delta} = \text{VW-ATT} + \text{VW-CT} - \color{red}{\Delta \text{ATT}}$
+
+- offset to treatment effects using early treated units as control for future treated and vice versa
+
 
 
 ---
@@ -1211,7 +1233,37 @@ count:false
 1. Pay attention to treatment timing
 
 ```{r include=FALSE}
+N <- 40
+pview.dat <- tibble(
+  id = seq(1:N),
+  w = as.numeric((runif(N, 0, 1)>0.5)),
+  xi = rnorm(N,0,2),
+  treat_year = sample(x=2010:2015,N,replace=T)
+)
 
+pview.final <- pview.dat %>%
+  mutate(year=2000)
+
+for (t in 2001:2020) {
+  pview.dat <- pview.dat %>%
+    mutate(year=t)
+  pview.final <- pview.final %>%
+    bind_rows(pview.dat)
+}
+N_t=nrow(pview.final)
+
+pview.final <- pview.final %>%
+  mutate(treat = (year>=treat_year)*w,
+         treat_year = case_when(
+           w==1 ~ treat_year,
+           w==0 ~ NA_integer_)) %>%
+  select(id, treat, w, xi, year, treat_year) %>%
+  mutate(y_out = 1.5+3*w -2*xi + 1.5*(year-2009) + 6*treat + rnorm(N_t,0,1))
+
+```
+
+```{r, echo=F}
+panelView()
 ```
 
 ---
@@ -1235,3 +1287,8 @@ count:false
   - [de Chaisemartin and D'Haultfoeuille (2020)](https://www.aeaweb.org/articles?id=10.1257/aer.20181169), `twowayfeweights`, `fuzzy_did`, and `did_multiplegt` in Stata. R packages apparently [on the way](https://twitter.com/CdeChaisemartin/status/1263506539718914049)
   - [Callaway and Sant'Anna (2019)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3148250), `did` package in R. Also check out Sant'Anna and Zhou's "doubly-robust" DD estimator package, `drdid`
   - Abraham and Sun (2020)
+  
+---
+count: false
+
+# Bacon Decomposition
