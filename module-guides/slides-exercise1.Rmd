@@ -1167,6 +1167,27 @@ But what parameter is this? Is it interesting?
 ]
 
 ---
+# Back to our estimation
+
+$Y_{it} = \alpha_{i} + \gamma_{t} + \delta W_{it} + \varepsilon_{it}$
+
+<br>
+--
+
+Goodman-Bacon (2019) shows that $\delta$ can be decomposed as follows:
+
+$\hat{\delta} = \text{ATT}_{vw} + \text{CT}_{vw} - \Delta \text{ATT}$
+
+---
+# Understanding TWFE
+
+$\hat{\delta} = \color{red}{\text{VW-ATT}} + \text{VW-CT} - \Delta \text{ATT}$
+
+- variance-weighted average treatment effect (on the treated)
+- 
+
+
+---
 # What can we do?
 
 1. Pay attention to treatment timing
@@ -1188,6 +1209,17 @@ count:false
 # What can we do?
 
 1. Pay attention to treatment timing
+
+```{r include=FALSE}
+
+```
+
+---
+count:false
+
+# What can we do?
+
+1. Pay attention to treatment timing
 2. Estimate event studies for specific treatment groups
 
 
@@ -1202,3 +1234,4 @@ count:false
   - [Goodman-Bacon (2019)](https://cdn.vanderbilt.edu/vu-my/wp-content/uploads/sites/2318/2019/07/29170757/ddtiming_7_29_2019.pdf), `bacondecomp` in Stata and R
   - [de Chaisemartin and D'Haultfoeuille (2020)](https://www.aeaweb.org/articles?id=10.1257/aer.20181169), `twowayfeweights`, `fuzzy_did`, and `did_multiplegt` in Stata. R packages apparently [on the way](https://twitter.com/CdeChaisemartin/status/1263506539718914049)
   - [Callaway and Sant'Anna (2019)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3148250), `did` package in R. Also check out Sant'Anna and Zhou's "doubly-robust" DD estimator package, `drdid`
+  - Abraham and Sun (2020)
