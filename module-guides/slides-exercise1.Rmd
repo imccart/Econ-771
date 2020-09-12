@@ -1047,7 +1047,7 @@ $Y_{it} = \alpha_{i} + \gamma_{t} + \delta W_{it} + \varepsilon_{it}$
 
 
 ---
-# Simulated data
+# DD versus TWFE
 
 .pre[
 ```{r}
@@ -1082,6 +1082,8 @@ twfe.final <- twfe.final %>%
 
 
 ---
+count: false
+
 # DD versus TWFE
 Focus on a specific treatment group and compare DD/TWFE estimates
 
@@ -1109,11 +1111,66 @@ summary(felm(y_out~treat|id + year, data=twfe.2010))
 
 
 ---
-# Allow treatment timing to vary
+# Differential treatment timing
+
+- With constant treatment effects across units, no problem...
 
 .pre[
 ```{r}
 summary(felm(y_out~treat|id + year, data=twfe.final))
+```
+]
+
+---
+count: false
+
+# Differential treatment timing
+
+- With heterogeneous effects across units, problem...
+
+.pre[
+```{r}
+twfe.het <- twfe.final %>%
+  mutate(treat_het = case_when(
+    !is.na(treat_year) & treat_year==2010 ~ 6,
+    !is.na(treat_year) & treat_year==2011 ~ 10,
+    !is.na(treat_year) & treat_year==2012 ~ 20,
+    !is.na(treat_year) & treat_year==2013 ~ 0,
+    !is.na(treat_year) & treat_year==2014 ~ 0,
+    !is.na(treat_year) & treat_year==2015 ~ -10,
+    is.na(treat_year) ~ 0),
+    treat_het = treat_het*treat,
+    treat_dyn = treat_het*(year-treat_year+1)*2.5*treat,
+    y_het = 1.5+3*w -2*xi + 1.5*(year-2009) + treat_het + rnorm(N_t,0,1),
+    y_dyn = 1.5+3*w -2*xi + 1.5*(year-2009) + treat_dyn + rnorm(N_t,0,1))
+```
+]
+
+---
+count: false
+
+# Differential treatment timing
+
+- With heterogeneous effects across units, problem...
+
+.pre[
+```{r}
+summary(twfe.het$treat_het[twfe.het$treat==1])
+summary(felm(y_het~treat|id + year, data=twfe.het))
+```
+]
+
+---
+count: false
+
+# Differential treatment timing
+
+- With heterogeneous and dynamic effects
+
+.pre[
+```{r}
+summary(twfe.het$treat_dyn[twfe.het$treat==1])
+summary(felm(y_dyn~treat|id + year, data=twfe.het))
 ```
 ]
 
@@ -1153,13 +1210,14 @@ But what parameter is this? Is it interesting?
 **Across Units**
 
 - TWFE estimator still recovers the ATT **if** heterogeneities are random
-- selective treatment timing is not allowed **at all** (even if time-invariant)
-- why? correlation means variance weights on ATT no longer equal to OLS
+- different effects by treatment timing is not allowed (even if exogenous) 
+- why? more weight given to treatment in middle of time frame
+- selective treatment (even time-invariant) also changes weights
 
 ]
 
 .pull-right[
-**Across Time** (dynamic effects)
+**Within Units** (dynamic effects)
 
 - Not allowed in baseline TWFE
 - Event study will help if this is the only source of heterogeneity
@@ -1261,6 +1319,19 @@ pview.final <- pview.final %>%
   select(id, treat, w, xi, year, treat_year) %>%
   mutate(y_out = 1.5+3*w -2*xi + 1.5*(year-2009) + 6*treat + rnorm(N_t,0,1))
 
+pview.het <- pview.final %>%
+    mutate(treat_het = case_when(
+    !is.na(treat_year) & treat_year==2010 ~ 6,
+    !is.na(treat_year) & treat_year==2011 ~ 10,
+    !is.na(treat_year) & treat_year==2012 ~ 20,
+    !is.na(treat_year) & treat_year==2013 ~ 0,
+    !is.na(treat_year) & treat_year==2014 ~ 0,
+    !is.na(treat_year) & treat_year==2015 ~ -10,
+    is.na(treat_year) ~ 0),
+    treat_het = treat_het*treat,
+    treat_dyn = if_else(is.na(treat_year),0,treat_het*(year-treat_year+1)*2.5*treat),
+    y_het = 1.5+3*w -2*xi + 1.5*(year-2009) + treat_het + rnorm(N_t,0,1),
+    y_dyn = 1.5+3*w -2*xi + 1.5*(year-2009) + treat_dyn + rnorm(N_t,0,1))
 ```
 
 ```{r, echo=F, warning=F, message=F, comment=F}
@@ -1306,7 +1377,7 @@ count:false
 2. Estimate event studies for specific treatment groups
 3. Consider recent approaches in:
   - [Goodman-Bacon (2019)](https://cdn.vanderbilt.edu/vu-my/wp-content/uploads/sites/2318/2019/07/29170757/ddtiming_7_29_2019.pdf), `bacondecomp` in Stata and R
-  - [de Chaisemartin and D'Haultfoeuille (2020)](https://www.aeaweb.org/articles?id=10.1257/aer.20181169), `twowayfeweights`, `fuzzy_did`, and `did_multiplegt` in Stata. R packages apparently [on the way](https://twitter.com/CdeChaisemartin/status/1263506539718914049)
+  - [de Chaisemartin and D'Haultfoeuille (2020)](https://www.aeaweb.org/articles?id=10.1257/aer.20181169), `twowayfeweights` and `did_multiplegt` in Stata. R packages apparently [on the way](https://twitter.com/CdeChaisemartin/status/1263506539718914049)
   - [Callaway and Sant'Anna (2019)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3148250), `did` package in R. Also check out Sant'Anna and Zhou's "doubly-robust" DD estimator package, `drdid`
   - Abraham and Sun (2020)
   
@@ -1333,3 +1404,63 @@ ggplot(df.bacon) +
   geom_hline(yintercept = 0) +
   labs(x = "Weight", y = "Estimate", shape = "Type")  
 ```
+
+
+---
+count: false
+
+# Bacon Decomposition
+
+```{r}
+df.bacon <- bacon(y_het~treat, data=pview.het, id_var="id", time_var="year")
+df.bacon
+```
+
+---
+count: false
+
+# Bacon Decomposition
+
+```{r, include=F}
+ggplot(df.bacon) +
+  aes(x = weight, y = estimate, shape = factor(type)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  labs(x = "Weight", y = "Estimate", shape = "Type")  
+```
+
+
+---
+count: false
+
+# Bacon Decomposition
+
+```{r}
+df.bacon <- bacon(y_dyn~treat, data=pview.het, id_var="id", time_var="year")
+df.bacon
+```
+
+---
+count: false
+
+# Bacon Decomposition
+
+```{r, include=F}
+ggplot(df.bacon) +
+  aes(x = weight, y = estimate, shape = factor(type)) +
+  geom_point() +
+  geom_hline(yintercept = 0) +
+  labs(x = "Weight", y = "Estimate", shape = "Type")  
+```
+
+---
+# Takeaways
+
+1. Standard DD/TWFE estimates only give ATT under **very** strong assumptions
+2. Can assess the scope of the problem by estimating the weights on each $2\times 2$ DD estimate
+3. General solutions involve careful consideration of the counterfactual estimates (potential outcomes framework is critical)
+4. Haven't even dealt with issues of parallel trends or time-varying selection into treatment!<sup>1</sup>
+
+.footnote[
+<sup>1</sup>balancing or doubly-robust DD estimates may help here
+]
