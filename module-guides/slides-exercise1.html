@@ -2159,7 +2159,7 @@ name: extras
 
 
 ---
-# Simulated data
+# DD versus TWFE
 
 .pre[
 
@@ -2195,6 +2195,8 @@ twfe.final &lt;- twfe.final %&gt;%
 
 
 ---
+count: false
+
 # DD versus TWFE
 Focus on a specific treatment group and compare DD/TWFE estimates
 
@@ -2267,7 +2269,9 @@ summary(felm(y_out~treat|id + year, data=twfe.2010))
 
 
 ---
-# Allow treatment timing to vary
+# Differential treatment timing
+
+- With constant treatment effects across units, no problem...
 
 .pre[
 
@@ -2295,6 +2299,123 @@ summary(felm(y_out~treat|id + year, data=twfe.final))
 ## Multiple R-squared(proj model): 0.7185   Adjusted R-squared: 0.7043 
 ## F-statistic(full model): 2745 on 5020 and 99979 DF, p-value: &lt; 2.2e-16 
 ## F-statistic(proj model): 2.552e+05 on 1 and 99979 DF, p-value: &lt; 2.2e-16
+```
+]
+
+---
+count: false
+
+# Differential treatment timing
+
+- With heterogeneous effects across units, problem...
+
+.pre[
+
+```r
+twfe.het &lt;- twfe.final %&gt;%
+  mutate(treat_het = case_when(
+    !is.na(treat_year) &amp; treat_year==2010 ~ 6,
+    !is.na(treat_year) &amp; treat_year==2011 ~ 10,
+    !is.na(treat_year) &amp; treat_year==2012 ~ 20,
+    !is.na(treat_year) &amp; treat_year==2013 ~ 0,
+    !is.na(treat_year) &amp; treat_year==2014 ~ 0,
+    !is.na(treat_year) &amp; treat_year==2015 ~ -10,
+    is.na(treat_year) ~ 0),
+    treat_het = treat_het*treat,
+    treat_dyn = treat_het*(year-treat_year+1)*2.5*treat,
+    y_het = 1.5+3*w -2*xi + 1.5*(year-2009) + treat_het + rnorm(N_t,0,1),
+    y_dyn = 1.5+3*w -2*xi + 1.5*(year-2009) + treat_dyn + rnorm(N_t,0,1))
+```
+]
+
+---
+count: false
+
+# Differential treatment timing
+
+- With heterogeneous effects across units, problem...
+
+.pre[
+
+```r
+summary(twfe.het$treat_het[twfe.het$treat==1])
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -10.000   0.000   6.000   5.433  10.000  20.000
+```
+
+```r
+summary(felm(y_het~treat|id + year, data=twfe.het))
+```
+
+```
+## 
+## Call:
+##    felm(formula = y_het ~ treat | id + year, data = twfe.het) 
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -13.1328  -1.1968   0.1402   1.4141  12.5811 
+## 
+## Coefficients:
+##       Estimate Std. Error t value Pr(&gt;|t|)    
+## treat  4.72946    0.03933   120.3   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.324 on 99979 degrees of freedom
+## Multiple R-squared(full model): 0.9265   Adjusted R-squared: 0.9228 
+## Multiple R-squared(proj model): 0.1264   Adjusted R-squared: 0.08252 
+## F-statistic(full model):251.2 on 5020 and 99979 DF, p-value: &lt; 2.2e-16 
+## F-statistic(proj model): 1.446e+04 on 1 and 99979 DF, p-value: &lt; 2.2e-16
+```
+]
+
+---
+count: false
+
+# Differential treatment timing
+
+- With heterogeneous and dynamic effects
+
+.pre[
+
+```r
+summary(twfe.het$treat_dyn[twfe.het$treat==1])
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -150.00    0.00   45.00   77.91  150.00  450.00
+```
+
+```r
+summary(felm(y_dyn~treat|id + year, data=twfe.het))
+```
+
+```
+## 
+## Call:
+##    felm(formula = y_dyn ~ treat | id + year, data = twfe.het) 
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -209.271  -36.237    7.606   32.325  261.979 
+## 
+## Coefficients:
+##       Estimate Std. Error t value Pr(&gt;|t|)    
+## treat  -16.335      1.453  -11.24   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 65.74 on 49339 degrees of freedom
+##   (53172 observations deleted due to missingness)
+## Multiple R-squared(full model): 0.5176   Adjusted R-squared: 0.4933 
+## Multiple R-squared(proj model): 0.002555   Adjusted R-squared: -0.04774 
+## F-statistic(full model):21.28 on 2488 and 49339 DF, p-value: &lt; 2.2e-16 
+## F-statistic(proj model): 126.4 on 1 and 49339 DF, p-value: &lt; 2.2e-16
 ```
 ]
 
@@ -2334,13 +2455,14 @@ But what parameter is this? Is it interesting?
 **Across Units**
 
 - TWFE estimator still recovers the ATT **if** heterogeneities are random
-- selective treatment timing is not allowed **at all** (even if time-invariant)
-- why? correlation means variance weights on ATT no longer equal to OLS
+- different effects by treatment timing is not allowed (even if exogenous) 
+- why? more weight given to treatment in middle of time frame
+- selective treatment (even time-invariant) also changes weights
 
 ]
 
 .pull-right[
-**Across Time** (dynamic effects)
+**Within Units** (dynamic effects)
 
 - Not allowed in baseline TWFE
 - Event study will help if this is the only source of heterogeneity
@@ -2421,7 +2543,7 @@ count:false
 FALSE Specified labels in the order of: Under Control, Under Treatment.
 ```
 
-&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 count:false
@@ -2436,7 +2558,7 @@ count:false
 FALSE Specified labels in the order of: Controls, Treated (Pre), Treated (Post).
 ```
 
-&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -2457,33 +2579,27 @@ count:false
 2. Estimate event studies for specific treatment groups
 3. Consider recent approaches in:
   - [Goodman-Bacon (2019)](https://cdn.vanderbilt.edu/vu-my/wp-content/uploads/sites/2318/2019/07/29170757/ddtiming_7_29_2019.pdf), `bacondecomp` in Stata and R
-  - [de Chaisemartin and D'Haultfoeuille (2020)](https://www.aeaweb.org/articles?id=10.1257/aer.20181169), `twowayfeweights`, `fuzzy_did`, and `did_multiplegt` in Stata. R packages apparently [on the way](https://twitter.com/CdeChaisemartin/status/1263506539718914049)
+  - [de Chaisemartin and D'Haultfoeuille (2020)](https://www.aeaweb.org/articles?id=10.1257/aer.20181169), `twowayfeweights` and `did_multiplegt` in Stata. R packages apparently [on the way](https://twitter.com/CdeChaisemartin/status/1263506539718914049)
   - [Callaway and Sant'Anna (2019)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3148250), `did` package in R. Also check out Sant'Anna and Zhou's "doubly-robust" DD estimator package, `drdid`
-  - Abraham and Sun (2020)
+  - [Abraham and Sun (2020)](http://economics.mit.edu/files/14964) discuss the interpretability of coefficient estimates from a standard event study. Similar to the other papers, they show that this is generally hard to interpret and they suggest doing event studies for each treatment cohort separately and averaging.
   
 ---
 count: false
 
 # Bacon Decomposition
 
+.pre[
 
 ```r
 library(bacondecomp)
-```
-
-```
-## Warning: package 'bacondecomp' was built under R version 3.6.3
-```
-
-```r
 df.bacon &lt;- bacon(y_out~treat, data=pview.final, id_var="id", time_var="year")
 ```
 
 ```
 ##                       type  weight avg_est
-## 1 Earlier vs Later Treated 0.06314 5.49289
-## 2 Later vs Earlier Treated 0.03958 5.58405
-## 3     Treated vs Untreated 0.89728 6.07294
+## 1 Earlier vs Later Treated 0.08753 5.65280
+## 2 Later vs Earlier Treated 0.05111 5.87914
+## 3     Treated vs Untreated 0.86136 5.85162
 ```
 
 ```r
@@ -2492,50 +2608,205 @@ df.bacon
 
 ```
 ##    treated untreated estimate       weight                     type
-## 2     2012     99999 5.713642 0.1261800168     Treated vs Untreated
-## 3     2011     99999 5.756501 0.1285166838     Treated vs Untreated
-## 4     2015     99999 6.289442 0.2103000280     Treated vs Untreated
-## 5     2013     99999 5.881235 0.0607533414     Treated vs Untreated
-## 6     2014     99999 6.431087 0.1144966819     Treated vs Untreated
-## 7     2010     99999 6.116181 0.2570333676     Treated vs Untreated
-## 10    2011      2012 5.931407 0.0010281335 Earlier vs Later Treated
-## 11    2015      2012 6.367655 0.0033648004 Later vs Earlier Treated
-## 12    2013      2012 5.758111 0.0003738667 Later vs Earlier Treated
-## 13    2014      2012 7.215479 0.0013085335 Later vs Earlier Treated
-## 14    2010      2012 5.669939 0.0037386672 Earlier vs Later Treated
-## 16    2012      2011 5.837811 0.0008412001 Later vs Earlier Treated
-## 18    2015      2011 5.327973 0.0044864006 Later vs Earlier Treated
-## 19    2013      2011 4.486508 0.0007477334 Later vs Earlier Treated
-## 20    2014      2011 6.097970 0.0019628003 Later vs Earlier Treated
-## 21    2010      2011 5.544842 0.0018693336 Earlier vs Later Treated
-## 23    2012      2015 5.609467 0.0067296009 Earlier vs Later Treated
-## 24    2011      2015 5.080898 0.0082250678 Earlier vs Later Treated
-## 26    2013      2015 3.773113 0.0024301337 Earlier vs Later Treated
-## 27    2014      2015 4.700346 0.0026170670 Earlier vs Later Treated
-## 28    2010      2015 5.734908 0.0186933358 Earlier vs Later Treated
-## 30    2012      2013 5.491956 0.0005608001 Earlier vs Later Treated
-## 31    2011      2013 4.301979 0.0010281335 Earlier vs Later Treated
-## 32    2015      2013 3.756708 0.0011216001 Later vs Earlier Treated
-## 34    2014      2013 6.061137 0.0003271334 Later vs Earlier Treated
-## 35    2010      2013 4.374021 0.0028040004 Earlier vs Later Treated
-## 37    2012      2014 6.448427 0.0022432003 Earlier vs Later Treated
-## 38    2011      2014 5.549884 0.0030844004 Earlier vs Later Treated
-## 39    2015      2014 4.340593 0.0011216001 Later vs Earlier Treated
-## 40    2013      2014 5.581629 0.0006075334 Earlier vs Later Treated
-## 42    2010      2014 6.176680 0.0074773343 Earlier vs Later Treated
-## 44    2012      2010 5.104688 0.0033648004 Later vs Earlier Treated
-## 45    2011      2010 5.031159 0.0018693336 Later vs Earlier Treated
-## 46    2015      2010 5.639037 0.0112160015 Later vs Earlier Treated
-## 47    2013      2010 4.322027 0.0022432003 Later vs Earlier Treated
-## 48    2014      2010 6.359629 0.0052341340 Later vs Earlier Treated
+## 2     2013     99999 5.883791 0.1677561762     Treated vs Untreated
+## 3     2012     99999 5.802833 0.2177604211     Treated vs Untreated
+## 4     2014     99999 5.786253 0.1975974191     Treated vs Untreated
+## 5     2015     99999 6.266458 0.1451736141     Treated vs Untreated
+## 6     2011     99999 5.343719 0.0887172086     Treated vs Untreated
+## 7     2010     99999 5.918711 0.0443586043     Treated vs Untreated
+## 10    2012      2013 6.230051 0.0050938110 Earlier vs Later Treated
+## 11    2014      2013 5.255616 0.0029713898 Later vs Earlier Treated
+## 12    2015      2013 5.429263 0.0040750488 Later vs Earlier Treated
+## 13    2011      2013 4.890646 0.0037354614 Earlier vs Later Treated
+## 14    2010      2013 4.695861 0.0025469055 Earlier vs Later Treated
+## 16    2013      2012 6.361402 0.0033958740 Later vs Earlier Treated
+## 18    2014      2012 6.493590 0.0074284744 Later vs Earlier Treated
+## 19    2015      2012 6.343376 0.0076407165 Later vs Earlier Treated
+## 20    2011      2012 4.534268 0.0023346634 Earlier vs Later Treated
+## 21    2010      2012 5.149782 0.0021224213 Earlier vs Later Treated
+## 23    2013      2014 5.464128 0.0055182953 Earlier vs Later Treated
+## 24    2012      2014 6.440161 0.0127345275 Earlier vs Later Treated
+## 26    2015      2014 6.107708 0.0025469055 Later vs Earlier Treated
+## 27    2011      2014 5.687398 0.0070039902 Earlier vs Later Treated
+## 28    2010      2014 5.749006 0.0042448425 Earlier vs Later Treated
+## 30    2013      2015 5.141340 0.0088292724 Earlier vs Later Treated
+## 31    2012      2015 5.782999 0.0152814331 Earlier vs Later Treated
+## 32    2014      2015 5.641978 0.0059427795 Earlier vs Later Treated
+## 34    2011      2015 5.607670 0.0074709228 Earlier vs Later Treated
+## 35    2010      2015 5.563448 0.0042448425 Earlier vs Later Treated
+## 37    2013      2011 5.406210 0.0027166992 Later vs Earlier Treated
+## 38    2012      2011 4.956013 0.0019101791 Later vs Earlier Treated
+## 39    2014      2011 6.108585 0.0044570846 Later vs Earlier Treated
+## 40    2015      2011 6.818786 0.0040750488 Later vs Earlier Treated
+## 42    2010      2011 4.930478 0.0004244843 Earlier vs Later Treated
+## 44    2013      2010 4.315451 0.0020375244 Later vs Earlier Treated
+## 45    2012      2010 4.744059 0.0019101791 Later vs Earlier Treated
+## 46    2014      2010 5.277987 0.0029713898 Later vs Earlier Treated
+## 47    2015      2010 5.636448 0.0025469055 Later vs Earlier Treated
+## 48    2011      2010 4.252266 0.0004244843 Later vs Earlier Treated
 ```
+]
 
 ---
 count: false
 
 # Bacon Decomposition
 
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /&gt;
 
+
+---
+count: false
+
+# Bacon Decomposition
+
+.pre[
+
+```r
+df.bacon &lt;- bacon(y_het~treat, data=pview.het, id_var="id", time_var="year")
+```
+
+```
+##                       type  weight  avg_est
+## 1 Earlier vs Later Treated 0.08753 11.03853
+## 2 Later vs Earlier Treated 0.05111 -2.55403
+## 3     Treated vs Untreated 0.86136  4.82667
+```
+
+```r
+df.bacon
+```
+
+```
+##    treated untreated      estimate       weight                     type
+## 2     2013     99999   0.020918843 0.1677561762     Treated vs Untreated
+## 3     2012     99999  20.066017059 0.2177604211     Treated vs Untreated
+## 4     2014     99999   0.129376627 0.1975974191     Treated vs Untreated
+## 5     2015     99999 -10.095479873 0.1451736141     Treated vs Untreated
+## 6     2011     99999  10.417894613 0.0887172086     Treated vs Untreated
+## 7     2010     99999   6.767886732 0.0443586043     Treated vs Untreated
+## 10    2012      2013  19.402128301 0.0050938110 Earlier vs Later Treated
+## 11    2014      2013   0.005213205 0.0029713898 Later vs Earlier Treated
+## 12    2015      2013 -10.897212211 0.0040750488 Later vs Earlier Treated
+## 13    2011      2013  10.772708991 0.0037354614 Earlier vs Later Treated
+## 14    2010      2013   6.374695935 0.0025469055 Earlier vs Later Treated
+## 16    2013      2012  -0.739056952 0.0033958740 Later vs Earlier Treated
+## 18    2014      2012   0.197480283 0.0074284744 Later vs Earlier Treated
+## 19    2015      2012  -9.937232302 0.0076407165 Later vs Earlier Treated
+## 20    2011      2012  10.951738374 0.0023346634 Earlier vs Later Treated
+## 21    2010      2012   6.350334506 0.0021224213 Earlier vs Later Treated
+## 23    2013      2014  -0.046845443 0.0055182953 Earlier vs Later Treated
+## 24    2012      2014  20.182070477 0.0127345275 Earlier vs Later Treated
+## 26    2015      2014 -10.204331545 0.0025469055 Later vs Earlier Treated
+## 27    2011      2014  10.599173311 0.0070039902 Earlier vs Later Treated
+## 28    2010      2014   6.846861799 0.0042448425 Earlier vs Later Treated
+## 30    2013      2015  -0.788325356 0.0088292724 Earlier vs Later Treated
+## 31    2012      2015  20.204920447 0.0152814331 Earlier vs Later Treated
+## 32    2014      2015   0.024074460 0.0059427795 Earlier vs Later Treated
+## 34    2011      2015  10.440814068 0.0074709228 Earlier vs Later Treated
+## 35    2010      2015   6.928246377 0.0042448425 Earlier vs Later Treated
+## 37    2013      2011   0.360346183 0.0027166992 Later vs Earlier Treated
+## 38    2012      2011  20.757931853 0.0019101791 Later vs Earlier Treated
+## 39    2014      2011   0.364293256 0.0044570846 Later vs Earlier Treated
+## 40    2015      2011 -10.141384085 0.0040750488 Later vs Earlier Treated
+## 42    2010      2011   5.719769182 0.0004244843 Earlier vs Later Treated
+## 44    2013      2010  -0.537471706 0.0020375244 Later vs Earlier Treated
+## 45    2012      2010  19.728400602 0.0019101791 Later vs Earlier Treated
+## 46    2014      2010   0.168890485 0.0029713898 Later vs Earlier Treated
+## 47    2015      2010  -9.897796340 0.0025469055 Later vs Earlier Treated
+## 48    2011      2010   9.445812361 0.0004244843 Later vs Earlier Treated
+```
+]
+
+---
+count: false
+
+# Bacon Decomposition
+
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+count: false
+
+# Bacon Decomposition
+
+.pre[
+
+```r
+df.bacon &lt;- bacon(y_dyn~treat, data=pview.het, id_var="id", time_var="year")
+```
+
+```
+##                       type  weight    avg_est
+## 1 Earlier vs Later Treated 0.08753   48.50340
+## 2 Later vs Earlier Treated 0.05111 -145.09554
+## 3     Treated vs Untreated 0.86136   67.29754
+```
+
+```r
+df.bacon
+```
+
+```
+##    treated untreated      estimate       weight                     type
+## 2     2013     99999 -9.652557e-03 0.1677561762     Treated vs Untreated
+## 3     2012     99999  2.500621e+02 0.2177604211     Treated vs Untreated
+## 4     2014     99999  9.446439e-02 0.1975974191     Treated vs Untreated
+## 5     2015     99999 -8.731104e+01 0.1451736141     Treated vs Untreated
+## 6     2011     99999  1.375690e+02 0.0887172086     Treated vs Untreated
+## 7     2010     99999  8.944141e+01 0.0443586043     Treated vs Untreated
+## 10    2012      2013  5.107382e+01 0.0050938110 Earlier vs Later Treated
+## 11    2014      2013 -1.353999e-01 0.0029713898 Later vs Earlier Treated
+## 12    2015      2013 -8.710858e+01 0.0040750488 Later vs Earlier Treated
+## 13    2011      2013  3.767410e+01 0.0037354614 Earlier vs Later Treated
+## 14    2010      2013  3.026393e+01 0.0025469055 Earlier vs Later Treated
+## 16    2013      2012 -2.240391e+02 0.0033958740 Later vs Earlier Treated
+## 18    2014      2012 -2.249298e+02 0.0074284744 Later vs Earlier Treated
+## 19    2015      2012 -3.121760e+02 0.0076407165 Later vs Earlier Treated
+## 20    2011      2012  2.570420e+01 0.0023346634 Earlier vs Later Treated
+## 21    2010      2012  2.269529e+01 0.0021224213 Earlier vs Later Treated
+## 23    2013      2014 -2.626308e-01 0.0055182953 Earlier vs Later Treated
+## 24    2012      2014  7.508355e+01 0.0127345275 Earlier vs Later Treated
+## 26    2015      2014 -8.788370e+01 0.0025469055 Later vs Earlier Treated
+## 27    2011      2014  4.981638e+01 0.0070039902 Earlier vs Later Treated
+## 28    2010      2014  3.771387e+01 0.0042448425 Earlier vs Later Treated
+## 30    2013      2015  2.372511e-01 0.0088292724 Earlier vs Later Treated
+## 31    2012      2015  1.003249e+02 0.0152814331 Earlier vs Later Treated
+## 32    2014      2015 -4.197790e-01 0.0059427795 Earlier vs Later Treated
+## 34    2011      2015  6.231998e+01 0.0074709228 Earlier vs Later Treated
+## 35    2010      2015  4.492627e+01 0.0042448425 Earlier vs Later Treated
+## 37    2013      2011 -1.250675e+02 0.0027166992 Later vs Earlier Treated
+## 38    2012      2011  1.256611e+02 0.0019101791 Later vs Earlier Treated
+## 39    2014      2011 -1.253564e+02 0.0044570846 Later vs Earlier Treated
+## 40    2015      2011 -2.128553e+02 0.0040750488 Later vs Earlier Treated
+## 42    2010      2011  1.550012e+01 0.0004244843 Earlier vs Later Treated
+## 44    2013      2010 -8.136477e+01 0.0020375244 Later vs Earlier Treated
+## 45    2012      2010  1.684339e+02 0.0019101791 Later vs Earlier Treated
+## 46    2014      2010 -8.153495e+01 0.0029713898 Later vs Earlier Treated
+## 47    2015      2010 -1.692808e+02 0.0025469055 Later vs Earlier Treated
+## 48    2011      2010  5.638035e+01 0.0004244843 Later vs Earlier Treated
+```
+]
+
+---
+count: false
+
+# Bacon Decomposition
+
+&lt;img src="slides-exercise1_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Takeaways
+
+1. Standard DD/TWFE estimates only give ATT under **very** strong assumptions
+2. Can assess the scope of the problem by estimating the weights on each `\(2\times 2\)` DD estimate
+3. General solutions involve careful consideration of the counterfactual estimates (potential outcomes framework is critical)
+4. Haven't even dealt with issues of parallel trends or time-varying selection into treatment!&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[
+&lt;sup&gt;1&lt;/sup&gt;balancing or doubly-robust DD estimates may help here
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
