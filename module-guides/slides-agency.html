@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 2: Physician Agency and Treatment Decisions</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ian McCarthy | Emory University" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 2: Physician Agency and Treatment Decisions
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#EB811B' size=1px width=0px>
+</html>
+### Ian McCarthy | Emory University
+### Econ 771
+
+---
+
+
+&lt;!-- Adjust some CSS code for font size and maintain R code font size --&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+&lt;/style&gt;
+
+
+&lt;!-- Set R options for how code chunks are displayed and load packages --&gt;
+
+
+
+# Table of contents
+
+1. [Motivation](#motivate)
+
+2. [Physician Agency](#agency)
+
+3. [Policy Issues](#policy)
+
+---
+.center[
+  ![:scale 700px](https://media.giphy.com/media/3orifb9GcyGZ8ClIuk/giphy.gif)
+]
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: motivate
+
+# Motivation
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Variation in care
+
+.pull-left[
+  ![:scale 475px](pics/dartmouth_map.png)
+]
+
+.pull-right[
+  ![:scale 375px](pics/dartmouth_dist.png)
+]
+
+&lt;div class="smalltext"&gt;Source: &lt;a href="https://www.dartmouthatlas.org"&gt;Dartmouth Atlas of Health Care&lt;/a&gt;&lt;/div&gt;
+
+---
+# Wasteful?
+- Estimates are that more than 30% of health care expenditures are "wasteful": [(The Atlantic, 2013)](https://www.theatlantic.com/health/archive/2013/12/youre-getting-too-much-healthcare/281896/)
+
+- Some clear areas of waste:
+  - Payment differentials by location of treatment (policy quirks)
+  - Better imaging with little benefit
+  - Proton treatment (for some conditions)
+  - Heart stents
+  - Arthroscopic knee surgery&lt;br&gt;
+
+
+--
+
+Many estimates of "waste" are after-the-fact. It's actually very hard to identify waste before-hand. [Report on End-of-life Spending](http://news.mit.edu/2018/value-late-life-health-care-spending-medicare-0628)
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: agency
+
+# Physician Agency
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Definition
+
+Physicians are better informed about treatment decisions than patients, and so there exists some &lt;b&gt;agency&lt;/b&gt; relationship between the two. For many conditions, patients can't treat themselves even if they wanted to.
+
+&lt;br&gt;
+--
+Role of physicians: 
+
+- [Gaynor, Propper, and Seiler (2016)](https://www.aeaweb.org/articles?id=10.1257/aer.20121532)
+- [Chernew, et al (2019)](https://www.nber.org/papers/w24869)
+
+---
+# Setup
+
+- Denote quantity of physician services by `\(x\)`
+- Denote benefit of services to patient by `\(B(x)\)`
+- Patients pay (and physicians receive) a price of `\(p\)` for each unit of service `\(x\)`
+- Physicians incur cost `\(c\)` for each unit of care
+- Net benefit to patients is `\(NB(x)=B(x)-px\)`
+- Physicians must choose quantity of care at least better than the patient's outside option, `\(NB(x)= B(x)-px \geq NB^{0}\)`.
+
+
+---
+# Solving the model
+With this framework, how much care will be provided? What is the optimal value of `\(x\)`?
+
+
+---
+count: false
+
+# Solving the model
+
+Solve the model in two steps:&lt;br&gt;
+
+1. Physician will provide minimum surplus to keep the patient, `\(NB(x) = B(x)-px = NB^{0}\)`
+
+2. Substitute into physician profit function, `$$\pi=(p-c)x = B(x)-NB^{0} - cx,$$` and solve for `\(x\)`&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[
+&lt;sup&gt;1&lt;/sup&gt;This approach applies when prices and quantity of care are variable. If the physician cannot set price, then we just work off of the constraint, `\(B(x)-\bar{p}x=NB^{0}\)`. 
+]
+
+---
+# Physician agency in a graph
+&lt;img src="slides-agency_files/figure-html/tikz-agency-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Example with fixed price
+An increase in the administratively set price leads to a &lt;b&gt;decrease&lt;/b&gt; in quantity of services provided. And vice versa, a reduction in price leads to an &lt;b&gt;increase&lt;/b&gt; in quantity provided. Why?
+
+--
+`$$\begin{align*}
+b(x)\frac{\mathrm{d}x}{\mathrm{d}p} - x - p\frac{\mathrm{d}x}{\mathrm{d}p} &amp;= 0 \\
+\frac{\mathrm{d}x}{\mathrm{d}p} = \frac{-x}{p-b(x)} &amp;&lt; 0.
+\end{align*}$$`
+
+---
+# Agency with capitated payments
+
+- Physician receives fixed ("capitated") amount for each patient, `\(R\)`, along with some price per unit of service, `\(p_{s}\)`
+
+- Physician therefore paid `\(R + (p_{s} - c)x\)` for each patient
+
+- Number of patients for each physician expressed as a positive function of the net benefit offered, `\(n(NB)\)`, where `\(NB=B(x) - p_{d}x\)`. Here, we assume that the insurer sets `\(p_{d}\)` and `\(p_{s}\)` separately (the demand and supply price, respectively).
+
+- Physician again aims to maximize profits, `\(\pi=n(NB)\left[R+(p_{s}-c)x\right]\)`.
+
+
+---
+# Solution with capitated payments
+Maximizing the profit function yields:&lt;br&gt;
+`\(n'(NB)(B'(x) - p_{d}) \left[R + (p_{s} - c)x \right] + n(NB)(p_{s}-c) = 0\)`.&lt;br&gt;
+
+Rearranging terms and multiplying both sides by `\(\frac{1}{NB}\)`, we get:&lt;br&gt;
+`\(\frac{B'(x) - p_{d}}{NB} \frac{R + (p_{s} - c)x}{p_{s}-c} = - \frac{1}{\varepsilon_{n,NB}}\)`
+
+--
+
+1. What happens for `\(R=0\)`?
+2. What about `\(R&gt;0\)`, assuming `\(p_{s}&lt;c\)`?
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: policy
+
+# Policy Issues
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Current policy
+1. [Value-based Purchasing](https://www.cms.gov/Medicare/Quality-Initiatives-Patient-Assessment-Instruments/Value-Based-Programs/HVBP/Hospital-Value-Based-Purchasing)
+
+2. [Bundled Payments](https://innovation.cms.gov/initiatives/bundled-payments/)
+
+3. [Accountable Care Organizations](https://www.cms.gov/Medicare/Medicare-Fee-for-Service-Payment/ACO/)
+
+4. Information and Consumer Choice: Examples include [Hospital Compare](https://www.medicare.gov/hospitalcompare/search.html?) and [Penalty Information](https://khn.org/news/hospital-penalties/)
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"touch": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

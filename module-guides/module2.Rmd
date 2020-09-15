@@ -38,7 +38,7 @@ This is the guide for **Module 2**, which covers issues related to physician age
 2. [Area Health Resources Files](https://data.hrsa.gov/topics/health-workforce/ahrf)
 3. [Medicare Advantage](https://github.com/imccart/Medicare-Advantage)
 4. [Provider Utilization and Payment Data](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Physician-and-Other-Supplier)
-5. [NPPES](https://www.cms.gov/Regulations-and-Guidance/Administrative-Simplification/NationalProvIdentStand/DataDissemination)'
+5. [NPPES](https://www.cms.gov/Regulations-and-Guidance/Administrative-Simplification/NationalProvIdentStand/DataDissemination)
 6. [National Hospital Discharge Survey](https://www.cdc.gov/nchs/nhds/index.htm)
 
 
@@ -48,6 +48,8 @@ This is the guide for **Module 2**, which covers issues related to physician age
 ### Class 9, 9/17
 **The agency problem in healthcare**<br>
 We typically think of agency as a contract problem in which the goal is to devise a contract that incentivizes maximum (unobservable) effort subject to relevant constraints. In the healthcare context, however, the agency problem simply reflects the different set of incentives faced by the physician versus the patient. The physician acts as an agent on behalf of the patient, but they may not act in a way that maximizes the patient's objective function. In this class, I'll present some basic theory of the physician agency problem and the role of fee-for-service versus capitated payment models. The lecture material is based entirely on the handbook chapter from McGuire (2000).
+
+- My intro slides for physician agency are [here](slides-agency.html)
 
 
 ### Class 10, 9/22
