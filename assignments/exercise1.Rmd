@@ -52,4 +52,3 @@ Here are my answers. There are lots of different ways to answer these questions.
 2. Analysis file [here](../solutions/exercise1/analysis.R). This is where I do the actual analysis. Notice that in this file, I remove a bunch of large objects and save the workspace. I then call the workspace in my markdown file.
 3. Code to read in the IPPS data [here](../solutions/exercise1/1_ipps.R).
 4. Code to read in the POS data [here](../solutions/exercise1/2_pos.R).
-3. 
