@@ -44,3 +44,12 @@ In your GitHub repository, please be sure to clearly address/answer the followin
 4. Estimate an "event study" version of the DD model from part 3. Focus only on states that expanded in 2014 that those that have never expanded.
 
 5. Estimate another event study where you allow for differential treatment timing and incorporate all states.
+
+# Solutions
+Here are my answers. There are lots of different ways to answer these questions. For example, some of the main variables may show up in more than one of the datasets, and you may have chosen a different source. There are also lots of different ways to filter the data. As long as you are transparent (i.e., I can see what you did in the code), then this isn't a problem. The point of this is to get some practice doing standard applied work with **real** data. 
+
+1. Final [solutions](../solutions/exercise1/solutions.pdf) in PDF. My actual `R Markdown` document is [here](../solutions/exercise1/solutions.Rmd), and [here](../solutions/exercise1/solutions.tex) is the `tex` file in case anyone is interested.
+2. Analysis file [here](../solutions/exercise1/analysis.R). This is where I do the actual analysis. Notice that in this file, I remove a bunch of large objects and save the workspace. I then call the workspace in my markdown file.
+3. Code to read in the IPPS data [here](../solutions/exercise1/1_ipps.R).
+4. Code to read in the POS data [here](../solutions/exercise1/2_pos.R).
+3. 

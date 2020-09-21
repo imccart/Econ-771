@@ -58,6 +58,9 @@ The literature doesn't always discuss their analysis in the context of agency pr
 
 The underlying idea in both papers is that physicians have a certain way of practicing, regardless of patient preferences. So when patients go to a new area where physicians are more aggressive, those patients will receive more care, and when physicians join practices that are more agressive, they will begin practicing in a more agressive way. The notion of patient and physician "movers" has become a popular identification strategy in the literature, and we'll discuss some of the merits and drawbacks of this strategy.
 
+- Hanna's slides for Finkelstein, Gentzkow, and Williams (2016) are [here](..student-presentations/hanna-20200922.pdf)
+- Drews's slides for Molitor (2018) are [here](..student-presentations/drew-20200922.pdf)
+
 
 ### Class 11, 9/24
 **Physician response to payment changes**<br>

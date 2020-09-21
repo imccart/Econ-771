@@ -1,0 +1,205 @@
+---
+title: "Exercise 1 Solutions"
+author: Ian McCarthy, Econ 771
+date: Fall 2020
+geometry: "left=2cm,right=2cm,top=1cm,bottom=2cm"
+fontsize: 12pt
+subparagraph: yes
+header-includes:
+   - \usepackage{setspace}
+   - \usepackage{titlesec}
+   - \titlespacing{\title}{0pt}{\parskip}{-\parskip}
+   - \titlespacing{\section}{0pt}{12pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+   - \titlespacing{\subsection}{0pt}{12pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+   - \titlespacing{\subsubsection}{0pt}{12pt plus 2pt minus 1pt}{0pt plus 1pt minus 1pt}
+   - \usepackage{float}
+output: 
+  bookdown::pdf_document2:
+    keep_tex: TRUE
+    toc: FALSE
+    number_sections: FALSE
+    fig_caption: yes
+bibliography: '../../BibTeX_Library.bib'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stargazer, knitr, kableExtra, lfe, googledrive)
+drive_download("Bibliography/BibTeX_Library.bib", overwrite=TRUE, path='../../BibTeX_Library.bib')
+```
+
+```{r, include=FALSE}
+load("workspace.Rdata")
+```
+
+\setstretch{1.5}
+
+# Overview
+This document lays out my approach to addressing the questions in Exercise 1. There are lots of ways to answer these problems and build the data, especially in `R`! My way of answering the questions is just one of many.
+
+I also have a particular workflow that you may or may not choose to adopt. That workflow is to do all of my analysis seperately from my markdown document. I really don't like seeing huge markdown documents constantly going in and out of data work and discussion. It's also not feasible to work with really large data within the markdown document. So, I do all of the analysis, remove any large objects (including the data), keep only the relevant objects for the final markdown (figures, tables, specific numbers or statistics), and then save the workspace. Then I load the workspace into my markdown document.
+
+
+# Data
+Before we get into the specific questions for this assignment, let's briefly go through the data. My code files for the IPPS and POS data are included in the classroom repo under the filenames *1_ipps.R* and *2_pos.R*. 
+
+### IPPS Data
+
+The IPPS data are pretty straightforward except for some slight changes in variable names over time. For example, "Provider Type" is missing in years 1986 through 1983; it is named "provtype" in years 1994 through 2000; and it is renamed "ptype" from 2001 onward.
+
+
+### POS Data
+
+The POS data may be a little troublesome to download because there are lots of different versions of the same datasets. From the [NBER POS website](https://data.nber.org/data/provider-of-services.html), I extracted the "csvYYYY" files from 1984 through 1990. Starting in 1991, there are two links for the csv files -- a "csv" and a "PROV". The "PROV" link is active but the datasets are empty in some of the earlier years, so I used the "csv" links in all cases. These links are to a crosswalk version of the data, in which the NBER tried to assign a consistent name to each variable in the POS data. The original, raw POS files had variable names like, "prov0028", but they changed to mnemonic style names in 2011. The crosswalk files are intended to make it easier to merge historic data with data from 2011 onward. These versions of the data are what I have made available in the AWS AMI.
+
+The POS data are supposed to be updated regularly, meaning that you should only need the most recent version of the data; however, that doesn't appear to be the case as some provider numbers only show up in the earlier years. It appears that once a hospital has been closed for a sufficiently long time, it no longer appears in the POS. Still, since the values are intended to be replaced every year for a given POS, there are **a lot** of duplicates. In my code file, I read in all of the data, recode the relevant variables, and then drop the duplicates.
+
+
+### Final dataset
+
+Once you have the ipps and POS data ready, you just have to merge the two. The easiest way to do this in our case is to merge on provider number and year. Here's my code to merge the three datasets:
+
+\setstretch{1}
+```{r, include=T, eval=F}
+full.data <- final.pos.data %>%
+  left_join(final.ipps.data, by=c("provider", "year"))
+```
+\setstretch{1.5}
+
+
+# Question and Answers
+
+### Question 1.
+
+**Provide and discuss a table of simple summary statistics showing the mean, standard deviation, min, and max of the case mix index and disproportionate share across years. Show these statistics overall and separately by hospital ownership type.**
+
+Table \@ref(tab:sum-stats) presents the mean, standard deviation, min, and max of the relevant variables. Note that disproportionate share information isn't available in the data until 1994, so the summary stats are missing until that year. We see from the table that the mean case mix index is increasing over time, which means that people are getting sicker. We also see that the mean DSH has increased over time, from about 23% to 30% in 2018.
+
+
+### Question 2.
+
+**Create a figure showing the average hospital disproportionate shares from 1986 to 2018. Show this trend separately by hospital ownership type (private not for profit and private for profit).**
+
+A table is not the best way to present summary statistics over several years like this. So, let's do that in a figure instead. Figures \@ref(fig:cmi-plot) and \@ref(fig:dsh-plot) present the average Case Mix Index and disproportionate shares, respectively, for each year. Each figure presents two lines, one showing the mean among for profit hosptials and the other showing the mean for private not-for-profit hospitals (labeled simply as "Non Profit" in the figures). 
+
+
+### Question 3
+
+**Using a simple DD identification strategy, estimate the effect of Medicaid expansion on the hospital disproportionate share percentage. Do these effects differ by profit status (i.e., re-estimate with a DDD using profit status)? Focus your analysis on the years from 2005 through 2018.**
+
+The disproportionate share program is actually two programs - a Medicaid and a Medicare program. The Medicare DSH program, which is what is relevant for the IPPS data, calculates a hospital's disproportionate share percentage based on the share of Medicare patients that are eligible for SSI as well as the number of Medicaid patients. Since not all states expanded Medicaid in 2014, we can use the ACA Medicaid expansion as a treatment and estimate the effect of Medicaid expansion on hospital DSH percentage (which should be positive, since more people would be on Medicaid).
+
+Before thinking of any type of regression, it's always a good idea just to summarize the key parts of your data. In this case, we want to know how DSH changed from before and after 2014, separately by states that expanded and didn't expand Medicaid. 
+
+Table \@ref(tab:dd-table) presents the 2x2 DD chart with pre/post, treatment/control averages. From these averages, our DD estimate for the effect of Medicaid expansion on DSH would be `r format(dd.table[2,3]-dd.table[2,2]-(dd.table[1,3]-dd.table[1,2]),digits=3)`.
+
+We can estimate this effect in a regression setting based on the specification in Equation \@ref(eq:dd1):
+\begin{equation}
+DSH_{ht} = \alpha Expand_{s} + \beta 1(t\geq 2014) + \delta Expand_{s} \times 1(t\geq 2014) + \varepsilon_{ht}, (\#eq:dd1)
+\end{equation}
+where $DSH_{ht}$ is the Disproportionate Share percent for hospital $h$ at time $t$, $Expand_{s}$ denotes an indicator set to 1 if the hospital is part of a Medicaid expansion state and 0 otherwise, and $1(t\geq 2014)$ denotes an indicator for the treatment period (after the DRG change in 1988.
+
+Since we have multiple years of data, a more general specification is presented in equation \@ref(eq:dd2):
+\begin{equation}
+DSH_{ht} = \delta Profit_{h} \times (t>1988) + \lambda_{h} + \gamma_{t} + \varepsilon_{ij}, (\#eq:dd2)
+\end{equation}
+where $\lambda_{h}$ and $\gamma_{t}$ denote hospital and year fixed effects, respectively. Hopefully it is clear that Equation \@ref(eq:dd2) subsumes Equation \@ref(eq:dd1) as a special case.
+
+
+The estimates for $\delta$ from each specification are presented in Table \@ref(tab:dd-regs). These estimates confirm our original estimates in the 2x2 DD table, where we find a relatively large increase in DSH among hospitals in expansion states
+
+
+### Question 4
+
+**Estimate an "event study" version of the DD model from part 3. Focus only on states that expanded in 2014 that those that have never expanded.**
+
+Event study estimates for 2014 expansion are presented in Figure \@ref(fig:event-study1). 
+
+
+### Question 5
+
+**Estimate another event study where you allow for differential treatment timing and incorporate all states.**
+
+Event study estimates for all expansion states (time varying treatment) are presented in Figure \@ref(fig:event-study2). Here, time of 0 denotes the start of treatment, so *t-1* is the baseline period for which every other period is estimated. That's why the coefficient for the *t-1* period is normalized to 0. Note that the full data run from 2005 to 2018, so DSH in period *t-12* is only observed for states that expanded in 2016. Since very few states expanded in 2017 or 2018, I've lumped all of those states into the *t-12* period.
+
+
+\newpage
+\setstretch{1}
+
+# Tables and Figures
+
+```{r sum-stats, echo=FALSE}
+options(knitr.kable.NA = '')
+knitr::kable(sum.stats, 
+             col.names=c("Year", "Mean", "Std. Dev.", "Min", "Max", "Mean", "Std. Dev.", "Min", "Max"),
+             digits=2,
+             caption = "Summary Statistics", 
+             booktabs = TRUE,
+             escape=F,
+             align=c("l","r","r","r","r","r","r","r","r")) %>% 
+  kable_styling(full_width=F,
+                latex_options="HOLD_position") %>%
+  add_header_above(c(" " = 1, "Case Mix Index" = 4,"Disproportionate Share" = 4))
+```
+
+\newpage
+
+```{r dd-table, echo=FALSE}
+knitr::kable(dd.table, 
+             col.names=c("Group", "Pre", "Post"),
+             digits=2,
+             caption = "DD Table for Medicaid Expansion", 
+             booktabs = TRUE,
+             escape=F,
+             align="l") %>% 
+  kable_styling(full_width=F,
+                latex_options="HOLD_position")
+```
+
+\newpage
+
+```{r dd-regs, echo=FALSE, results='asis', message=F}
+stargazer(dd.est, lfe.est, label="tab:dd-regs",
+          keep.stat=c("n"),
+          model.names=FALSE,
+          dep.var.caption="",
+          font.size="scriptsize",
+          add.lines=list(c("Model","DD","DD, FE")),
+          no.space=TRUE,
+          covariate.labels = c("After 2014","Expansion","Treatment Effect"),
+          dep.var.labels = "Disproportionate Share",
+          title="Difference-in-Differences Estimates",
+          header=FALSE,
+          table.placement="H")
+```
+
+
+\newpage
+
+```{r cmi-plot, echo=FALSE, warning=FALSE, fig.cap="Mean Case Mix Index by Year and Profit Status"}
+fig.avg.cmi
+```
+
+\newpage
+
+```{r dsh-plot, echo=FALSE, warning=FALSE, fig.cap="Mean Disproportionate Share by Year and Profit Status"}
+fig.avg.dsh
+```
+
+\newpage
+
+```{r event-study1, echo=FALSE, fig.cap="Event Study for 2014 Treatment Group"}
+event.plot
+```
+
+\newpage
+
+```{r event-study2, echo=FALSE, fig.cap="Event Study for All Expansion States"}
+event.plot2
+```
+
+
+\newpage
+
+# References
