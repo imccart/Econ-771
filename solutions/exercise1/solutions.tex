@@ -212,15 +212,21 @@ We can estimate this effect in a regression setting based on the specification i
 \begin{equation}
 DSH_{ht} = \alpha Expand_{s} + \beta 1(t\geq 2014) + \delta Expand_{s} \times 1(t\geq 2014) + \varepsilon_{ht}, \label{eq:dd1}
 \end{equation}
-where \(DSH_{ht}\) is the Disproportionate Share percent for hospital \(h\) at time \(t\), \(Expand_{s}\) denotes an indicator set to 1 if the hospital is part of a Medicaid expansion state and 0 otherwise, and \(1(t\geq 2014)\) denotes an indicator for the treatment period (after the DRG change in 1988.
+where \(DSH_{ht}\) is the Disproportionate Share percent for hospital \(h\) at time \(t\), \(Expand_{s}\) denotes an indicator set to 1 if the hospital is part of a Medicaid expansion state and 0 otherwise, and \(1(t\geq 2014)\) denotes an indicator for the treatment period (after the Medicaid expansion in 2014).
 
 Since we have multiple years of data, a more general specification is presented in equation \eqref{eq:dd2}:
 \begin{equation}
-DSH_{ht} = \delta Profit_{h} \times (t>1988) + \lambda_{h} + \gamma_{t} + \varepsilon_{ij}, \label{eq:dd2}
+DSH_{ht} = \delta Expand_{s} \times (t>2014) + \lambda_{h} + \gamma_{t} + \varepsilon_{ij}, \label{eq:dd2}
 \end{equation}
 where \(\lambda_{h}\) and \(\gamma_{t}\) denote hospital and year fixed effects, respectively. Hopefully it is clear that Equation \eqref{eq:dd2} subsumes Equation \eqref{eq:dd1} as a special case.
 
-The estimates for \(\delta\) from each specification are presented in Table \ref{tab:dd-regs}. These estimates confirm our original estimates in the 2x2 DD table, where we find a relatively large increase in DSH among hospitals in expansion states
+The estimates for \(\delta\) from each specification are presented in Table \ref{tab:dd-regs}. These estimates confirm our original estimates in the 2x2 DD table, where we find a relatively large increase in DSH among hospitals in expansion states.
+
+We can also separate this effect by for profit status, in which we use ownership type to create a 3rd category of interest (hence, the triple difference, or difference-in-difference-in-difference, or just DDD). Ownership type shouldn't change much over time, but it can. This isn't good for a DDD, because you'd like all of your groups to be stable. I'm going to deal with this issue in a haphazard way and just re-define ``for profit'' as a hospital that is ever for profit in the treatment period (2014 and after). The final specification we're estimating is written in Equation \eqref{eq:ddd}.
+\begin{equation}
+DSH_{ht} = \beta_{1} Expand_{s} + \beta_{2} 1(t\geq 2014) + \beta_{3} Expand_{s} \times 1(t\geq 2014) + \beta_{4} ForProfit_{h} + \delta ForProfit_{h} \times Expand_{s} \times 1(t\geq 2014) +  \varepsilon_{ht}, \label{eq:ddd}
+\end{equation}
+Results from estimating this equation are provided Table \ref{tab:ddd-regs}, where we see that for profit hospitals indeed have a larger estimated response than not-for-profit hospitals.
 
 \hypertarget{question-4}{%
 \subsubsection{Question 4}\label{question-4}}
@@ -342,6 +348,37 @@ Observations & 42,698 & 42,698 \\
 
 \newpage
 
+\begin{table}[H] \centering 
+  \caption{Triple Differences Estimates} 
+  \label{tab:ddd-regs} 
+\scriptsize 
+\begin{tabular}{@{\extracolsep{5pt}}lc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\\[-1.8ex] & Disproportionate Share \\ 
+\hline \\[-1.8ex] 
+ After 2014 & $-$0.00005 \\ 
+  & (0.003) \\ 
+  Expansion & 0.022$^{***}$ \\ 
+  & (0.003) \\ 
+  Treatment & 0.030$^{***}$ \\ 
+  & (0.005) \\ 
+  Ever FP & 0.035$^{***}$ \\ 
+  & (0.003) \\ 
+  Treat x FP & 0.027$^{***}$ \\ 
+  & (0.006) \\ 
+  Constant & 0.242$^{***}$ \\ 
+  & (0.002) \\ 
+ \hline \\[-1.8ex] 
+Observations & 27,821 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+\newpage
+
 \begin{figure}
 \centering
 \includegraphics{solutions_files/figure-latex/cmi-plot-1.pdf}
@@ -371,10 +408,5 @@ Observations & 42,698 & 42,698 \\
 \includegraphics{solutions_files/figure-latex/event-study2-1.pdf}
 \caption{\label{fig:event-study2}Event Study for All Expansion States}
 \end{figure}
-
-\newpage
-
-\hypertarget{references}{%
-\section{References}\label{references}}
 
 \end{document}

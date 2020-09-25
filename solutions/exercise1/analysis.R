@@ -122,7 +122,7 @@ fig.avg.dsh <- ggplot(data = dsh.dat,
 
 
 
-# Q4 DD analysis ----------------------------------------------------------
+# Q3 DD analysis ----------------------------------------------------------
 
 dd.table <- full.data %>% 
   filter(!is.na(expand_ever), year %in% c(2013, 2015)) %>%  
@@ -146,12 +146,25 @@ reg.data <- full.data %>%
   mutate(post=(year>=2014),
          treat=post*expand_ever)
 
+ever.fp <- reg.data %>%
+  filter(!is.na(profit_status),
+         year>=2014) %>%
+  mutate(fp=ifelse(profit_status=="For Profit",1,0)) %>%
+  group_by(provider) %>%
+  summarize(ever_fp=ifelse(sum(fp,na.rm=TRUE)>0,1,0))
+
+reg.data.ddd <- reg.data %>%
+  inner_join(ever.fp, by=c("provider")) %>%
+  mutate(prof_treat=treat*ever_fp)
+  
+
 dd.est <- lm(dshpct~post + expand_ever + treat, data=reg.data)
 lfe.est <- felm(dshpct~treat | provider + year, data=reg.data)
+ddd.est <- lm(dshpct~post + expand_ever + treat + ever_fp + prof_treat, data=reg.data.ddd)
 
 
 
-# Q5 Event study with constant treatment ----------------------------------
+# Q4 Event study with constant treatment ----------------------------------
 
 event.dat <- reg.data %>%
   mutate(expand_2005 = expand_ever*(year==2005),
@@ -387,6 +400,7 @@ for (y in 1985:2018) {
   pos.list=c(pos.list, paste0("pos.",y))
 }
 
-rm(list=c(ipps.list, pos.list, "reg.data", "event.dat", "event.plot.dat", "event.plot.dat2"))
+rm(list=c(ipps.list, pos.list, "reg.data", "reg.data.ddd",
+          "event.dat", "event.plot.dat", "event.plot.dat2"))
 save.image("solutions/exercise1/workspace.Rdata")
 
