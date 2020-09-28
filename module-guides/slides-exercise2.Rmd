@@ -1,0 +1,467 @@
+---
+title: "Empirical Exercise 2: Medicare Advantage Data and Instrumental Variables"
+subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
+author: Ian McCarthy | Emory University
+date: Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
+header-includes: 
+  - \usepackage{graphicx}
+  - \usepackage{amsmath}
+output:
+#  html_document: default (toggle on for "simplified" view)
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, custom.css, cols.css] 
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: [macros.js, cols_macro.js]
+---
+
+<!-- Adjust some CSS code for font size and maintain R code font size -->
+<style type="text/css">
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+</style>
+
+
+<!-- Set R options for how code chunks are displayed and load packages -->
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+opts_chunk$set(
+  fig.align="center",  
+  fig.height=3, #fig.width=6,
+  # out.width="748px", #out.length="520.75px",
+  dpi=300, #fig.path='Figs/',
+  cache=T#, echo=F, warning=F, message=F
+  )
+
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if(options$fig.callout) {
+    options$echo = FALSE
+  }
+  options
+})
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
+               scales, gganimate, gapminder, gifski, png, tufte, plotly, OECD,
+               ggrepel, dtplyr, data.table, kableExtra, plotly, cobalt, stargazer, haven, ggthemes,
+               magick, lfe, dotwhisker, aer, ivreg)
+```
+
+
+# Table of contents
+
+1. [Overview](#overview)
+
+2. [Instrumental Variables](#iv)
+
+3. [Data](#data)
+
+4. [Analysis](#analysis)
+
+5. [Extras](#extras)
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: overview
+
+# Overview
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Goals of this assignment
+
+1. Work with data on insurance markets (Medicare Advantage)
+2. Employ 2SLS with real data
+3. Implement some sensitivity analyses relevant for 2SLS in practice
+
+<br>
+--
+Plus the sub-goal for all assignments...practice your Git/GitHub workflow, version control, and replicability
+
+
+---
+# Specific "research question"
+
+Does more private insurance lead to lower costs for Medicare?
+
+- Economics: Spillover effects from MA policy onto how Medicare patients are treated
+- Important for quantifying full effects of changes to MA policy
+
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: iv
+
+# Instrumental Variables
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# What is instrumental variables
+Instrumental Variables (IV) is a way to identify causal effects using variation in treatment particpation that is due to an *exogenous* variable that is only related to the outcome through treatment.
+
+
+---
+# Why bother with IV?
+Two reasons to consider IV:
+1. Selection on unobservables
+2. Reverse causation
+
+--
+<br>
+
+Either problem is sometimes loosely referred to as *endogeneity*
+
+---
+# Simple example
+- $y = \beta x + \varepsilon (x)$,<br>
+where $\varepsilon(x)$ reflects the dependence between our observed variable and the error term.<br>
+
+- Simple OLS will yield<br>
+$\frac{dy}{dx} = \beta + \frac{d\varepsilon}{dx} \neq \beta$
+
+
+---
+# What does IV do?
+- The regression we want to do: <br>
+$y_{i} = \alpha + \delta W_{i} + \gamma A_{i} + \epsilon_{i}$,<br>
+where $W_{i}$ is treatment (think of schooling for now) and $A_{i}$ is something like ability.
+
+- $A_{i}$ is unobserved, so instead we run: <br>
+$y_{i} = \alpha + \beta W_{i} + \epsilon_{i}$
+
+- From this "short" regression, we don't actually estimate $\delta$. Instead, we get an estimate of<br>
+$\beta = \delta + \lambda_{ws}\gamma \neq \delta$,<br>
+where $\lambda_{ws}$ is the coefficient of a regression of $A_{i}$ on $W_{i}$. 
+
+---
+# Intuition
+IV will recover the "long" regression without observing underlying ability<br>
+
+--
+<br>
+
+*IF* our IV satisfies all of the necessary assumptions.
+
+---
+# More formally
+- We want to estimate<br>
+$E[Y_{i} | W_{i}=1] - E[Y_{i} | W_{i}=0]$
+
+- With instrument $Z_{i}$ that satisfies relevant assumptions, we can estimate this as<br>
+$E[Y_{i} | W_{i}=1] - E[Y_{i} | W_{i}=0] = \frac{E[Y_{i} | Z_{i}=1] - E[Y_{i} | Z_{i}=0]}{E[W_{i} | Z_{i}=1] - E[W_{i} | Z_{i}=0]}$
+
+- In words, this is effect of the instrument on the outcome ("reduced form") divded by the effect of the instrument on treatment ("first stage")
+
+
+---
+# IVs in practice
+Easy to think of in terms of randomized controlled trial...
+
+--
+<br>
+
+ Measure    | Offered Seat | Not Offered Seat | Difference 
+ ---------- | ------------ | ---------------- | ---------- 
+ Score      | -0.003       | -0.358           | 0.355      
+ % Enrolled | 0.787        | 0.046            | 0.741   
+ Effect     |              |                  | 0.48
+
+<br>
+
+.footnote[
+Angrist *et al.*, 2012. "Who Benefits from KIPP?" *Journal of Policy Analysis and Management*.
+] 
+
+
+---
+# What is IV *really* doing
+Think of IV as two-steps:
+
+1. Isolate variation due to the instrument only (not due to endogenous stuff)
+2. Estimate effect on outcome using only this source of variation
+
+---
+# In regression terms
+Interested in estimating $\delta$ from $y_{i} = \alpha + \beta x_{i} + \delta W_{i} + \varepsilon_{i}$, but $W_{i}$ is endogenous (no pure "selection on observables").
+
+--
+<br>
+
+<b>Step 1:</b> With instrument $Z_{i}$, we can regress $W_{i}$ on $Z_{i}$ and $x_{i}$,<br>
+$W_{i} = \lambda + \theta Z_{i} + \kappa x_{i} + \nu$,<br>
+and form prediction $\hat{W}_{i}$.
+
+--
+<br>
+
+<b>Step 2:</b> Regress $y_{i}$ on $x_{i}$ and $\hat{W}_{i}$,<br>
+$y_{i} = \alpha + \beta x_{i} + \delta \hat{W}_{i} + \xi_{i}$
+
+---
+# In regression terms
+But in practice, *DON'T* do this in two steps. Why?
+
+--
+<br>
+
+Because standard errors are wrong...not accounting for noise in prediction, $\hat{W}_{i}$. The appropriate fix is built into most modern stats programs.
+
+
+---
+# Key IV assumptions
+1. *First-stage:* Instrument is correlated with the endogenous variable<br>
+
+2. *Exogeneity:* Instrument is uncorrelated with the error term<br> 
+
+3. *Exclusion:* Instruments do not directly affect your outcome<br>
+
+4. *Monotonicity:* Treatment more (less) likely for those with higher (lower) values of the instrument<br>
+
+--
+<br>
+
+Assumptions 1 and 3 sometimes grouped into an *only through* condition.
+
+
+---
+# Animation for IV
+
+.center[
+  ![:scale 900px](pics/iv_animate.gif)
+]
+
+---
+# Simulated data
+.pull-left[
+```{r}
+n <- 5000
+b.true <- 5.25
+iv.dat <- tibble(
+  z = rnorm(n,0,2),
+  eps = rnorm(n,0,1),
+  w = (z + 1.5*eps>0.15),
+  y = 2.5 + b.true*w + eps + rnorm(n,0,0.5)
+)
+```
+]
+
+.pull-right[
+- endogenous `eps`: affects treatment and outcome
+- `z` is an instrument: affects treatment but no direct effect on outcome
+]
+
+---
+# Results with simulated data
+Recall that the *true* treatment effect is `r b.true`
+.pull-left[
+.pre[
+```{r, echo=FALSE}
+summary(lm(y~w, data=iv.dat))
+```
+]
+]
+
+
+.pull-right[
+.pre[
+```{r, echo=FALSE}
+summary(ivreg(y ~ w | z, data=iv.dat))
+```
+]
+]
+
+---
+# Checking instrument
+.pull-left[
+.pre[
+- Check the 'first stage'
+```{r, echo=FALSE}
+summary(lm(w~z, data=iv.dat))
+```
+]
+]
+
+.pull-right[
+.pre[
+- Check the 'reduced form'
+```{r echo=FALSE}
+summary(lm(y~z, data=iv.dat))
+```
+]
+]
+
+
+---
+# Two-stage equivalence
+.pre[
+```{r}
+step1 <- lm(w ~ z, data=iv.dat)
+w.hat <- predict(step1)
+step2 <- lm(y ~ w.hat, data=iv.dat)
+summary(step2)
+```
+]
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: data
+
+# Data
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Data sources
+
+1. Medicare Advantage, available [here](https://github.com/imccart/Medicare-Advantage)
+
+2. Area Health Resources Files, available [here](https://data.hrsa.gov/topics/health-workforce/ahrf)
+
+---
+# What is Medicare Advantage
+- Private provision of health insurance for Medicare beneficiaries
+- Medicare "replacement" plans <br>
+
+--
+- It's just private insurance for Medicare folks
+
+---
+# Medicare Advantage History
+- Existed since 1980s, formalized in the 1990s, expanded in 2000s
+- Medicare+Choice as part of Balanced Budget Act in 1997
+- Largest expansion: Medicare Modernization Act in 2003 (also brought Medicare Part D)
+
+---
+# Medicare Advantage Details
+In its current form...
+- Insurers submit plan details and a price needed to cover traditional Medicare ("bid")
+- If approved, Medicare pays risk-adjusted bid *or* benchmark
+- Bid $<$ benchmark, insurer gets a rebate
+- Bid $>$ benchmark, insurer charges premium
+- Seperate bidding for Part D
+
+---
+# Medicare Advantage in Real Life
+Let's take a look at the Medicare Advantage plan options...
+
+--
+<br>
+[Medicare Plan Finder](https://www.medicare.gov/plan-compare/)
+
+
+---
+# Datasets
+
+My code files to read in the data are available here...
+
+1. MA benchmark data, [1_benchmark.R](../solutions/exercise2/1_benchmark.R)
+2. MA market share data, [2_penetration.R](../solutions/exercise2/2_penetration.R)
+3. AHRF data, [3_ahrf.R](../solutions/exercise2/3_ahrf.R)
+
+---
+# MA Benchmarks
+
+- Reflects a payment that CMS sets for each enrollee of a MA plan
+- Varies by county 
+- CMS doesn't actually pay this rate to each plan...final payment depends on the plan's "bid"
+- Technically varies by star rating beginning 2012, but for our purposes, I take the benchmark rate for a 3-star plan
+
+---
+# MA penetration data
+
+- Enrollments published at the plan/county/year/month level
+- Not much change across months in the same year 
+- For this, I take the penetration data for December of each year see [MA repo](https://github.com/imccart/Medicare-Advantage) for code extracting all months and averaging
+
+---
+# AHRF data
+
+- Easy to download but can be tricky to read into `R` 
+- Use the `SAScii` package to read in the full ascii (.asc) file using the .sas input file provided in the documentation
+- Variable of interest, *F15299*
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: analysis
+
+# Analysis
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Basic IV specification
+
+- Lots of packages, including `ivreg`
+- Since we have panel data, I'll use `felm` with the instrument specification,
+
+```{r, include=T, eval=F}
+felm(medicare_ffs_exp ~ 0 | year + ssa | (penetration ~ bench_pay) | ssa, 
+     data=full.data)
+```
+
+---
+# First stage and reduced form
+
+These terms are frustrating, but they are common in the literature
+
+- First stage: Regression of your endogeneous variable on all exog. covariates and instrument
+- Reduced form: Regression of outcome on all exog. variables and the instrument
+
+
+---
+# IV in practice?
+
+- Ideally, we would spend more time talking about the assumptions, testing those assumptions, and what to do when those assumptions fail
+- For now, curious minds can take a look at my [Navigating Empirical Microeconomics](https://empiricalmethods.netlify.app/) project. It is very raw but the IV section is somewhat filled out.
+
+
+---
+# What do we estimate?
+
+- *Not* an average treatment effect
+- Estimate Local Average Treatment Effect (LATE) if monotonicity assumption holds
+- Otherwise, not clear...need to do more work
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: extras
+
+# Extensions
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Lots of new methods
+
+- Sensitivity to outliers, `riv`
+- Violations of the exclusion restriction, "plausibly exogenous" work from Conley et al. (2012). `plausexog` in Stata.
+- Restore unbiasedness in your IV estimate with assumptions on sign of the first stage, Andrews and Armstrong (2017)

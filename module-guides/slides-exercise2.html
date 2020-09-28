@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Empirical Exercise 2: Medicare Advantage Data and Instrumental Variables</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ian McCarthy | Emory University" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+    <link rel="stylesheet" href="cols.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Empirical Exercise 2: Medicare Advantage Data and Instrumental Variables
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#EB811B' size=1px width=0px>
+</html>
+### Ian McCarthy | Emory University
+### Econ 771
+
+---
+
+
+&lt;!-- Adjust some CSS code for font size and maintain R code font size --&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+&lt;/style&gt;
+
+
+&lt;!-- Set R options for how code chunks are displayed and load packages --&gt;
+
+
+
+# Table of contents
+
+1. [Overview](#overview)
+
+2. [Instrumental Variables](#iv)
+
+3. [Data](#data)
+
+4. [Analysis](#analysis)
+
+5. [Extras](#extras)
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: overview
+
+# Overview
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Goals of this assignment
+
+1. Work with data on insurance markets (Medicare Advantage)
+2. Employ 2SLS with real data
+3. Implement some sensitivity analyses relevant for 2SLS in practice
+
+&lt;br&gt;
+--
+Plus the sub-goal for all assignments...practice your Git/GitHub workflow, version control, and replicability
+
+
+---
+# Specific "research question"
+
+Does more private insurance lead to lower costs for Medicare?
+
+- Economics: Spillover effects from MA policy onto how Medicare patients are treated
+- Important for quantifying full effects of changes to MA policy
+
+
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: iv
+
+# Instrumental Variables
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# What is instrumental variables
+Instrumental Variables (IV) is a way to identify causal effects using variation in treatment particpation that is due to an *exogenous* variable that is only related to the outcome through treatment.
+
+
+---
+# Why bother with IV?
+Two reasons to consider IV:
+1. Selection on unobservables
+2. Reverse causation
+
+--
+&lt;br&gt;
+
+Either problem is sometimes loosely referred to as *endogeneity*
+
+---
+# Simple example
+- `\(y = \beta x + \varepsilon (x)\)`,&lt;br&gt;
+where `\(\varepsilon(x)\)` reflects the dependence between our observed variable and the error term.&lt;br&gt;
+
+- Simple OLS will yield&lt;br&gt;
+`\(\frac{dy}{dx} = \beta + \frac{d\varepsilon}{dx} \neq \beta\)`
+
+
+---
+# What does IV do?
+- The regression we want to do: &lt;br&gt;
+`\(y_{i} = \alpha + \delta W_{i} + \gamma A_{i} + \epsilon_{i}\)`,&lt;br&gt;
+where `\(W_{i}\)` is treatment (think of schooling for now) and `\(A_{i}\)` is something like ability.
+
+- `\(A_{i}\)` is unobserved, so instead we run: &lt;br&gt;
+`\(y_{i} = \alpha + \beta W_{i} + \epsilon_{i}\)`
+
+- From this "short" regression, we don't actually estimate `\(\delta\)`. Instead, we get an estimate of&lt;br&gt;
+`\(\beta = \delta + \lambda_{ws}\gamma \neq \delta\)`,&lt;br&gt;
+where `\(\lambda_{ws}\)` is the coefficient of a regression of `\(A_{i}\)` on `\(W_{i}\)`. 
+
+---
+# Intuition
+IV will recover the "long" regression without observing underlying ability&lt;br&gt;
+
+--
+&lt;br&gt;
+
+*IF* our IV satisfies all of the necessary assumptions.
+
+---
+# More formally
+- We want to estimate&lt;br&gt;
+`\(E[Y_{i} | W_{i}=1] - E[Y_{i} | W_{i}=0]\)`
+
+- With instrument `\(Z_{i}\)` that satisfies relevant assumptions, we can estimate this as&lt;br&gt;
+`\(E[Y_{i} | W_{i}=1] - E[Y_{i} | W_{i}=0] = \frac{E[Y_{i} | Z_{i}=1] - E[Y_{i} | Z_{i}=0]}{E[W_{i} | Z_{i}=1] - E[W_{i} | Z_{i}=0]}\)`
+
+- In words, this is effect of the instrument on the outcome ("reduced form") divded by the effect of the instrument on treatment ("first stage")
+
+
+---
+# IVs in practice
+Easy to think of in terms of randomized controlled trial...
+
+--
+&lt;br&gt;
+
+ Measure    | Offered Seat | Not Offered Seat | Difference 
+ ---------- | ------------ | ---------------- | ---------- 
+ Score      | -0.003       | -0.358           | 0.355      
+ % Enrolled | 0.787        | 0.046            | 0.741   
+ Effect     |              |                  | 0.48
+
+&lt;br&gt;
+
+.footnote[
+Angrist *et al.*, 2012. "Who Benefits from KIPP?" *Journal of Policy Analysis and Management*.
+] 
+
+
+---
+# What is IV *really* doing
+Think of IV as two-steps:
+
+1. Isolate variation due to the instrument only (not due to endogenous stuff)
+2. Estimate effect on outcome using only this source of variation
+
+---
+# In regression terms
+Interested in estimating `\(\delta\)` from `\(y_{i} = \alpha + \beta x_{i} + \delta W_{i} + \varepsilon_{i}\)`, but `\(W_{i}\)` is endogenous (no pure "selection on observables").
+
+--
+&lt;br&gt;
+
+&lt;b&gt;Step 1:&lt;/b&gt; With instrument `\(Z_{i}\)`, we can regress `\(W_{i}\)` on `\(Z_{i}\)` and `\(x_{i}\)`,&lt;br&gt;
+`\(W_{i} = \lambda + \theta Z_{i} + \kappa x_{i} + \nu\)`,&lt;br&gt;
+and form prediction `\(\hat{W}_{i}\)`.
+
+--
+&lt;br&gt;
+
+&lt;b&gt;Step 2:&lt;/b&gt; Regress `\(y_{i}\)` on `\(x_{i}\)` and `\(\hat{W}_{i}\)`,&lt;br&gt;
+`\(y_{i} = \alpha + \beta x_{i} + \delta \hat{W}_{i} + \xi_{i}\)`
+
+---
+# In regression terms
+But in practice, *DON'T* do this in two steps. Why?
+
+--
+&lt;br&gt;
+
+Because standard errors are wrong...not accounting for noise in prediction, `\(\hat{W}_{i}\)`. The appropriate fix is built into most modern stats programs.
+
+
+---
+# Key IV assumptions
+1. *First-stage:* Instrument is correlated with the endogenous variable&lt;br&gt;
+
+2. *Exogeneity:* Instrument is uncorrelated with the error term&lt;br&gt; 
+
+3. *Exclusion:* Instruments do not directly affect your outcome&lt;br&gt;
+
+4. *Monotonicity:* Treatment more (less) likely for those with higher (lower) values of the instrument&lt;br&gt;
+
+--
+&lt;br&gt;
+
+Assumptions 1 and 3 sometimes grouped into an *only through* condition.
+
+
+---
+# Animation for IV
+
+.center[
+  ![:scale 900px](pics/iv_animate.gif)
+]
+
+---
+# Simulated data
+.pull-left[
+
+```r
+n &lt;- 5000
+b.true &lt;- 5.25
+iv.dat &lt;- tibble(
+  z = rnorm(n,0,2),
+  eps = rnorm(n,0,1),
+  w = (z + 1.5*eps&gt;0.15),
+  y = 2.5 + b.true*w + eps + rnorm(n,0,0.5)
+)
+```
+]
+
+.pull-right[
+- endogenous `eps`: affects treatment and outcome
+- `z` is an instrument: affects treatment but no direct effect on outcome
+]
+
+---
+# Results with simulated data
+Recall that the *true* treatment effect is 5.25
+.pull-left[
+.pre[
+
+```
+## 
+## Call:
+## lm(formula = y ~ w, data = iv.dat)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.5482 -0.6674 -0.0037  0.6840  3.3803 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.01004    0.01981   101.4   &lt;2e-16 ***
+## wTRUE        6.22339    0.02857   217.8   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.01 on 4998 degrees of freedom
+## Multiple R-squared:  0.9047,	Adjusted R-squared:  0.9047 
+## F-statistic: 4.743e+04 on 1 and 4998 DF,  p-value: &lt; 2.2e-16
+```
+]
+]
+
+
+.pull-right[
+.pre[
+
+```
+## 
+## Call:
+## ivreg(formula = y ~ w | z, data = iv.dat)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -4.009846 -0.744281 -0.005625  0.757291  3.878728 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.47165    0.02869   86.15   &lt;2e-16 ***
+## wTRUE        5.26331    0.04980  105.70   &lt;2e-16 ***
+## 
+## Diagnostic tests:
+##                   df1  df2 statistic p-value    
+## Weak instruments    1 4998    3383.2  &lt;2e-16 ***
+## Wu-Hausman          1 4997     901.9  &lt;2e-16 ***
+## Sargan              0   NA        NA      NA    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.118 on 4998 degrees of freedom
+## Multiple R-Squared: 0.8831,	Adjusted R-squared: 0.8831 
+## Wald test: 1.117e+04 on 1 and 4998 DF,  p-value: &lt; 2.2e-16
+```
+]
+]
+
+---
+# Checking instrument
+.pull-left[
+.pre[
+- Check the 'first stage'
+
+```
+## 
+## Call:
+## lm(formula = w ~ z, data = iv.dat)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.02567 -0.30855 -0.00491  0.31129  1.08706 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 0.474379   0.005459   86.90   &lt;2e-16 ***
+## z           0.161516   0.002777   58.16   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.3859 on 4998 degrees of freedom
+## Multiple R-squared:  0.4037,	Adjusted R-squared:  0.4035 
+## F-statistic:  3383 on 1 and 4998 DF,  p-value: &lt; 2.2e-16
+```
+]
+]
+
+.pull-right[
+.pre[
+- Check the 'reduced form'
+
+```
+## 
+## Call:
+## lm(formula = y ~ z, data = iv.dat)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.4742 -2.1306 -0.0198  2.1180  8.7368 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  4.96845    0.03975  124.98   &lt;2e-16 ***
+## z            0.85011    0.02022   42.04   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.81 on 4998 degrees of freedom
+## Multiple R-squared:  0.2612,	Adjusted R-squared:  0.2611 
+## F-statistic:  1767 on 1 and 4998 DF,  p-value: &lt; 2.2e-16
+```
+]
+]
+
+
+---
+# Two-stage equivalence
+.pre[
+
+```r
+step1 &lt;- lm(w ~ z, data=iv.dat)
+w.hat &lt;- predict(step1)
+step2 &lt;- lm(y ~ w.hat, data=iv.dat)
+summary(step2)
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ w.hat, data = iv.dat)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.4742 -2.1306 -0.0198  2.1180  8.7368 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.47165    0.07214   34.26   &lt;2e-16 ***
+## w.hat        5.26331    0.12521   42.04   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.81 on 4998 degrees of freedom
+## Multiple R-squared:  0.2612,	Adjusted R-squared:  0.2611 
+## F-statistic:  1767 on 1 and 4998 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: data
+
+# Data
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Data sources
+
+1. Medicare Advantage, available [here](https://github.com/imccart/Medicare-Advantage)
+
+2. Area Health Resources Files, available [here](https://data.hrsa.gov/topics/health-workforce/ahrf)
+
+---
+# What is Medicare Advantage
+- Private provision of health insurance for Medicare beneficiaries
+- Medicare "replacement" plans &lt;br&gt;
+
+--
+- It's just private insurance for Medicare folks
+
+---
+# Medicare Advantage History
+- Existed since 1980s, formalized in the 1990s, expanded in 2000s
+- Medicare+Choice as part of Balanced Budget Act in 1997
+- Largest expansion: Medicare Modernization Act in 2003 (also brought Medicare Part D)
+
+---
+# Medicare Advantage Details
+In its current form...
+- Insurers submit plan details and a price needed to cover traditional Medicare ("bid")
+- If approved, Medicare pays risk-adjusted bid *or* benchmark
+- Bid `\(&lt;\)` benchmark, insurer gets a rebate
+- Bid `\(&gt;\)` benchmark, insurer charges premium
+- Seperate bidding for Part D
+
+---
+# Medicare Advantage in Real Life
+Let's take a look at the Medicare Advantage plan options...
+
+--
+&lt;br&gt;
+[Medicare Plan Finder](https://www.medicare.gov/plan-compare/)
+
+
+---
+# Datasets
+
+My code files to read in the data are available here...
+
+1. MA benchmark data, [1_benchmark.R](../solutions/exercise2/1_benchmark.R)
+2. MA market share data, [2_penetration.R](../solutions/exercise2/2_penetration.R)
+3. AHRF data, [3_ahrf.R](../solutions/exercise2/3_ahrf.R)
+
+---
+# MA Benchmarks
+
+- Reflects a payment that CMS sets for each enrollee of a MA plan
+- Varies by county 
+- CMS doesn't actually pay this rate to each plan...final payment depends on the plan's "bid"
+- Technically varies by star rating beginning 2012, but for our purposes, I take the benchmark rate for a 3-star plan
+
+---
+# MA penetration data
+
+- Enrollments published at the plan/county/year/month level
+- Not much change across months in the same year 
+- For this, I take the penetration data for December of each year see [MA repo](https://github.com/imccart/Medicare-Advantage) for code extracting all months and averaging
+
+---
+# AHRF data
+
+- Easy to download but can be tricky to read into `R` 
+- Use the `SAScii` package to read in the full ascii (.asc) file using the .sas input file provided in the documentation
+- Variable of interest, *F15299*
+
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: analysis
+
+# Analysis
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Basic IV specification
+
+- Lots of packages, including `ivreg`
+- Since we have panel data, I'll use `felm` with the instrument specification,
+
+
+```r
+felm(medicare_ffs_exp ~ 0 | year + ssa | (penetration ~ bench_pay) | ssa, 
+     data=full.data)
+```
+
+---
+# First stage and reduced form
+
+These terms are frustrating, but they are common in the literature
+
+- First stage: Regression of your endogeneous variable on all exog. covariates and instrument
+- Reduced form: Regression of outcome on all exog. variables and the instrument
+
+
+---
+# IV in practice?
+
+- Ideally, we would spend more time talking about the assumptions, testing those assumptions, and what to do when those assumptions fail
+- For now, curious minds can take a look at my [Navigating Empirical Microeconomics](https://empiricalmethods.netlify.app/) project. It is very raw but the IV section is somewhat filled out.
+
+
+---
+# What do we estimate?
+
+- *Not* an average treatment effect
+- Estimate Local Average Treatment Effect (LATE) if monotonicity assumption holds
+- Otherwise, not clear...need to do more work
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: extras
+
+# Extensions
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Lots of new methods
+
+- Sensitivity to outliers, `riv`
+- Violations of the exclusion restriction, "plausibly exogenous" work from Conley et al. (2012). `plausexog` in Stata.
+- Restore unbiasedness in your IV estimate with assumptions on sign of the first stage, Andrews and Armstrong (2017)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script src="cols_macro.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
