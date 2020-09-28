@@ -1,7 +1,7 @@
 # Meta --------------------------------------------------------------------
 
 ## Date Created:  7/22/2020
-## Date Edited:   9/9/2020
+## Date Edited:   9/28/2020
 ## Description:   Analysis file for exercise 1
 
 
@@ -155,12 +155,13 @@ ever.fp <- reg.data %>%
 
 reg.data.ddd <- reg.data %>%
   inner_join(ever.fp, by=c("provider")) %>%
-  mutate(prof_treat=treat*ever_fp)
+  mutate(prof_treat=treat*ever_fp,
+         prof_post=post*ever_fp)
   
 
 dd.est <- lm(dshpct~post + expand_ever + treat, data=reg.data)
 lfe.est <- felm(dshpct~treat | provider + year, data=reg.data)
-ddd.est <- lm(dshpct~post + expand_ever + treat + ever_fp + prof_treat, data=reg.data.ddd)
+ddd.est <- lm(dshpct~post + expand_ever + treat + ever_fp + prof_post + prof_treat, data=reg.data.ddd)
 
 
 

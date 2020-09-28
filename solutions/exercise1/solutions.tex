@@ -223,10 +223,12 @@ where \(\lambda_{h}\) and \(\gamma_{t}\) denote hospital and year fixed effects,
 The estimates for \(\delta\) from each specification are presented in Table \ref{tab:dd-regs}. These estimates confirm our original estimates in the 2x2 DD table, where we find a relatively large increase in DSH among hospitals in expansion states.
 
 We can also separate this effect by for profit status, in which we use ownership type to create a 3rd category of interest (hence, the triple difference, or difference-in-difference-in-difference, or just DDD). Ownership type shouldn't change much over time, but it can. This isn't good for a DDD, because you'd like all of your groups to be stable. I'm going to deal with this issue in a haphazard way and just re-define ``for profit'' as a hospital that is ever for profit in the treatment period (2014 and after). The final specification we're estimating is written in Equation \eqref{eq:ddd}.
-\begin{equation}
-DSH_{ht} = \beta_{1} Expand_{s} + \beta_{2} 1(t\geq 2014) + \beta_{3} Expand_{s} \times 1(t\geq 2014) + \beta_{4} ForProfit_{h} + \delta ForProfit_{h} \times Expand_{s} \times 1(t\geq 2014) +  \varepsilon_{ht}, \label{eq:ddd}
-\end{equation}
-Results from estimating this equation are provided Table \ref{tab:ddd-regs}, where we see that for profit hospitals indeed have a larger estimated response than not-for-profit hospitals.
+\begin{align}
+DSH_{ht} = &\beta_{1} Expand_{s} + \beta_{2} 1(t\geq 2014) + \beta_{3} Expand_{s} \times 1(t\geq 2014) + \nonumber \\
+& \beta_{4} ForProfit_{h} + \beta_{5} ForProfit_{h} \times 1(t\geq 2014) + \nonumber \\
+& \delta ForProfit_{h} \times Expand_{s} \times 1(t\geq 2014) +  \varepsilon_{ht}, \label{eq:ddd}
+\end{align}
+Results from estimating this equation are provided Table \ref{tab:ddd-regs}, where we see that for profit hospitals indeed have a larger estimated response than not-for-profit hospitals. In fact, based on this simple DDD specification, the effect is almost entirely driven by for profit hospitals.
 
 \hypertarget{question-4}{%
 \subsubsection{Question 4}\label{question-4}}
@@ -322,7 +324,6 @@ Expansion & 0.29 & 0.29\\
 \begin{table}[H] \centering 
   \caption{Difference-in-Differences Estimates} 
   \label{tab:dd-regs} 
-\scriptsize 
 \begin{tabular}{@{\extracolsep{5pt}}lcc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
@@ -351,23 +352,24 @@ Observations & 42,698 & 42,698 \\
 \begin{table}[H] \centering 
   \caption{Triple Differences Estimates} 
   \label{tab:ddd-regs} 
-\scriptsize 
 \begin{tabular}{@{\extracolsep{5pt}}lc} 
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
 \\[-1.8ex] & Disproportionate Share \\ 
 \hline \\[-1.8ex] 
- After 2014 & $-$0.00005 \\ 
-  & (0.003) \\ 
-  Expansion & 0.022$^{***}$ \\ 
-  & (0.003) \\ 
-  Treatment & 0.030$^{***}$ \\ 
+ After 2014 & 0.025$^{***}$ \\ 
   & (0.005) \\ 
-  Ever FP & 0.035$^{***}$ \\ 
+  Expansion & 0.025$^{***}$ \\ 
   & (0.003) \\ 
-  Treat x FP & 0.027$^{***}$ \\ 
+  Treatment & 0.007 \\ 
+  & (0.005) \\ 
+  Ever FP & 0.046$^{***}$ \\ 
+  & (0.003) \\ 
+  After 2014 x FP & $-$0.049$^{***}$ \\ 
   & (0.006) \\ 
-  Constant & 0.242$^{***}$ \\ 
+  Treat x FP & 0.065$^{***}$ \\ 
+  & (0.008) \\ 
+  Constant & 0.236$^{***}$ \\ 
   & (0.002) \\ 
  \hline \\[-1.8ex] 
 Observations & 27,821 \\ 
