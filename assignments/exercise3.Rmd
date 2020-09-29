@@ -34,7 +34,7 @@ In your GitHub repository, please be sure to clearly address/answer the followin
 
 3. Provide the results from the manipulation tests described in Cattaneo et al. (2018).
 
-4. Summarize the relationship between enrollment and market shares in 2006 on premiums in 2007.
+4. Summarize the relationship between market shares in 2006 on changes in premiums from 2006 to 2007.
 
-5. Use the Part D low-income subsidy as an IV in a fuzzy RD to examine the effect of a boost in enrollments in 2006 on premiums in 2007.
+5. Use the Part D low-income subsidy as an IV for market share to examine the effect of market share in 2006 on premium changes.
 
