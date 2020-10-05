@@ -82,6 +82,19 @@ name: motivation
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
 
+---
+# Motivation
+
+Huge movement toward "consumerism" in health care
+
+- show graph of cost sharing over time
+
+
+---
+# Motivation
+
+- Do people shop for health care? (context of MRI scans)
+- Do people learn what's best for them? (context of Medicare Part D)
 
 
 <!-- New Section -->
@@ -93,13 +106,6 @@ name: chernew
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
 
----
-# Motivation
-
-Huge movement toward "consumerism" in health care
-
-- show graph of cost sharing over time
-
 
 ---
 # Main empirical question
@@ -110,6 +116,13 @@ Are health care services "shoppable"? Study this in the context of MRIs where qu
 --
 - If so, more consumerism might be OK
 - If not, need other tools for now
+
+
+---
+# Contribution
+
+- Policy on "consumerism"
+- Physician agency and role of physician referrals
 
 
 ---
@@ -126,6 +139,17 @@ Are health care services "shoppable"? Study this in the context of MRIs where qu
 
 - Private insurance claims in 2013 (single insurer, but a large one)
 - SK&A data on physician practices
-- Very interesting variable: who used a shopping tool provided by the insurer
+- Limit to orthopedics
+- Data on who used a shopping tool provided by the insurer ($<$1%)
+
+---
+# Empirical analysis:
+
+- Mainly descriptive statistics
+- Calculate counterfactual prices using the mean price of each location
+
+
+---
+# Findings
 
 
