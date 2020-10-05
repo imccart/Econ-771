@@ -152,4 +152,53 @@ Are health care services "shoppable"? Study this in the context of MRIs where qu
 ---
 # Findings
 
+- Markets have nearly 2x range from 20th to 80th price percentile
+- $468.53 mean savings per case (55% drop) within 1 hour drive
+- 36% drop without change in driving distance
+- $<$ 1% shop
+- Referring physician controls 50% of the savings
 
+
+---
+class: inverse, center, middle
+name: ketcham
+
+# Ketcham et al. (2012)
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Motivation
+
+- Lots of perceived "poor" decisions in Part D choice
+- What's the source of these poor decisions? 
+
+<br>
+--
+- If people just *can't* make a good decision, then we need some intervention
+- If people are larning, then perhaps less need for intervention
+
+---
+# Main empirical question
+
+Do people improve the match quality of their Part D insurance choice over time?
+
+---
+# Contribution
+
+- Large literature on poor decision making in insurance, especially Part D 
+- Many interventions designed based off of this literature:<br>
+  - decision assistance
+  - default plan assignment
+  - informational letters
+  - restrictions on choice size
+
+<br>  
+--
+**NOT** limited to insurance...credit cards, mortgages, other financial instruments
+
+---
+# Preview of findings
+
+---
+# Data
