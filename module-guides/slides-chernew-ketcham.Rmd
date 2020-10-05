@@ -1,0 +1,131 @@
+---
+title: "Consumerism in health care"
+subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
+author: Horwitz and Nichols (2009), Bayindir (2012)
+date: Comments by Ian McCarthy | Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{amsmath}
+  - \usepackage{pgf}
+  - \usepackage[xcolor=pst]{pstricks}
+  - \usepackage{pgfshade}
+  - \usepackage{pdftools}
+  - \usepackage{color}
+  - \usepackage{colortbl}
+  - \usepackage{xcolor}
+output:
+#  html_document: default (toggle on for "simplified" view)
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, custom.css] 
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: "macros.js"
+      navigation:
+          touch: false
+---
+
+<!-- Adjust some CSS code for font size and maintain R code font size -->
+<style type="text/css">
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+</style>
+
+
+<!-- Set R options for how code chunks are displayed and load packages -->
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+opts_chunk$set(
+  fig.align="center",  
+  fig.height=3, #fig.width=6,
+  # out.width="748px", #out.length="520.75px",
+  dpi=300, #fig.path='Figs/',
+  cache=T#, echo=F, warning=F, message=F
+  )
+
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if(options$fig.callout) {
+    options$echo = FALSE
+  }
+  options
+})
+
+```
+
+
+# Table of contents
+
+1. [Motivation](#motivation)
+
+2. [Chernew et al. (2019)](#chernew)
+
+3. [Ketcham et al. (2012)](#ketcham)
+
+4. [Takeaways](#final)
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: motivation
+
+# Motivation
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: chernew
+
+# Chernew et al. (2019)
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Motivation
+
+Huge movement toward "consumerism" in health care
+
+- show graph of cost sharing over time
+
+
+---
+# Main empirical question
+
+Are health care services "shoppable"? Study this in the context of MRIs where quality is homogeneous.
+
+<br>
+--
+- If so, more consumerism might be OK
+- If not, need other tools for now
+
+
+---
+# Preview of findings
+
+- Patients pass 6 lower-priced facilities en route to selected facility
+- 50% potential drop if people went to cheapest facility
+
+- figure 1 of paper
+
+
+---
+# Main data:
+
+- Private insurance claims in 2013 (single insurer, but a large one)
+- SK&A data on physician practices
+- Very interesting variable: who used a shopping tool provided by the insurer
+
+
