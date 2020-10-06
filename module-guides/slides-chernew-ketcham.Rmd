@@ -176,7 +176,7 @@ name: ketcham
 <br>
 --
 - If people just *can't* make a good decision, then we need some intervention
-- If people are larning, then perhaps less need for intervention
+- If people are learning, then perhaps less need for intervention
 
 ---
 # Main empirical question
@@ -200,5 +200,78 @@ Do people improve the match quality of their Part D insurance choice over time?
 ---
 # Preview of findings
 
+Yes, people overspend initially (i.e., choose a bad plan), but:
+
+- 55% reduction in "overspending" from 2006 to 2007
+- Largest reductions among those that overspent the most and among those with largest cognitive barriers
+- Improved match driven mainly by those that switched plans
+
+- show figure 1 in paper
+
+
 ---
 # Data
+
+- Medicare Part D choices from 2006 to 2007
+- Source: Private insurer that sells Part D and administers other Part D plans sold by other companies
+- Variables: Plan choices, prescription drug use and spending
+
+
+---
+# Measuring overspending
+
+- Employ CMS formulary files for copayment in each possible plan for each drug taken
+- Drug prices in each plan from the Wolters Kluwer Health data or from CMS plan finder webiste
+- Plan characteristics like deductibles and donut hole coverage
+- **Main assumption**: Drug usage is independent of plan choice
+
+
+---
+# Econometric methods
+
+First-difference regression of overspending on health status:
+
+$$\Delta O_{i} = \alpha + \Gamma \times \Delta H_{i} + \Delta u_{i}.$$
+
+---
+# Results
+
+- Table 3 results
+
+---
+# Heterogeneity
+
+Series of alternative regressions with different control variables and indicators for switching
+
+---
+# Switching results
+
+- Figure 2
+
+---
+# Additional analysis
+
+- Analysis of switching behaviors
+- Robustness
+- Generalizability (given data from one insurer)
+
+---
+class: inverse, center, middle
+name: final
+
+# Takeaways
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Chernew et al. (2019)
+
+- Large price variation for homogeneous quality
+- Potential for large savings
+- "Shopping" may need to come from the physician
+
+---
+# Ketcham et al. (2012)
+
+- People improve plan choices over time
+- Interia and prevalence of "bad choices" may be overemphasized in literature and policy circles
