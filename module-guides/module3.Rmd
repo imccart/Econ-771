@@ -45,7 +45,9 @@ This is the guide for **Module 3**, which covers healthcare decision-making and 
 
 ### Class 14, 10/6
 **Poor decisions in healthcare and health insurance**<br>
-The first paper for today, Chernew et al. (2018), is a working paper that I think highlights the questionable value of information disclosure efforts in healthcare. They show that patients don't really shop for services even when they could save a lot of money without sacrificing quality or travel time. Referring physicians instead have the largest effects on imaging choice. On the other hand, the second paper from Ketcham et al. (2012) shows that people do appear to learn about healthcare spending over time and adjust health insurance plans to better match their needs. This is important in the context of other static studies of plan choice, where authors find that people are very bad at initially selecting an insurance plan.
+The first paper for today, Chernew et al. (2019), is a working paper that I think highlights the questionable value of information disclosure efforts in healthcare. They show that patients don't really shop for services even when they could save a lot of money without sacrificing quality or travel time. Referring physicians instead have the largest effects on imaging choice. On the other hand, the second paper from Ketcham et al. (2012) shows that people do appear to learn about healthcare spending over time and adjust health insurance plans to better match their needs. This is important in the context of other static studies of plan choice, where authors find that people are very bad at initially selecting an insurance plan.
+
+- See my slides for Chernew et al. (2019) and Ketcham et al. (2012) [here](slides-chernew-ketcham.html)
 
 
 ### Class 15, 10/8

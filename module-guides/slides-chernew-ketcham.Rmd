@@ -1,7 +1,7 @@
 ---
 title: "Consumerism in health care"
 subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
-author: Horwitz and Nichols (2009), Bayindir (2012)
+author: Chernew et al. (2019), Ketcham et al. (2012)
 date: Comments by Ian McCarthy | Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
 header-includes: 
   - \usepackage{tikz}
@@ -85,9 +85,7 @@ name: motivation
 ---
 # Motivation
 
-Huge movement toward "consumerism" in health care
-
-- show graph of cost sharing over time
+Huge movement toward "consumerism" in health care, see KFF study [here](https://www.healthsystemtracker.org/brief/tracking-the-rise-in-premium-contributions-and-cost-sharing-for-families-with-large-employer-coverage/)
 
 
 ---
@@ -114,6 +112,7 @@ Are health care services "shoppable"? Study this in the context of MRIs where qu
 
 <br>
 --
+
 - If so, more consumerism might be OK
 - If not, need other tools for now
 
@@ -131,7 +130,16 @@ Are health care services "shoppable"? Study this in the context of MRIs where qu
 - Patients pass 6 lower-priced facilities en route to selected facility
 - 50% potential drop if people went to cheapest facility
 
-- figure 1 of paper
+
+---
+count: false
+
+# Preview of findings
+
+.center[
+  ![:scale 800px](pics/chernew_figure1.png)
+]
+
 
 
 ---
@@ -175,6 +183,7 @@ name: ketcham
 
 <br>
 --
+
 - If people just *can't* make a good decision, then we need some intervention
 - If people are learning, then perhaps less need for intervention
 
@@ -206,7 +215,15 @@ Yes, people overspend initially (i.e., choose a bad plan), but:
 - Largest reductions among those that overspent the most and among those with largest cognitive barriers
 - Improved match driven mainly by those that switched plans
 
-- show figure 1 in paper
+---
+count: false
+
+# Preview of findings
+
+.center[
+  ![:scale 800px](pics/ketcham_figure1.png)
+]
+
 
 
 ---
@@ -236,7 +253,10 @@ $$\Delta O_{i} = \alpha + \Gamma \times \Delta H_{i} + \Delta u_{i}.$$
 ---
 # Results
 
-- Table 3 results
+.center[
+  ![:scale 800px](pics/ketcham_table3.png)
+]
+
 
 ---
 # Heterogeneity
@@ -246,7 +266,10 @@ Series of alternative regressions with different control variables and indicator
 ---
 # Switching results
 
-- Figure 2
+.center[
+  ![:scale 700px](pics/ketcham_figure2.png)
+]
+
 
 ---
 # Additional analysis

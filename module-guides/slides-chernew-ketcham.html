@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Consumerism in health care</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Chernew et al. (2019), Ketcham et al. (2012)" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Consumerism in health care
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#EB811B' size=1px width=0px>
+</html>
+### Chernew et al. (2019), Ketcham et al. (2012)
+### Comments by Ian McCarthy | Econ 771
+
+---
+
+
+&lt;!-- Adjust some CSS code for font size and maintain R code font size --&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+&lt;/style&gt;
+
+
+&lt;!-- Set R options for how code chunks are displayed and load packages --&gt;
+
+
+
+# Table of contents
+
+1. [Motivation](#motivation)
+
+2. [Chernew et al. (2019)](#chernew)
+
+3. [Ketcham et al. (2012)](#ketcham)
+
+4. [Takeaways](#final)
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: motivation
+
+# Motivation
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Motivation
+
+Huge movement toward "consumerism" in health care, see KFF study [here](https://www.healthsystemtracker.org/brief/tracking-the-rise-in-premium-contributions-and-cost-sharing-for-families-with-large-employer-coverage/)
+
+
+---
+# Motivation
+
+- Do people shop for health care? (context of MRI scans)
+- Do people learn what's best for them? (context of Medicare Part D)
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: chernew
+
+# Chernew et al. (2019)
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Main empirical question
+
+Are health care services "shoppable"? Study this in the context of MRIs where quality is homogeneous.
+
+&lt;br&gt;
+--
+
+- If so, more consumerism might be OK
+- If not, need other tools for now
+
+
+---
+# Contribution
+
+- Policy on "consumerism"
+- Physician agency and role of physician referrals
+
+
+---
+# Preview of findings
+
+- Patients pass 6 lower-priced facilities en route to selected facility
+- 50% potential drop if people went to cheapest facility
+
+
+---
+count: false
+
+# Preview of findings
+
+.center[
+  ![:scale 800px](pics/chernew_figure1.png)
+]
+
+
+
+---
+# Main data:
+
+- Private insurance claims in 2013 (single insurer, but a large one)
+- SK&amp;A data on physician practices
+- Limit to orthopedics
+- Data on who used a shopping tool provided by the insurer ($&lt;$1%)
+
+---
+# Empirical analysis:
+
+- Mainly descriptive statistics
+- Calculate counterfactual prices using the mean price of each location
+
+
+---
+# Findings
+
+- Markets have nearly 2x range from 20th to 80th price percentile
+- $468.53 mean savings per case (55% drop) within 1 hour drive
+- 36% drop without change in driving distance
+- `\(&lt;\)` 1% shop
+- Referring physician controls 50% of the savings
+
+
+---
+class: inverse, center, middle
+name: ketcham
+
+# Ketcham et al. (2012)
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Motivation
+
+- Lots of perceived "poor" decisions in Part D choice
+- What's the source of these poor decisions? 
+
+&lt;br&gt;
+--
+
+- If people just *can't* make a good decision, then we need some intervention
+- If people are learning, then perhaps less need for intervention
+
+---
+# Main empirical question
+
+Do people improve the match quality of their Part D insurance choice over time?
+
+---
+# Contribution
+
+- Large literature on poor decision making in insurance, especially Part D 
+- Many interventions designed based off of this literature:&lt;br&gt;
+  - decision assistance
+  - default plan assignment
+  - informational letters
+  - restrictions on choice size
+
+&lt;br&gt;  
+--
+**NOT** limited to insurance...credit cards, mortgages, other financial instruments
+
+---
+# Preview of findings
+
+Yes, people overspend initially (i.e., choose a bad plan), but:
+
+- 55% reduction in "overspending" from 2006 to 2007
+- Largest reductions among those that overspent the most and among those with largest cognitive barriers
+- Improved match driven mainly by those that switched plans
+
+---
+count: false
+
+# Preview of findings
+
+.center[
+  ![:scale 800px](pics/ketcham_figure1.png)
+]
+
+
+
+---
+# Data
+
+- Medicare Part D choices from 2006 to 2007
+- Source: Private insurer that sells Part D and administers other Part D plans sold by other companies
+- Variables: Plan choices, prescription drug use and spending
+
+
+---
+# Measuring overspending
+
+- Employ CMS formulary files for copayment in each possible plan for each drug taken
+- Drug prices in each plan from the Wolters Kluwer Health data or from CMS plan finder webiste
+- Plan characteristics like deductibles and donut hole coverage
+- **Main assumption**: Drug usage is independent of plan choice
+
+
+---
+# Econometric methods
+
+First-difference regression of overspending on health status:
+
+`$$\Delta O_{i} = \alpha + \Gamma \times \Delta H_{i} + \Delta u_{i}.$$`
+
+---
+# Results
+
+.center[
+  ![:scale 800px](pics/ketcham_table3.png)
+]
+
+
+---
+# Heterogeneity
+
+Series of alternative regressions with different control variables and indicators for switching
+
+---
+# Switching results
+
+.center[
+  ![:scale 700px](pics/ketcham_figure2.png)
+]
+
+
+---
+# Additional analysis
+
+- Analysis of switching behaviors
+- Robustness
+- Generalizability (given data from one insurer)
+
+---
+class: inverse, center, middle
+name: final
+
+# Takeaways
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Chernew et al. (2019)
+
+- Large price variation for homogeneous quality
+- Potential for large savings
+- "Shopping" may need to come from the physician
+
+---
+# Ketcham et al. (2012)
+
+- People improve plan choices over time
+- Interia and prevalence of "bad choices" may be overemphasized in literature and policy circles
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"touch": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
