@@ -75,6 +75,7 @@ Today we'll look at a couple of papers that study how changes in one healthcare 
 
 Hopefully it's clear from these papers how difficult it is to study healthcare in a general equilibrium setting...Medicare policies affect commercial insurers, and changes in the commercial insurance market affect how physicians treat Medicare patients. On top of that, there are practice level changes that affect physician behaviors, which of course affects patients.
 
+- Nada's slides for Baicker, Chernew, and Robbins (2013) [here](../student-presentations/nada-20200929.pdf)
 
 
 ### Class 13, 10/01

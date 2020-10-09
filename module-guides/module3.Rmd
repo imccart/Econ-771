@@ -54,6 +54,7 @@ The first paper for today, Chernew et al. (2019), is a working paper that I thin
 **Inertia in health insurance choice**<br>
 Handel (2013) documents the role of interia in health insurance choice, showing that inertia is a major factor in insurance choice and that policies to reduce intertia may exacerbate existing problems of adverse selection. In other words, maybe inertia isn't quite so bad. Ericson (2014) takes inertia as given and considers how firms may employ an "invest-then-harvest" strategy whereby premiums are set low to attract customers and then raised once a sufficient level of market share is reached. 
 
+- Nada's slides for Ericson (2014) [here](../student-presentations/nada-20201008.pdf)
 
 ### Class 16, 10/13
 **Effects of quality disclosure**<br>
