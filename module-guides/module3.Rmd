@@ -60,6 +60,9 @@ Handel (2013) documents the role of interia in health insurance choice, showing 
 **Effects of quality disclosure**<br>
 Dafny and Dranove (2008) study the role of quality information on Medicare Advantage enrollment decisions. They employ the Barry (1994) estimation strategy that uses market share data to recover individual utility coefficient estimates in a nested logit model. Dranove et al. (2003) examines the effect of quality information on providers (as revealed through hospital and physician report cards on mortality rates for CABG patients in New York and Pennsylvania in the early 1990s). 
 
+- My (very brief) slides on demand estimation [here](slides-demand-market.html)
+- Fabrice's slides for Dranove et al. (2003) [here](../student-presentations/fabrice-20201013.pdf)
+
 
 ### Class 17, 10/15
 **Effects of price disclosure**<br>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 3: Estimating Demand with Market Level Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ian McCarthy | Emory University" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 3: Estimating Demand with Market Level Data
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#EB811B' size=1px width=0px>
+</html>
+### Ian McCarthy | Emory University
+### Econ 771
+
+---
+
+
+&lt;!-- Adjust some CSS code for font size and maintain R code font size --&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+&lt;/style&gt;
+
+
+&lt;!-- Set R options for how code chunks are displayed and load packages --&gt;
+
+
+
+# Table of contents
+
+1. [Discrete Choice](#discrete)
+
+2. [Market level data](#market)
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: discrete
+
+# Basics of Discrete Choice
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Setup
+
+Indirect utility of person `\(i\)`, `$$u_{ij} = x_{ij}\beta + \epsilon_{ij},$$` where `\(x_{ij}\)` denotes person (and perhaps product) characteristics and `\(\epsilon_{ij}\)` denotes an error term. 
+
+- Standard logit: one choice, `\(j=0,1\)`
+- Multinomial logit: many possible choices, `\(j=0,1,...,J\)`
+
+
+---
+# Logit terminology
+
+A few different terms for very similar models:
+
+- Multinomial Logit
+- Conditional Logit
+- "Mixed" Logit
+
+---
+# Multinomial 
+
+- Individual covariates only
+- Alternative-specific coefficients
+
+--
+`$$u_{ij}=x_{i}\beta_{j} + \epsilon_{ij},$$` such that `$$p_{ij} = \frac{e^{x_{i}\beta_{j}}}{\sum_{k} e^{x_{i}\beta_{k}}}$$`
+
+
+---
+# Conditional
+
+Allow for alternative-specific regressors, such that `$$u_{ij}=x_{ij}\beta + \epsilon_{ij}$$`
+
+
+---
+# Mixed
+
+Allow for individual and alternative-specific regressors, such that `$$u_{ij}=x_{ij}\beta + w_{i} \gamma_{j} + \epsilon_{ij}$$`
+
+&lt;br&gt;
+--
+*but* people sometimes use "mixed" to refer to random-coefficients logit
+
+
+---
+# Does it matter?
+
+These are really all the same and it's just a matter of specification (e.g., interact individual covariates with product characteristics or with product dummies). I'll refer to them as "multinomial" logit.
+
+
+---
+# The Indepenence of Irrelevant Alternatives
+
+Fundamental issue with logit models...the ratio of choice probabilities for `\(j\)` and `\(k\)` does not depend on any other alternatives: `$$\frac{P_{ij}}{P_{ik}} = \frac{e^{V_{ij}}}{e^{V_{ik}}}.$$`
+
+---
+# Relaxing IIA
+
+- This is really an omitted variables problem...with enough interactions, we can allow for a sufficiently rich substitution pattern
+- Alternatively, relax assumptions on the error term with nested logit or random-coefficient logit (or multinomial probit)
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: market
+
+# Discrete Choice with Market Data
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Setup
+
+Utility of individual `\(i\)` from selecting product `\(j\)` is `$$U_{ij}=\delta_{j}+\epsilon_{ij},$$`
+where `\(\delta_{j}=x_{j}\beta + \xi_{j}\)`, and `\(\xi_{j}\)` represents the mean level of utility derived from unobserved characteristics.
+
+---
+# Estimating with market shares
+
+Goal is to find `\(\hat{\delta}\)` to statisfy moment condition, `$$\frac{1}{J}\sum_{j} (\hat{\delta}_{j}-x_{j}\beta)z_{j}=0.$$`
+
+In standard logit, `\(s_{j}=e^{\delta_{j}}/\sum e^{\delta_{j}}\)`, and `\(\delta_{j}\)` then follows directly from taking logs and subtracting the outside share (with the normalization of `\(\delta_{0}=0\)`, which yields the estimating equation `$$\ln(s_{j}) - \ln(s_{0}) = x_{j}\beta + \xi_{j}$$`
+
+---
+count: false
+
+# Estimating with market shares
+
+- Standard logit imposes cross-price elasticities that are proportional to market shares (limited substitution patterns)
+- Relax with nested logit or random-coefficients logit
+- For details, see Berry (1994) or come talk to me
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"touch": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

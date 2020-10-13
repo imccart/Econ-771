@@ -43,3 +43,13 @@ In your GitHub repository, please be sure to clearly address/answer the followin
 
 5. Present selected specification/robustness checks of your IV and discuss two weaknesses of this identification strategy.
 
+
+# Solutions
+Here are my answers. There are lots of different ways to answer these questions. For example, some of the main variables may show up in more than one of the datasets, and you may have chosen a different source. There are also lots of different ways to filter the data. As long as you are transparent (i.e., I can see what you did in the code), then this isn't a problem. The point of this is to get some practice doing standard applied work with **real** data. 
+
+1. Final [solutions](../solutions/exercise2/solutions.pdf) in PDF. My actual `R Markdown` document is [here](../solutions/exercise2/solutions.Rmd), and [here](../solutions/exercise2/solutions.tex) is the `tex` file in case anyone is interested.
+2. Analysis file [here](../solutions/exercise2/analysis.R). This is where I do the actual analysis. Notice that in this file, I remove a bunch of large objects and save the workspace. I then call the workspace in my markdown file.
+3. Code to read in the MA benchmark data is [here](../solutions/exercise2/1_benchmark.R).
+4. Code to read in the MA penetration data [here](../solutions/exercise2/2_penetration.R).
+4. Code to read in the AHRF data [here](../solutions/exercise2/3_ahrf.R).
+

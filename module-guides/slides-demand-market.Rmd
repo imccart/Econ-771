@@ -1,0 +1,173 @@
+---
+title: "Module 3: Estimating Demand with Market Level Data"
+subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
+author: Ian McCarthy | Emory University
+date: Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{amsmath}
+  - \usepackage{pgf}
+  - \usepackage[xcolor=pst]{pstricks}
+  - \usepackage{pgfshade}
+  - \usepackage{pdftools}
+output:
+#  html_document: default (toggle on for "simplified" view)
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, custom.css] 
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: "macros.js"
+      navigation:
+          touch: false
+---
+
+<!-- Adjust some CSS code for font size and maintain R code font size -->
+<style type="text/css">
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+</style>
+
+
+<!-- Set R options for how code chunks are displayed and load packages -->
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+opts_chunk$set(
+  fig.align="center",  
+  fig.height=3, #fig.width=6,
+  # out.width="748px", #out.length="520.75px",
+  dpi=300, #fig.path='Figs/',
+  cache=T#, echo=F, warning=F, message=F
+  )
+
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if(options$fig.callout) {
+    options$echo = FALSE
+  }
+  options
+})
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
+               scales, gganimate, gapminder, gifski, png, tufte, plotly, OECD,
+               ggrepel)
+```
+
+
+# Table of contents
+
+1. [Discrete Choice](#discrete)
+
+2. [Market level data](#market)
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: discrete
+
+# Basics of Discrete Choice
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Setup
+
+Indirect utility of person $i$, $$u_{ij} = x_{ij}\beta + \epsilon_{ij},$$ where $x_{ij}$ denotes person (and perhaps product) characteristics and $\epsilon_{ij}$ denotes an error term. 
+
+- Standard logit: one choice, $j=0,1$
+- Multinomial logit: many possible choices, $j=0,1,...,J$
+
+
+---
+# Logit terminology
+
+A few different terms for very similar models:
+
+- Multinomial Logit
+- Conditional Logit
+- "Mixed" Logit
+
+---
+# Multinomial 
+
+- Individual covariates only
+- Alternative-specific coefficients
+
+--
+$$u_{ij}=x_{i}\beta_{j} + \epsilon_{ij},$$ such that $$p_{ij} = \frac{e^{x_{i}\beta_{j}}}{\sum_{k} e^{x_{i}\beta_{k}}}$$
+
+
+---
+# Conditional
+
+Allow for alternative-specific regressors, such that $$u_{ij}=x_{ij}\beta + \epsilon_{ij}$$
+
+
+---
+# Mixed
+
+Allow for individual and alternative-specific regressors, such that $$u_{ij}=x_{ij}\beta + w_{i} \gamma_{j} + \epsilon_{ij}$$
+
+<br>
+--
+*but* people sometimes use "mixed" to refer to random-coefficients logit
+
+
+---
+# Does it matter?
+
+These are really all the same and it's just a matter of specification (e.g., interact individual covariates with product characteristics or with product dummies). I'll refer to them as "multinomial" logit.
+
+
+---
+# The Indepenence of Irrelevant Alternatives
+
+Fundamental issue with logit models...the ratio of choice probabilities for $j$ and $k$ does not depend on any other alternatives: $$\frac{P_{ij}}{P_{ik}} = \frac{e^{V_{ij}}}{e^{V_{ik}}}.$$
+
+---
+# Relaxing IIA
+
+- This is really an omitted variables problem...with enough interactions, we can allow for a sufficiently rich substitution pattern
+- Alternatively, relax assumptions on the error term with nested logit or random-coefficient logit (or multinomial probit)
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: market
+
+# Discrete Choice with Market Data
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Setup
+
+Utility of individual $i$ from selecting product $j$ is $$U_{ij}=\delta_{j}+\epsilon_{ij},$$
+where $\delta_{j}=x_{j}\beta + \xi_{j}$, and $\xi_{j}$ represents the mean level of utility derived from unobserved characteristics.
+
+---
+# Estimating with market shares
+
+Goal is to find $\hat{\delta}$ to statisfy moment condition, $$\frac{1}{J}\sum_{j} (\hat{\delta}_{j}-x_{j}\beta)z_{j}=0.$$
+
+In standard logit, $s_{j}=e^{\delta_{j}}/\sum e^{\delta_{j}}$, and $\delta_{j}$ then follows directly from taking logs and subtracting the outside share (with the normalization of $\delta_{0}=0$, which yields the estimating equation $$\ln(s_{j}) - \ln(s_{0}) = x_{j}\beta + \xi_{j}$$
+
+---
+count: false
+
+# Estimating with market shares
+
+- Standard logit imposes cross-price elasticities that are proportional to market shares (limited substitution patterns)
+- Relax with nested logit or random-coefficients logit
+- For details, see Berry (1994) or come talk to me
+
