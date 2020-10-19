@@ -1,0 +1,474 @@
+---
+title: "Empirical Exercise 3: Regression Discontinuity and Part D Plans"
+subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
+author: Ian McCarthy | Emory University
+date: Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
+header-includes: 
+  - \usepackage{graphicx}
+  - \usepackage{amsmath}
+output:
+#  html_document: default (toggle on for "simplified" view)
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, custom.css, cols.css] 
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: [macros.js, cols_macro.js]
+---
+
+<!-- Adjust some CSS code for font size and maintain R code font size -->
+<style type="text/css">
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+</style>
+
+
+<!-- Set R options for how code chunks are displayed and load packages -->
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+opts_chunk$set(
+  fig.align="center",  
+  fig.height=3, #fig.width=6,
+  # out.width="748px", #out.length="520.75px",
+  dpi=300, #fig.path='Figs/',
+  cache=T#, echo=F, warning=F, message=F
+  )
+
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if(options$fig.callout) {
+    options$echo = FALSE
+  }
+  options
+})
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
+               scales, gganimate, gapminder, gifski, png, tufte, plotly, OECD,
+               ggrepel, dtplyr, data.table, kableExtra, plotly, cobalt, stargazer, haven, ggthemes,
+               magick, lfe, dotwhisker, aer, ivreg)
+```
+
+
+# Table of contents
+
+1. [Overview](#overview)
+
+2. [Regression Discontinuity in Theory](#rd_theory)
+
+3. [Regression Discontinuity in Practice](#rd_practice)
+
+4. [Fuzzy Regression Discontinuity](#fuzzy_rd)
+
+5. [RD with Part D](#ericson)
+
+6. [Extras](#extras) 
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: overview
+
+# Overview
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Goals of this assignment
+
+1. Work with data on Part D plans (from Ericson 2014)
+2. Employ RD with the data
+3. Extend Ericson (2014) using RD as an IV
+
+<br>
+--
+Plus the sub-goal for all assignments...practice your Git/GitHub workflow, version control, and replicability
+
+
+---
+# Specific "research question"
+
+Do firms exploit inertia with an "invest-then-harvest" pricing strategy?
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: rd_theory
+
+# Regression Discontinuity in Theory
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Intuition
+Key intuition from RD:<br>
+
+--
+<br>
+
+Observations are <b>identical</b> just above/below threshold
+
+---
+# Intuition
+Highly relevant in "rule-based" world...
+- School eligibility based on age cutoffs
+- Program participation based on discrete income thresholds
+- Performance scores rounded to nearest integer
+
+---
+# Types of RD
+1. Sharp regression discontinuity
+  - those above the threshold guaranteed to participate<br>
+
+--
+<br>
+2. Fuzzy regression discontinuity
+  - those above the threshold are eligible but may not participate
+
+---
+# Sharp RD
+<br>
+$$W_{i} = 1(x_{i}>c) = \begin{cases}
+    1 & \text{if} & x_{i}>c \\
+    0 & \text{if} & x_{i}<c 
+\end{cases}$$
+
+<br>
+- $x$ is "forcing variable"
+- $c$ is the threshold value or cutoff point
+
+---
+# Sharp RD Scatterplot
+```{r rd-plot1, echo=FALSE, message=FALSE}
+n=1000
+rd.dat <- tibble(
+  X = runif(n,0,2),
+  W = (X>1),
+  Y = 0.5 + 2*X + 4*W + -2.5*W*X + rnorm(n,0,.5)
+)
+plot1 <- rd.dat %>% ggplot(aes(x=X,y=Y)) + 
+  geom_point() + theme_bw() +
+  geom_vline(aes(xintercept=1),linetype='dashed') +
+  scale_x_continuous(
+    breaks = c(.5, 1.5),
+    label = c("Untreated", "Treated")
+  ) +
+  xlab("Running Variable") + ylab("Outcome")
+plot1
+```
+
+---
+# Sharp RD Linear Predictions
+```{r rd-plot2, echo=FALSE, message=FALSE, warning=FALSE}
+plot2 <- plot1 +
+  geom_smooth(method = 'lm', data = (rd.dat %>% filter(W == TRUE)) ) +
+  geom_smooth(method = 'lm', data = (rd.dat %>% filter(W == FALSE)) )
+plot2
+```
+
+
+---
+# Sharp RD Linear Predictions
+```{r rd-plot3, echo=FALSE, message=FALSE, warning=FALSE}
+plot3 <- plot2 +
+  stat_smooth(method = 'lm', data = (rd.dat %>% filter(W == TRUE)), fullrange = TRUE, linetype = 'dashed') +
+  stat_smooth(method = 'lm', data = (rd.dat %>% filter(W == FALSE)), fullrange = TRUE, linetype = 'dashed')
+plot3
+```
+
+
+---
+# Different averages
+```{r calcs, include=FALSE}
+mean.0 <- rd.dat %>% filter(X>0.8 & W == FALSE) %>% summarize(mean=mean(Y))
+mean.1 <- rd.dat %>% filter(X<1.2 & W == TRUE) %>% summarize(mean=mean(Y))
+mean.0.all <- rd.dat %>% filter(W == FALSE) %>% summarize(mean=mean(Y))
+mean.1.all <- rd.dat %>% filter(W == TRUE) %>% summarize(mean=mean(Y))
+```
+- Mean difference around threshold of 0.2, `r round(mean.1,2)` - `r round(mean.0,2)` = `r round(mean.1-mean.0,2)`
+- Mean overall difference, `r round(mean.1.all,2)` - `r round(mean.0.all,2)` = `r round(mean.1.all-mean.0.all,2)`
+
+
+---
+# More generally
+- Running variable may affect outcome directly
+- Focusing on area around cutoff does two things:<br>
+
+--
+<br>
+  1. Controls for running variable
+  2. "Controls" for unobserved things correlated with running variable and outcome
+
+---
+# Animations!
+
+.center[
+  ![:scale 900px](pics/rd_animate.gif)
+]
+
+
+---
+# Estimation
+Goal is to estimate $E[Y(1)|X=c] - E[Y(0)|X=c]$
+1. Trim to reasonable window around threshold ("bandwidth"), $X \in [c-h, c+h]$
+2. Transform running variable, $\tilde{X}=X-c$
+3. Estimate regressions...
+  - Linear, same slope: $y = \alpha + \delta W + \beta \tilde{X} + \varepsilon$
+  - Linear, different slope: $y = \alpha + \delta W + \beta \tilde{X} + \gamma W\tilde{X} + \varepsilon$
+  - Nonlinear: add polynomials in $\tilde{X}$ and interactions $W \tilde{X}$
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: rd_practice
+
+# Regression Discontinuity in Practice
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# RDs "in the wild"
+Most RD estimates follow a similar set of steps:
+1. Investigate the running variable and show a jump at the discontinuity
+2. Show clear graphical evidence of a change around the discontinuity
+3. Overlay regression specification (and consider "Continuity-Based RD")
+4. Explore sensitivity to bandwidths and orders of the polynomial
+5. Conduct similar analyses with baseline covariates as outcomes
+6. Explore sensitivity of results to inclusion of baseline covariates
+
+
+---
+# Initial graphical evidence
+Before presenting RD estimates, **any** good RD approach first highlights the discontinuity with a simple graph. We can do so by plotting the average outcomes within bins of the forcing variable (i.e., binned averages), $$\bar{Y}_{k} = \frac{1}{N_{k}}\sum_{i=1}^{N} Y_{i} \times 1(b_{k} < X_{i} \leq b_{k+1}).$$<br>
+
+--
+The binned averages help remove noise in the graph and can provide a cleaner look at the data. Just make sure that no bin includes observations above and below the cutoff!
+
+---
+# Binned average calculation
+```{r echo=TRUE, results="hide", warnings=FALSE}
+library(rdrobust)
+rd.result <- rdplot(rd.dat$Y, rd.dat$X, 
+                    c=1, 
+                    title="RD Plot with Binned Average", 
+                    x.label="Running Variable", 
+                    y.label="Outcome", hide=TRUE)
+bin.avg <- as_tibble(rd.result$vars_bins)
+
+plot.bin <- bin.avg %>% ggplot(aes(x=rdplot_mean_x,y=rdplot_mean_y)) + 
+  geom_point() + theme_bw() +
+  geom_vline(aes(xintercept=1),linetype='dashed') +
+  scale_x_continuous(
+    breaks = c(.5, 1.5),
+    label = c("Untreated", "Treated")
+  ) +
+  xlab("Running Variable") + ylab("Outcome")
+```
+
+---
+# Binned average plot
+```{r echo=FALSE}
+plot.bin
+```
+
+---
+# With and without binning
+.pull-left[
+```{r echo=FALSE}
+plot1
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+plot.bin
+```
+]
+
+
+---
+# Kernels?
+Some RD estimates talk about "kernel weighting" to assign more weight to observations closer to the threshold and less weight to observations further from the threshold.
+
+---
+# Kernels
+$$\hat{\mu}_{+}(x) = \frac{\sum_{i: X_{i}<c} Y_{i} \times K \left(\frac{X_{i} -x}{h} \right)}{\sum_{i: X_{i}<c} K \left(\frac{X_{i} -x}{h} \right)},$$ and $$\hat{\mu}_{-}(x) = \frac{\sum_{i: X_{i}\geq c} Y_{i} \times K \left(\frac{X_{i} -x}{h} \right)}{\sum_{i: X_{i}\geq c} K \left(\frac{X_{i} -x}{h} \right)},$$
+where $K(u)$ is a kernel that assigns weight to observations based on the distance from $u$. A rectagular kernel is such that $K(u)=1/2$ for $u \in (-1,1)$ and 0 elsewhere. 
+
+---
+# Kernels and regression
+- Local linear regression (regression within the pre-specified bandwidth) is a kernel weighted regression with a uniform (or rectangular) kernel. 
+- Could use more complicated kernels for a fully nonparametric approach, but these don't work well around the RD cutoff values.
+- Polynomial 
+
+---
+# Some practical concerns
+- Bin size for plots
+- Selecting bandwidth, $h$
+- Check for sorting around threshold (e.g., gaming)
+- Covariate balance (love plots around threshold)
+- Should we control for other covariates?
+- Sensitivity to polynomial specification
+
+---
+# Selecting "bin" width
+1. Dummy variables: Create dummies for each bin, regress the outcome on the set of all dummies $R^{2}_{r}$, repeat with double the number of bins and find r-square value $R^{2}_{u}$, form F-stat, $\frac{R^{2}_{u}-R^{2}_{r}}{1-R^{2}_{u}}\times \frac{n-K-1}{K}$.
+
+2. Interaction terms: Include interactions between dummies and the running variable, joint F-test for the interaction terms
+
+If F-test suggests significance, then we have too few bins and need to narrow the bin width.
+
+
+---
+# Selecting bandwidth in local linear regression
+The bandwidth is a "tuning parameter"
+- High $h$ means high bias but lower variance (use more of the data, closer to OLS)
+- Low $h$ means low bias but higher variance (use less data, more focused around discontinuity)<br>
+
+--
+
+Represent bias-variance tradeoff with the mean-square error, $$MSE(h) = E[(\hat{\tau}_{h} - \tau_{RD})^2]=\left(E[\hat{\tau}_{h} - \tau_{RD}] \right)^2 + V(\hat{\tau}_{h}).$$
+
+---
+# Selecting bandwidth
+In the RD case, we have two different mean-square error terms:
+1. "From above", $MSE_{+}(h) = E[(\hat{\mu}_{+}(c,h) - E[Y_{i}(1)|X_{i}=c])^2]$
+2. "From below", $MSE_{-}(h) = E[(\hat{\mu}_{-}(c,h) - E[Y_{i}(0)|X_{i}=c])^2]$<br>
+
+--
+
+Goal is to find $h$ that minimizes these values, but we don't know the true $E[Y(1)|X=c]$ and $E[Y(0)|X=c]$. So we have two approaches:
+1. Use **cross-validation** to choose $h$  
+2. Explicitly solve for optimal bandwidth 
+
+---
+# Cross-validation
+Essentially a series of "leave-one-out" estimates:
+1. Pick an $h$
+2. Run regression, leaving out observation $i$. If $i$ is to the left of the threshold, we estimate regression for observations within $X_{i}-h$, and conversely $X_{i}+h$ if $i$ is to the right of the threshold.
+3. Predicted $\hat{Y}_{i}$ at $X_{i}$ (out of sample prediction for the left out observation)
+4. Do this for all $i$, and form $CV(h)=\frac{1}{N}\sum (Y_{i} - \hat{Y}_{i})^2$ <br>
+
+--
+
+Select $h$ with lowest $CV(h)$ value.
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: fuzzy_rd
+
+# Fuzzy Regression Discontinuity
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Fuzzy RD
+"Fuzzy" just means that assignment isn't guaranteed based on the running variable. For example, maybe students are much more likely to get a scholarship past some threshold SAT score, but it remains possible for students below the threshold to still get the scholarship. 
+
+- Discontinuity reflects a jump in the probability of treatment
+- Other RD assumptions still required (namely, can't manipulate running variable around the threshold)
+
+---
+# Fuzzy RD is IV
+In practice, fuzzy RD is employed as an instrumental variables estimator
+- Difference in outcomes among those above and below the discontinuity divided by the difference in treatment probabilities for those above and below the discontinuity,<br>
+$E[Y_{i} | W_{i}=1] - E[Y_{i} | W_{i}=0] = \frac{E[Y_{i} | x_{i}\geq c] - E[Y_{i} | x_{i}< c]}{E[W_{i} | x_{i}\geq c] - E[W_{i} | x_{i}<c]}$
+- Indicator for $x_{i}\geq c$ is an instrument for treatment status, $W_{i}$.
+
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: ericson
+
+# RD and Part D - Replicating Ericson (2014)
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Data
+
+```{r, eval=F, include=T}
+pdp.data <- pdp.data %>%
+  group_by(state, year) %>%
+  mutate(state_yr_enroll = sum(enrollment, na.rm=TRUE)) %>%
+  ungroup() %>%
+  mutate(share = enrollment/state_yr_enroll,
+         ln_share = log(share))
+```
+
+
+---
+count: false
+
+# Data
+
+```{r, eval=F, include=T} 
+lis.data <- pivot_longer(lis.data, cols=c("s2006","s2007","s2008","s2009","s2010"), 
+                         names_to="year",
+                         names_prefix="s",
+                         values_to="LISsubsidy") %>%
+  mutate(year=as.numeric(year))
+```
+
+---
+count: false
+
+# Data
+
+```{r, include=T, eval=F}
+final.data <- pdp.data %>%
+  inner_join(lis.data, by=c("PDPregion","year")) %>%
+  mutate(LISPremium = premium - LISsubsidy,
+         proposedBenchmarkPlan = ifelse(LISPremium<=0,1,0),
+         ProblemObs = case_when(
+           LISPremium < 0 & LIS == 0 ~ 1,
+           LISPremium > 0 & LIS == 1 ~ 2
+         ),
+         LISPremium = ifelse(benefit=="E",NA,LISPremium),
+         proposedBenchmarkPlan = ifelse(benefit=="E", NA, proposedBenchmarkPlan),
+         LISPremiumNeg = ifelse(LISPremium<=0, LISPremium, 0),
+         LISPremiumPos = ifelse(LISPremium>=0, LISPremium, 0))
+```
+
+---
+# Analysis
+
+- Need `rdrobust` and `rddensity` libraries
+- Use `rdplot` command for graphs, `rddensity` for manipulation test
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: extras
+
+# Extras
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# Extras
+
+- Cattaneao et al. have some great resources as part of a large NSF project
+- Tons of commands in both Stata and R, along with excellent discussions and tutorials
+- [https://rdpackages.github.io/](https://rdpackages.github.io/)

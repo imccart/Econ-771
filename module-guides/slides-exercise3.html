@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Empirical Exercise 3: Regression Discontinuity and Part D Plans</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ian McCarthy | Emory University" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+    <link rel="stylesheet" href="cols.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Empirical Exercise 3: Regression Discontinuity and Part D Plans
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#EB811B' size=1px width=0px>
+</html>
+### Ian McCarthy | Emory University
+### Econ 771
+
+---
+
+
+&lt;!-- Adjust some CSS code for font size and maintain R code font size --&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+&lt;/style&gt;
+
+
+&lt;!-- Set R options for how code chunks are displayed and load packages --&gt;
+
+
+
+# Table of contents
+
+1. [Overview](#overview)
+
+2. [Regression Discontinuity in Theory](#rd_theory)
+
+3. [Regression Discontinuity in Practice](#rd_practice)
+
+4. [Fuzzy Regression Discontinuity](#fuzzy_rd)
+
+5. [RD with Part D](#ericson)
+
+6. [Extras](#extras) 
+
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: overview
+
+# Overview
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Goals of this assignment
+
+1. Work with data on Part D plans (from Ericson 2014)
+2. Employ RD with the data
+3. Extend Ericson (2014) using RD as an IV
+
+&lt;br&gt;
+--
+Plus the sub-goal for all assignments...practice your Git/GitHub workflow, version control, and replicability
+
+
+---
+# Specific "research question"
+
+Do firms exploit inertia with an "invest-then-harvest" pricing strategy?
+
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: rd_theory
+
+# Regression Discontinuity in Theory
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Intuition
+Key intuition from RD:&lt;br&gt;
+
+--
+&lt;br&gt;
+
+Observations are &lt;b&gt;identical&lt;/b&gt; just above/below threshold
+
+---
+# Intuition
+Highly relevant in "rule-based" world...
+- School eligibility based on age cutoffs
+- Program participation based on discrete income thresholds
+- Performance scores rounded to nearest integer
+
+---
+# Types of RD
+1. Sharp regression discontinuity
+  - those above the threshold guaranteed to participate&lt;br&gt;
+
+--
+&lt;br&gt;
+2. Fuzzy regression discontinuity
+  - those above the threshold are eligible but may not participate
+
+---
+# Sharp RD
+&lt;br&gt;
+`$$W_{i} = 1(x_{i}&gt;c) = \begin{cases}
+    1 &amp; \text{if} &amp; x_{i}&gt;c \\
+    0 &amp; \text{if} &amp; x_{i}&lt;c 
+\end{cases}$$`
+
+&lt;br&gt;
+- `\(x\)` is "forcing variable"
+- `\(c\)` is the threshold value or cutoff point
+
+---
+# Sharp RD Scatterplot
+&lt;img src="slides-exercise3_files/figure-html/rd-plot1-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# Sharp RD Linear Predictions
+&lt;img src="slides-exercise3_files/figure-html/rd-plot2-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Sharp RD Linear Predictions
+&lt;img src="slides-exercise3_files/figure-html/rd-plot3-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Different averages
+
+- Mean difference around threshold of 0.2, 3.93 - 2.29 = 1.64
+- Mean overall difference, 3.77 - 1.47 = 2.31
+
+
+---
+# More generally
+- Running variable may affect outcome directly
+- Focusing on area around cutoff does two things:&lt;br&gt;
+
+--
+&lt;br&gt;
+  1. Controls for running variable
+  2. "Controls" for unobserved things correlated with running variable and outcome
+
+---
+# Animations!
+
+.center[
+  ![:scale 900px](pics/rd_animate.gif)
+]
+
+
+---
+# Estimation
+Goal is to estimate `\(E[Y(1)|X=c] - E[Y(0)|X=c]\)`
+1. Trim to reasonable window around threshold ("bandwidth"), `\(X \in [c-h, c+h]\)`
+2. Transform running variable, `\(\tilde{X}=X-c\)`
+3. Estimate regressions...
+  - Linear, same slope: `\(y = \alpha + \delta W + \beta \tilde{X} + \varepsilon\)`
+  - Linear, different slope: `\(y = \alpha + \delta W + \beta \tilde{X} + \gamma W\tilde{X} + \varepsilon\)`
+  - Nonlinear: add polynomials in `\(\tilde{X}\)` and interactions `\(W \tilde{X}\)`
+
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: rd_practice
+
+# Regression Discontinuity in Practice
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# RDs "in the wild"
+Most RD estimates follow a similar set of steps:
+1. Investigate the running variable and show a jump at the discontinuity
+2. Show clear graphical evidence of a change around the discontinuity
+3. Overlay regression specification (and consider "Continuity-Based RD")
+4. Explore sensitivity to bandwidths and orders of the polynomial
+5. Conduct similar analyses with baseline covariates as outcomes
+6. Explore sensitivity of results to inclusion of baseline covariates
+
+
+---
+# Initial graphical evidence
+Before presenting RD estimates, **any** good RD approach first highlights the discontinuity with a simple graph. We can do so by plotting the average outcomes within bins of the forcing variable (i.e., binned averages), `$$\bar{Y}_{k} = \frac{1}{N_{k}}\sum_{i=1}^{N} Y_{i} \times 1(b_{k} &lt; X_{i} \leq b_{k+1}).$$`&lt;br&gt;
+
+--
+The binned averages help remove noise in the graph and can provide a cleaner look at the data. Just make sure that no bin includes observations above and below the cutoff!
+
+---
+# Binned average calculation
+
+```r
+library(rdrobust)
+rd.result &lt;- rdplot(rd.dat$Y, rd.dat$X, 
+                    c=1, 
+                    title="RD Plot with Binned Average", 
+                    x.label="Running Variable", 
+                    y.label="Outcome", hide=TRUE)
+bin.avg &lt;- as_tibble(rd.result$vars_bins)
+
+plot.bin &lt;- bin.avg %&gt;% ggplot(aes(x=rdplot_mean_x,y=rdplot_mean_y)) + 
+  geom_point() + theme_bw() +
+  geom_vline(aes(xintercept=1),linetype='dashed') +
+  scale_x_continuous(
+    breaks = c(.5, 1.5),
+    label = c("Untreated", "Treated")
+  ) +
+  xlab("Running Variable") + ylab("Outcome")
+```
+
+---
+# Binned average plot
+&lt;img src="slides-exercise3_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+# With and without binning
+.pull-left[
+&lt;img src="slides-exercise3_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="slides-exercise3_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+# Kernels?
+Some RD estimates talk about "kernel weighting" to assign more weight to observations closer to the threshold and less weight to observations further from the threshold.
+
+---
+# Kernels
+`$$\hat{\mu}_{+}(x) = \frac{\sum_{i: X_{i}&lt;c} Y_{i} \times K \left(\frac{X_{i} -x}{h} \right)}{\sum_{i: X_{i}&lt;c} K \left(\frac{X_{i} -x}{h} \right)},$$` and `$$\hat{\mu}_{-}(x) = \frac{\sum_{i: X_{i}\geq c} Y_{i} \times K \left(\frac{X_{i} -x}{h} \right)}{\sum_{i: X_{i}\geq c} K \left(\frac{X_{i} -x}{h} \right)},$$`
+where `\(K(u)\)` is a kernel that assigns weight to observations based on the distance from `\(u\)`. A rectagular kernel is such that `\(K(u)=1/2\)` for `\(u \in (-1,1)\)` and 0 elsewhere. 
+
+---
+# Kernels and regression
+- Local linear regression (regression within the pre-specified bandwidth) is a kernel weighted regression with a uniform (or rectangular) kernel. 
+- Could use more complicated kernels for a fully nonparametric approach, but these don't work well around the RD cutoff values.
+- Polynomial 
+
+---
+# Some practical concerns
+- Bin size for plots
+- Selecting bandwidth, `\(h\)`
+- Check for sorting around threshold (e.g., gaming)
+- Covariate balance (love plots around threshold)
+- Should we control for other covariates?
+- Sensitivity to polynomial specification
+
+---
+# Selecting "bin" width
+1. Dummy variables: Create dummies for each bin, regress the outcome on the set of all dummies `\(R^{2}_{r}\)`, repeat with double the number of bins and find r-square value `\(R^{2}_{u}\)`, form F-stat, `\(\frac{R^{2}_{u}-R^{2}_{r}}{1-R^{2}_{u}}\times \frac{n-K-1}{K}\)`.
+
+2. Interaction terms: Include interactions between dummies and the running variable, joint F-test for the interaction terms
+
+If F-test suggests significance, then we have too few bins and need to narrow the bin width.
+
+
+---
+# Selecting bandwidth in local linear regression
+The bandwidth is a "tuning parameter"
+- High `\(h\)` means high bias but lower variance (use more of the data, closer to OLS)
+- Low `\(h\)` means low bias but higher variance (use less data, more focused around discontinuity)&lt;br&gt;
+
+--
+
+Represent bias-variance tradeoff with the mean-square error, `$$MSE(h) = E[(\hat{\tau}_{h} - \tau_{RD})^2]=\left(E[\hat{\tau}_{h} - \tau_{RD}] \right)^2 + V(\hat{\tau}_{h}).$$`
+
+---
+# Selecting bandwidth
+In the RD case, we have two different mean-square error terms:
+1. "From above", `\(MSE_{+}(h) = E[(\hat{\mu}_{+}(c,h) - E[Y_{i}(1)|X_{i}=c])^2]\)`
+2. "From below", `\(MSE_{-}(h) = E[(\hat{\mu}_{-}(c,h) - E[Y_{i}(0)|X_{i}=c])^2]\)`&lt;br&gt;
+
+--
+
+Goal is to find `\(h\)` that minimizes these values, but we don't know the true `\(E[Y(1)|X=c]\)` and `\(E[Y(0)|X=c]\)`. So we have two approaches:
+1. Use **cross-validation** to choose `\(h\)`  
+2. Explicitly solve for optimal bandwidth 
+
+---
+# Cross-validation
+Essentially a series of "leave-one-out" estimates:
+1. Pick an `\(h\)`
+2. Run regression, leaving out observation `\(i\)`. If `\(i\)` is to the left of the threshold, we estimate regression for observations within `\(X_{i}-h\)`, and conversely `\(X_{i}+h\)` if `\(i\)` is to the right of the threshold.
+3. Predicted `\(\hat{Y}_{i}\)` at `\(X_{i}\)` (out of sample prediction for the left out observation)
+4. Do this for all `\(i\)`, and form `\(CV(h)=\frac{1}{N}\sum (Y_{i} - \hat{Y}_{i})^2\)` &lt;br&gt;
+
+--
+
+Select `\(h\)` with lowest `\(CV(h)\)` value.
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: fuzzy_rd
+
+# Fuzzy Regression Discontinuity
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Fuzzy RD
+"Fuzzy" just means that assignment isn't guaranteed based on the running variable. For example, maybe students are much more likely to get a scholarship past some threshold SAT score, but it remains possible for students below the threshold to still get the scholarship. 
+
+- Discontinuity reflects a jump in the probability of treatment
+- Other RD assumptions still required (namely, can't manipulate running variable around the threshold)
+
+---
+# Fuzzy RD is IV
+In practice, fuzzy RD is employed as an instrumental variables estimator
+- Difference in outcomes among those above and below the discontinuity divided by the difference in treatment probabilities for those above and below the discontinuity,&lt;br&gt;
+`\(E[Y_{i} | W_{i}=1] - E[Y_{i} | W_{i}=0] = \frac{E[Y_{i} | x_{i}\geq c] - E[Y_{i} | x_{i}&lt; c]}{E[W_{i} | x_{i}\geq c] - E[W_{i} | x_{i}&lt;c]}\)`
+- Indicator for `\(x_{i}\geq c\)` is an instrument for treatment status, `\(W_{i}\)`.
+
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: ericson
+
+# RD and Part D - Replicating Ericson (2014)
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Data
+
+
+```r
+pdp.data &lt;- pdp.data %&gt;%
+  group_by(state, year) %&gt;%
+  mutate(state_yr_enroll = sum(enrollment, na.rm=TRUE)) %&gt;%
+  ungroup() %&gt;%
+  mutate(share = enrollment/state_yr_enroll,
+         ln_share = log(share))
+```
+
+
+---
+count: false
+
+# Data
+
+
+```r
+lis.data &lt;- pivot_longer(lis.data, cols=c("s2006","s2007","s2008","s2009","s2010"), 
+                         names_to="year",
+                         names_prefix="s",
+                         values_to="LISsubsidy") %&gt;%
+  mutate(year=as.numeric(year))
+```
+
+---
+count: false
+
+# Data
+
+
+```r
+final.data &lt;- pdp.data %&gt;%
+  inner_join(lis.data, by=c("PDPregion","year")) %&gt;%
+  mutate(LISPremium = premium - LISsubsidy,
+         proposedBenchmarkPlan = ifelse(LISPremium&lt;=0,1,0),
+         ProblemObs = case_when(
+           LISPremium &lt; 0 &amp; LIS == 0 ~ 1,
+           LISPremium &gt; 0 &amp; LIS == 1 ~ 2
+         ),
+         LISPremium = ifelse(benefit=="E",NA,LISPremium),
+         proposedBenchmarkPlan = ifelse(benefit=="E", NA, proposedBenchmarkPlan),
+         LISPremiumNeg = ifelse(LISPremium&lt;=0, LISPremium, 0),
+         LISPremiumPos = ifelse(LISPremium&gt;=0, LISPremium, 0))
+```
+
+---
+# Analysis
+
+- Need `rdrobust` and `rddensity` libraries
+- Use `rdplot` command for graphs, `rddensity` for manipulation test
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: extras
+
+# Extras
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+
+---
+# Extras
+
+- Cattaneao et al. have some great resources as part of a large NSF project
+- Tons of commands in both Stata and R, along with excellent discussions and tutorials
+- [https://rdpackages.github.io/](https://rdpackages.github.io/)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script src="cols_macro.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
