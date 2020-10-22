@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 4: Healthcare Competition</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ian McCarthy | Emory University" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 4: Healthcare Competition
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#EB811B' size=1px width=0px>
+</html>
+### Ian McCarthy | Emory University
+### Econ 771
+
+---
+
+
+&lt;!-- Adjust some CSS code for font size and maintain R code font size --&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+&lt;/style&gt;
+
+
+&lt;!-- Set R options for how code chunks are displayed and load packages --&gt;
+
+
+
+# Table of contents
+
+1. [Competition in Theory](#theory)
+2. [Competition in Practice](#practice)
+
+
+
+
+---
+class: inverse, center, middle
+name: theory
+
+# Competition in Theory
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Fixed Prices
+
+- Demand: `\(q_{j}=s_{j}(z_{j}) \times D(\bar{p})\)`
+- Costs: `\(c_{j}=c(q_{j},z_{j}) + F\)`
+- Profits: `\(\pi_{j} = \bar{p}q_{j} - c_{j}\)`
+
+&lt;br&gt;
+--
+Hospitals choose quality such that: `$$\frac{\partial \pi_{j}}{\partial z_{j}} = \left(\bar{p} - \frac{\partial c_{j}}{\partial q_{j}} \right)\left(\frac{\partial s_{j}}{\partial z_{j}}D + s_{j}\frac{\partial D}{\partial z_{j}} \right) - \frac{\partial c_{j}}{\partial z_{j}}=0$$`
+
+---
+count: false
+
+# Fixed Prices
+
+- Increase in competition will tend to increase quality
+- Negative welfare effects if `\(\frac{\partial D}{\partial z_{j}}\)` is sufficiently small and fixed costs are large
+
+
+---
+count: false
+
+# Fixed Prices
+
+Alternative expression for quality: `$$z_{j} = \left(\bar{p} - c_{q} \right) \left(\eta_{s} + \eta_{D} \right) \frac{D s_{j}}{c_{z}}$$`
+
+- Quality increasing in `\(\bar{p}\)`
+- Quality increasing in share and demand elasticities
+- Quality increase in overall market share and market demand
+- Quality decreasing in marginal cost
+
+
+---
+# Market Prices
+
+Profit given by `\(\pi = q(p,z) \times (p-c-d\times z) - F,\)` which yields
+`\begin{align*}
+  p &amp;= \frac{\epsilon_{p}}{\epsilon_{p}-1} (c+dz) \\
+  z &amp;= \frac{\epsilon_{z}}{\epsilon_{z}+1} \frac{p-c}{d}
+\end{align*}`
+
+
+---
+count: false
+
+# Market Prices
+
+Rewrite in terms of elasticities:
+`\begin{align*}
+  \epsilon_{p} &amp;= \frac{p}{p-c-dz} \\
+  \epsilon_{z} &amp;= \frac{dz}{p - c - dz}
+\end{align*}`
+
+&lt;br&gt;
+--
+
+Taking the ratio and solving for `\(z\)` yields, `$$z = \frac{p}{d}\times \frac{\epsilon_{z}}{\epsilon_{p}}.$$`    
+
+---
+count: false
+
+# Market Prices
+
+`$$z = \frac{p}{d}\times \frac{\epsilon_{z}}{\epsilon_{p}}$$`    
+
+Dorfman-Steiner condition:
+- Quality increases if the quality elasticity increases or if price increases
+- Quality increases if the price elasticity decreases or the marginal cost of quality decreases
+
+&lt;br&gt;
+--
+**Prediction for competition:** Hospitals will compete on whatever matters most to patients.
+
+---
+# Bargaining
+
+Gowrisankaran, Nevo, and Town extend the Nash bargaining framework to consider a hospital-insurer negotiation. They propose a two-stage bargaining process:
+1. Hospitals and insurers negotiate over the terms of their agreement (network inclusion and prices)
+2. Individuals receive "health draws" which dictate their healthcare needs
+
+&lt;br&gt;
+--
+*Bargaining occurs over a base price, not specific to each procedure*
+
+---
+count: false
+
+# Bargaining
+
+- Total expected cost to the insurer, `\(TC_{m}(N_{m},\vec{p}_{m})\)` 
+- Willingness to pay to have access to hospital, `\(W_{m}(N_{m},\vec{p}_{m})\)`
+- Total payoff for the MCO is `$$V_{m}(N_{m},\vec{p}_{m}) = \tau W_{m}(N_{m},\vec{p}_{m}) - TC_{m}(N_{m},\vec{p}_{m}),$$` where `\(\tau\)` is the relative weight placed on employee/patient welfare
+- Net value that MCO `\(m\)` receives from including hospital `\(j\)` in its network is then `\(V_{m}(N_{m},\vec{p}_{m})-V_{m}(N_{m,-j},\vec{p}_{m})\)`.
+
+---
+count: false
+
+# Bargaining
+
+In the case of a single hospital system, and denoting hospital `\(j\)`'s marginal cost for services provided to patients in MCO `\(m\)` is given by `\(mc_{mj}\)`, the overall profit for hospital `\(j\)` for a given set of MCO contracts (denoted `\(M_{s}\)`), is `$$\pi_{j}\left(M_{s},\{\vec{p}_{m}\}_{m\in M_{s}} \right)=\sum_{m\in M_{s}} q_{mj}(N_{m},\vec{p}_{m}) \left[p_{mj} - mc_{mj} \right].$$`
+
+
+---
+count: false
+
+# Bargaining
+
+The authors then derive the Nash bargaining solution as the choice of prices maximizing the exponentiated product of the net value from agreement:
+`\begin{align*}
+NB^{m,j} \left(p_{mj} | \vec{p}_{m,-j}\right) &amp;= \left(q_{mj}(N_{m},\vec{p}_{m}) \left[p_{mj} - mc_{mj} \right]\right)^{b_{j(m)}} \\
+&amp; \times \left(V_{m}(N_{m},\vec{p}_{m})-V_{m}(N_{m,-j},\vec{p}_{m})\right)^{b_{m(j)}},
+\end{align*}`
+where `\(b_{j(m)}\)` is the bargaining weight of hospital `\(j\)` when facing MCO `\(m\)`, `\(b_{m(j)}\)` is the bargaining weight of MCO `\(m\)` when facing hospital `\(j\)`, and `\(\vec{p}_{m,-j}\)` is the vector of prices for MCO `\(m\)` and hospitals other than `\(j\)`. We can normalize bargaining weight such that `\(b_{j(m)} + b_{m(j)} = 1\)`.
+
+---
+count: false
+
+# Bargaining
+
+Taking the natural log, the resulting first order condition yields: 
+`\begin{align*}
+\frac{\partial \ln (NB^{m,s})}{\partial p_{mj}} =&amp; b_{s(m)} \frac{q_{mj} + \frac{\partial q_{mj}}{\partial p_{mj}} \left[p_{mj}-mc_{mj}\right]}{q_{mj}\left[p_{mj}-mc_{mj}\right]} \\
+&amp; + b_{m(j)} \frac{\frac{\partial V_{m}}{\partial p_{mj}}}{V_{m}(N_{m},\vec{p}_{m})-V_{m}(N_{m,-j},\vec{p}_{m})} = 0
+\end{align*}`
+
+---
+count: false
+
+# Bargaining
+
+Simplifying and rewriting, we get: `$$p_{mj} - mc_{mj} = -q_{mj} \left(\frac{\partial q_{mj}}{\partial p_{mj}} + q_{mj} \times \frac{b_{m(j)}}{b_{j(m)}} \times \frac{\frac{\partial V_{m}}{\partial p_{mj}}}{\triangle V_{m}} \right)^{-1}$$`
+
+- `\(\triangle V_{m}\)` is positive by construction
+- Can show that `\(\frac{\partial V_{m}}{\partial p_{mj}}&lt;0\)` under most conditions 
+
+&lt;br&gt;
+--
+Bargaining tends to increase the "effective" price sensitivity and reduce hospital margins relative to standard pricing conditions (but not always)
+
+---
+count: false
+
+# Bargaining
+
+- Price response to other changes depends largely on `\(\frac{\partial V_{m}}{\partial p_{mj}}\)`
+- Can be expressed as: `$$-q_{mj}-\alpha \sum_{i}\sum_{d}\gamma_{id}c_{id}(1-c_{id}) \left(\sum_{k\in N_{m}} p_{mk}s_{ikd} - p_{mj}\right),$$` where `\(\gamma_{id}\)` includes several terms including disease weights and probability of disease. 
+
+---
+count: false
+
+# Bargaining
+`$$-q_{mj}-\alpha \sum_{i}\sum_{d}\gamma_{id}c_{id}(1-c_{id}) \left(\sum_{k\in N_{m}} p_{mk}s_{ikd} - p_{mj}\right),$$`
+
+- `\(c_{id}\)` denotes the coinsurance rate
+- final term is the difference between hospital `\(j\)`'s price and the weighted average price of all other hospitals (weighted by their market share)
+- `\(c_{id}\times (1-c_{id})\)` shows role of coinsurance in steering patients to different hospitals
+
+
+&lt;!-- New Section --&gt;
+---
+class: inverse, center, middle
+name: practice
+
+# Competition in Practice
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Key Issues
+
+1. Measuring competitiveness
+2. Reduced form - mergers, closures, structure-conduct-performance
+3. Structural estimation with bargaining models
+
+
+---
+# Measuring competitiveness
+- Common measure is Herfindahl-Hirschman Index (HHI), `\(\sum_{i=1}^{N} s_{i}^{2}\)`.
+  - 2,500 is considered **highly concentrated**
+  - 1,800 is considered **unconcentrated**
+- "Willingness to pay" is more recent measure (theoretically supported)
+- Both require a measure of the geographic market
+
+---
+# Defining the market
+Lots of subjectivity...
+- Radius around a hospital?
+- Concentric circles to define "catchment" areas?
+- Patient/physician referrals?
+- At what product-level do hospitals compete?
+
+---
+# Trends in competitiveness
+Almost any way you define it, hospital markets are more and more concentrated (less competitive) in recent decades.
+- 1990: 65% of MSAs highlgy concentrated, 23% unconcentrated
+- 2006: 77% highly concentrated, 11% unconcentrated
+
+
+---
+# Hospital concentration over time
+
+.pull-left[
+  ![:scale 450px](pics/GHT1.png)
+]
+
+.pull-right[
+  ![:scale 450px](pics/GHT2.png)
+]
+
+&lt;div class="smalltext"&gt;Source: &lt;a href="https://www.aeaweb.org/articles?id=10.1257/jel.53.2.235"&gt;Gaynor, Ho, and Town (2015). The Industrial Organization of Health Care Markets. Journal of Economic Literature.&lt;/a&gt;&lt;/div&gt;
+
+---
+# Hospital concentration over time
+- More data and [interactive report](https://www.healthcostinstitute.org/research/hmi/hmi-interactive#HMI-Concentration-Index) from the Health Care Cost Institute.
+- [Presentation](https://www.nihcm.org/topics/health-care-delivery/hospital-consolidation-trends-impacts-outlook) from the National Institute for Health Care Management
+
+---
+# Why?
+Historical perception of hospital competition as "wasteful" and assumption that more capacity means more (unnecessary) care:
+- Limit public spending by limiting competition
+- Prevalence of certificate of need (CON) laws
+
+---
+# Effects of reduced competition
+1. Higher prices
+2. Lower quality, [2020 NEJM Paper](https://www.nejm.org/doi/full/10.1056/NEJMsa1901383)
+3. Maybe lower costs (but not passed on to lower prices)&lt;br&gt;
+
+--
+
+Effects for both "in-market" and "out-of-market" mergers
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"touch": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,315 @@
+---
+title: "Module 4: Healthcare Competition"
+subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
+author: Ian McCarthy | Emory University
+date: Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
+header-includes: 
+  - \usepackage{tikz}
+  - \usepackage{amsmath}
+  - \usepackage{pgf}
+  - \usepackage[xcolor=pst]{pstricks}
+  - \usepackage{pgfshade}
+  - \usepackage{pdftools}
+output:
+#  html_document: default (toggle on for "simplified" view)
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, custom.css] 
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      beforeInit: "macros.js"
+      navigation:
+          touch: false
+---
+
+<!-- Adjust some CSS code for font size and maintain R code font size -->
+<style type="text/css">
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+</style>
+
+
+<!-- Set R options for how code chunks are displayed and load packages -->
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+opts_chunk$set(
+  fig.align="center",  
+  fig.height=3, #fig.width=6,
+  # out.width="748px", #out.length="520.75px",
+  dpi=300, #fig.path='Figs/',
+  cache=T#, echo=F, warning=F, message=F
+  )
+
+knitr::opts_hooks$set(fig.callout = function(options) {
+  if(options$fig.callout) {
+    options$echo = FALSE
+  }
+  options
+})
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, readr, readxl, hrbrthemes,
+               scales, gganimate, gapminder, gifski, png, tufte, plotly, OECD,
+               ggrepel)
+```
+
+
+# Table of contents
+
+1. [Competition in Theory](#theory)
+2. [Competition in Practice](#practice)
+
+
+
+
+---
+class: inverse, center, middle
+name: theory
+
+# Competition in Theory
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Fixed Prices
+
+- Demand: $q_{j}=s_{j}(z_{j}) \times D(\bar{p})$
+- Costs: $c_{j}=c(q_{j},z_{j}) + F$
+- Profits: $\pi_{j} = \bar{p}q_{j} - c_{j}$
+
+<br>
+--
+Hospitals choose quality such that: $$\frac{\partial \pi_{j}}{\partial z_{j}} = \left(\bar{p} - \frac{\partial c_{j}}{\partial q_{j}} \right)\left(\frac{\partial s_{j}}{\partial z_{j}}D + s_{j}\frac{\partial D}{\partial z_{j}} \right) - \frac{\partial c_{j}}{\partial z_{j}}=0$$
+
+---
+count: false
+
+# Fixed Prices
+
+- Increase in competition will tend to increase quality
+- Negative welfare effects if $\frac{\partial D}{\partial z_{j}}$ is sufficiently small and fixed costs are large
+
+
+---
+count: false
+
+# Fixed Prices
+
+Alternative expression for quality: $$z_{j} = \left(\bar{p} - c_{q} \right) \left(\eta_{s} + \eta_{D} \right) \frac{D s_{j}}{c_{z}}$$
+
+- Quality increasing in $\bar{p}$
+- Quality increasing in share and demand elasticities
+- Quality increase in overall market share and market demand
+- Quality decreasing in marginal cost
+
+
+---
+# Market Prices
+
+Profit given by $\pi = q(p,z) \times (p-c-d\times z) - F,$ which yields
+\begin{align*}
+  p &= \frac{\epsilon_{p}}{\epsilon_{p}-1} (c+dz) \\
+  z &= \frac{\epsilon_{z}}{\epsilon_{z}+1} \frac{p-c}{d}
+\end{align*}
+
+
+---
+count: false
+
+# Market Prices
+
+Rewrite in terms of elasticities:
+\begin{align*}
+  \epsilon_{p} &= \frac{p}{p-c-dz} \\
+  \epsilon_{z} &= \frac{dz}{p - c - dz}
+\end{align*}
+
+<br>
+--
+
+Taking the ratio and solving for $z$ yields, $$z = \frac{p}{d}\times \frac{\epsilon_{z}}{\epsilon_{p}}.$$    
+
+---
+count: false
+
+# Market Prices
+
+$$z = \frac{p}{d}\times \frac{\epsilon_{z}}{\epsilon_{p}}$$    
+
+Dorfman-Steiner condition:
+- Quality increases if the quality elasticity increases or if price increases
+- Quality increases if the price elasticity decreases or the marginal cost of quality decreases
+
+<br>
+--
+**Prediction for competition:** Hospitals will compete on whatever matters most to patients.
+
+---
+# Bargaining
+
+Gowrisankaran, Nevo, and Town extend the Nash bargaining framework to consider a hospital-insurer negotiation. They propose a two-stage bargaining process:
+1. Hospitals and insurers negotiate over the terms of their agreement (network inclusion and prices)
+2. Individuals receive "health draws" which dictate their healthcare needs
+
+<br>
+--
+*Bargaining occurs over a base price, not specific to each procedure*
+
+---
+count: false
+
+# Bargaining
+
+- Total expected cost to the insurer, $TC_{m}(N_{m},\vec{p}_{m})$ 
+- Willingness to pay to have access to hospital, $W_{m}(N_{m},\vec{p}_{m})$
+- Total payoff for the MCO is $$V_{m}(N_{m},\vec{p}_{m}) = \tau W_{m}(N_{m},\vec{p}_{m}) - TC_{m}(N_{m},\vec{p}_{m}),$$ where $\tau$ is the relative weight placed on employee/patient welfare
+- Net value that MCO $m$ receives from including hospital $j$ in its network is then $V_{m}(N_{m},\vec{p}_{m})-V_{m}(N_{m,-j},\vec{p}_{m})$.
+
+---
+count: false
+
+# Bargaining
+
+In the case of a single hospital system, and denoting hospital $j$'s marginal cost for services provided to patients in MCO $m$ is given by $mc_{mj}$, the overall profit for hospital $j$ for a given set of MCO contracts (denoted $M_{s}$), is $$\pi_{j}\left(M_{s},\{\vec{p}_{m}\}_{m\in M_{s}} \right)=\sum_{m\in M_{s}} q_{mj}(N_{m},\vec{p}_{m}) \left[p_{mj} - mc_{mj} \right].$$
+
+
+---
+count: false
+
+# Bargaining
+
+The authors then derive the Nash bargaining solution as the choice of prices maximizing the exponentiated product of the net value from agreement:
+\begin{align*}
+NB^{m,j} \left(p_{mj} | \vec{p}_{m,-j}\right) &= \left(q_{mj}(N_{m},\vec{p}_{m}) \left[p_{mj} - mc_{mj} \right]\right)^{b_{j(m)}} \\
+& \times \left(V_{m}(N_{m},\vec{p}_{m})-V_{m}(N_{m,-j},\vec{p}_{m})\right)^{b_{m(j)}},
+\end{align*}
+where $b_{j(m)}$ is the bargaining weight of hospital $j$ when facing MCO $m$, $b_{m(j)}$ is the bargaining weight of MCO $m$ when facing hospital $j$, and $\vec{p}_{m,-j}$ is the vector of prices for MCO $m$ and hospitals other than $j$. We can normalize bargaining weight such that $b_{j(m)} + b_{m(j)} = 1$.
+
+---
+count: false
+
+# Bargaining
+
+Taking the natural log, the resulting first order condition yields: 
+\begin{align*}
+\frac{\partial \ln (NB^{m,s})}{\partial p_{mj}} =& b_{s(m)} \frac{q_{mj} + \frac{\partial q_{mj}}{\partial p_{mj}} \left[p_{mj}-mc_{mj}\right]}{q_{mj}\left[p_{mj}-mc_{mj}\right]} \\
+& + b_{m(j)} \frac{\frac{\partial V_{m}}{\partial p_{mj}}}{V_{m}(N_{m},\vec{p}_{m})-V_{m}(N_{m,-j},\vec{p}_{m})} = 0
+\end{align*}
+
+---
+count: false
+
+# Bargaining
+
+Simplifying and rewriting, we get: $$p_{mj} - mc_{mj} = -q_{mj} \left(\frac{\partial q_{mj}}{\partial p_{mj}} + q_{mj} \times \frac{b_{m(j)}}{b_{j(m)}} \times \frac{\frac{\partial V_{m}}{\partial p_{mj}}}{\triangle V_{m}} \right)^{-1}$$
+
+- $\triangle V_{m}$ is positive by construction
+- Can show that $\frac{\partial V_{m}}{\partial p_{mj}}<0$ under most conditions 
+
+<br>
+--
+Bargaining tends to increase the "effective" price sensitivity and reduce hospital margins relative to standard pricing conditions (but not always)
+
+---
+count: false
+
+# Bargaining
+
+- Price response to other changes depends largely on $\frac{\partial V_{m}}{\partial p_{mj}}$
+- Can be expressed as: $$-q_{mj}-\alpha \sum_{i}\sum_{d}\gamma_{id}c_{id}(1-c_{id}) \left(\sum_{k\in N_{m}} p_{mk}s_{ikd} - p_{mj}\right),$$ where $\gamma_{id}$ includes several terms including disease weights and probability of disease. 
+
+---
+count: false
+
+# Bargaining
+$$-q_{mj}-\alpha \sum_{i}\sum_{d}\gamma_{id}c_{id}(1-c_{id}) \left(\sum_{k\in N_{m}} p_{mk}s_{ikd} - p_{mj}\right),$$
+
+- $c_{id}$ denotes the coinsurance rate
+- final term is the difference between hospital $j$'s price and the weighted average price of all other hospitals (weighted by their market share)
+- $c_{id}\times (1-c_{id})$ shows role of coinsurance in steering patients to different hospitals
+
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: practice
+
+# Competition in Practice
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Key Issues
+
+1. Measuring competitiveness
+2. Reduced form - mergers, closures, structure-conduct-performance
+3. Structural estimation with bargaining models
+
+
+---
+# Measuring competitiveness
+- Common measure is Herfindahl-Hirschman Index (HHI), $\sum_{i=1}^{N} s_{i}^{2}$.
+  - 2,500 is considered **highly concentrated**
+  - 1,800 is considered **unconcentrated**
+- "Willingness to pay" is more recent measure (theoretically supported)
+- Both require a measure of the geographic market
+
+---
+# Defining the market
+Lots of subjectivity...
+- Radius around a hospital?
+- Concentric circles to define "catchment" areas?
+- Patient/physician referrals?
+- At what product-level do hospitals compete?
+
+---
+# Trends in competitiveness
+Almost any way you define it, hospital markets are more and more concentrated (less competitive) in recent decades.
+- 1990: 65% of MSAs highlgy concentrated, 23% unconcentrated
+- 2006: 77% highly concentrated, 11% unconcentrated
+
+
+---
+# Hospital concentration over time
+
+.pull-left[
+  ![:scale 450px](pics/GHT1.png)
+]
+
+.pull-right[
+  ![:scale 450px](pics/GHT2.png)
+]
+
+<div class="smalltext">Source: <a href="https://www.aeaweb.org/articles?id=10.1257/jel.53.2.235">Gaynor, Ho, and Town (2015). The Industrial Organization of Health Care Markets. Journal of Economic Literature.</a></div>
+
+---
+# Hospital concentration over time
+- More data and [interactive report](https://www.healthcostinstitute.org/research/hmi/hmi-interactive#HMI-Concentration-Index) from the Health Care Cost Institute.
+- [Presentation](https://www.nihcm.org/topics/health-care-delivery/hospital-consolidation-trends-impacts-outlook) from the National Institute for Health Care Management
+
+---
+# Why?
+Historical perception of hospital competition as "wasteful" and assumption that more capacity means more (unnecessary) care:
+- Limit public spending by limiting competition
+- Prevalence of certificate of need (CON) laws
+
+---
+# Effects of reduced competition
+1. Higher prices
+2. Lower quality, [2020 NEJM Paper](https://www.nejm.org/doi/full/10.1056/NEJMsa1901383)
+3. Maybe lower costs (but not passed on to lower prices)<br>
+
+--
+
+Effects for both "in-market" and "out-of-market" mergers
+
+

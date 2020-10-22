@@ -47,6 +47,9 @@ This is the guide for **Module 4**, the last module of the class. Over these las
 **Competition in price and quality**<br>
 No student presentations today. Instead, I'll present some basics on the nature of competition when firms set both prices and quality. The main takeaway--theory doesn't tell us much about the effects of competition in this case. It really depends on the dimension by which customers are most responsive (price or quality).
 
+- My slides on competition are [here](slides-competition.html)
+
+
 ### Class 20, 10/27
 **Measuring hospital market power**<br>
 Today's class is about how we measure market power. The only paper for today is Dranove (2016), which provides a nice comparison of different measures in the literature.
