@@ -54,6 +54,7 @@ No student presentations today. Instead, I'll present some basics on the nature 
 **Measuring hospital market power**<br>
 Today's class is about how we measure market power. The only paper for today is Dranove (2016), which provides a nice comparison of different measures in the literature.
 
+- My slides measuring market power are [here](slides-markets.html)
 
 ### Class 21, 10/29
 **Evidence from "structure-conduct-performance" studies**<br>

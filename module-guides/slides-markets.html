@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Module 4: Healthcare Competition</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ian McCarthy | Emory University" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 4: Healthcare Competition
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#EB811B' size=1px width=0px>
+</html>
+### Ian McCarthy | Emory University
+### Econ 771
+
+---
+
+
+&lt;!-- Adjust some CSS code for font size and maintain R code font size --&gt;
+&lt;style type="text/css"&gt;
+.remark-slide-content {
+    font-size: 30px;
+    padding: 1em 2em 1em 2em;    
+}
+.remark-code, .remark-inline-code { 
+    font-size: 20px;
+}
+&lt;/style&gt;
+
+
+&lt;!-- Set R options for how code chunks are displayed and load packages --&gt;
+
+
+
+# Table of contents
+
+1. [Measuring Hospital Markets](#motivation)
+2. [HHI](#hhi)
+3. [WTP](#wtp)
+
+
+
+
+---
+class: inverse, center, middle
+name: motivation
+
+# Motivation
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# Importance of the market
+
+**Every** analysis of competition requires some definition of the market. This is complicated in healthcare for several reasons:
+
+1. Hospital markets more local than insurance markets
+2. Hospitals are multi-product firms
+3. Geographic market may differ by procedure
+4. Insurance networks limit choice within a geographic market
+
+---
+# Given a market
+
+Once we have a measure of the market, we'd like to have a quick and easy way to assess competitiveness:
+
+1. HHI
+2. WTP
+
+
+---
+class: inverse, center, middle
+name: hhi
+
+# Herfindahl-Hirschman Index
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# HHI
+
+- Basic Cournot framework: `$$\pi_{i} = P(q) q_{i} - C_{i}(q_{i})$$`
+- First order condition: `$$P'(q) q_{i} + P(q) - C_{i}'(q) = 0$$`
+
+---
+count: false
+
+# HHI
+
+- Rewriting yields: `$$\frac{P(q) - C_{i}'(q_{i})}{P(q)} = \frac{q_{i}}{q} \times \frac{-P'(q)q}{P(q)}=\frac{\alpha_{i}}{\eta}$$`
+- Constant marginal costs: `$$\frac{p - c_{i}}{p} = \frac{\alpha_{i}}{\eta}$$`
+
+---
+count: false
+
+# HHI
+
+- In equilibrium, `$$\sum_{i}\pi_{i} = \sum_{i}(p - c_{i}) q_{i} = \sum_{i}(p-c_{i})\alpha_{i} q$$`
+- Two equivalent expressions
+  - `\(\sum_{i} \pi_{i} = \left(p - \sum_{i} \alpha_{i} c_{i} \right)q\)` and
+  - `\(\sum_{i} \pi_{i} = \frac{pq}{\eta} \sum_{i} \alpha_{i}^{2}\)` after substituting `\(p - c_{i} = \alpha_{i} \frac{p}{\eta}\)`.
+  
+---
+count: false
+
+# HHI
+
+- Equating these two expressions yields:$$\frac{p - \sum_{i} \alpha_{i} c_{i}}{q} = \frac{\sum_{i} \alpha_{i}^{2}}{\eta} = \frac{HHI}{\eta}$$
+- *Takeaway*: In linear Cournot model with constant marginal costs and homogeneous products, the markup (a common measure of market power) is proportional to the HHI. 
+
+
+---
+class: inverse, center, middle
+name: wtp
+
+# Willingness to Pay
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=1055px&gt;&lt;/html&gt;
+
+---
+# WTP
+
+- Alternative measure from Capps et al. (2003)
+- Not healthcare specific...option demand market where indermediary sells a "network" of products to consumers, and consumers are uncertain about final products they will need
+- **Key**: consumers agree to *ex ante* restrict their choice set before they know what services are needed
+- Derivation works backward...
+
+---
+count: false
+
+# WTP
+
+*Step 1.* Derive *ex post* utility.
+
+`\begin{align*}
+U_{ij} &amp;= \alpha R_{j} + H_{j}'\Gamma X_{i} + \tau_{1} T_{ij} + \tau_{2} T_{ij} X_{i} + \tau_{3} T_{ij} R_{j} - \gamma(Y_{i},Z_{i}) P_{j}(Z_{i}) + \varepsilon_{ij} \\
+ &amp;= U(H_{j},X_{i},\lambda_{i}) - \gamma(X_{i})P_{j}(Z_{i}) + \varepsilon_{ij},
+\end{align*}`
+
+which yields choice probabilities, `$$s_{ij} = s_{j}(G,X_{i},\lambda_{i}) = \frac{\text{exp}(U(H_{j},X_{i},\lambda_{i}))}{\sum_{g\in G}\text{exp}(U(H_{g},X_{i},\lambda_{i}))}.$$`
+
+---
+count: false
+
+# WTP
+
+*Step 2.* Derive utility from access to network, `\(G\)`, with `\(U(H_{g},X_{i},\lambda_{i})\)` taken as given.
+
+The patient's expected maximum utility across all hospitals is, `$$V(G,X_{i},\lambda_{i}) = \text{E} \left[\max_{g\in G} U(H_{g},X_{i},\lambda_{i}) + \varepsilon_{g} \right] = \text{ln} \left[\sum_{g\in G} \text{exp} (U(H_{g},X_{i},\lambda_{i})) \right].$$`
+
+---
+count: false
+
+# WTP
+
+Contribution of hospital `\(j\)` is then:
+`\begin{align*}
+\triangle V_{j}(G,X_{i},\lambda_{i}) &amp;= V(G,X_{i},\lambda_{i}) - V(G_{-j},X_{i},\lambda_{i}) \\
+ &amp;= \text{ln} \left[ \left(\sum_{k\in G_{-j}} \frac{ \text{exp} (U(H_{k},X_{i},\lambda_{i})) }{\sum_{g\in G} \text{exp} (U(H_{g},X_{i},\lambda_{i})) }\right)^{-1} \right] \\
+ &amp;= \text{ln} \left[ \left(\sum_{k\in G_{-j}} s_{k}(G,X_{i},\lambda_{i})\right)^{-1} \right] \\
+ &amp;= \text{ln} \left[ \left( 1- s_{j}(G,X_{i},\lambda_{i})\right)^{-1} \right].
+\end{align*}`
+
+---
+count: false
+
+# WTP
+
+Translate into dollar values by weighting by the marginal utility of price `$$\triangle \tilde{W}_{j} = \frac{\triangle V_{j}}{\gamma (X_{i})}.$$`
+
+
+---
+count: false
+
+# WTP
+
+*Step 3.* Estimate *ex ante* WTP to include hospital `\(j\)` in patient's network. (i.e., integrate over all possible health conditions)
+
+`\begin{equation*}
+W_{ij}(G,Y_{i},\lambda_{i}) = \int_{Z} \frac{\delta V_{j}(G,X_{i},\lambda_{i})}{\gamma (X_{i})} f(Z_{i}|Y_{i},\lambda_{i}) dZ_{i}.
+\end{equation*}`
+Further integrating over all patients, `\((Y_{i},\lambda_{i})\)`, yields
+`\begin{equation*}
+WTP_{j} = N \int_{\lambda} \int_{Z} \int_{Y} \frac{1}{\gamma (X_{i})} \text{ln}\left[\frac{1}{1-s_{j}(G,X_{i},\lambda_{i})} \right]f(Y_{i},Z_{i},\lambda_{i})dY_{i} dZ_{i} d\lambda_{i}.
+\end{equation*}`
+
+---
+count: false
+
+# WTP in Practice
+
+Simplify by calculating WTP for each "micro-market" (e.g., health condition) and taking sum:
+
+`$$WTP_{j} = - \sum_{m} N_{m} \text{ln}(1 - s_{mj})$$`
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"touch": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
