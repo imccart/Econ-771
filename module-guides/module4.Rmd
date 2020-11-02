@@ -62,6 +62,9 @@ Kessler and McClellan (2000) is one of the first healthcare studies in this lite
 
 Cooper et al. (2019) provides an excellent set of summary statistics and regression analysis of hospital pricing and industrial organization of healthcare markets. Their analysis is not necessarily causal but is an important set of empirical facts nonetheless. 
 
+- Hanna's slides on Cooper et al. (2019) are [here](../student-presentations/hanna-20201029.pdf)
+- Swati's slides on Kessler and McClellan (2000) are [here](../student-presentations/swati-20201029.pdf)
+
 
 ### Class 22, 11/3
 **Competition in a bargaining model**<br>

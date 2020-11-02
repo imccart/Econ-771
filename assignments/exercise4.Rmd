@@ -25,17 +25,15 @@ You will "turn in" your repository to me with your answers and all supporting do
 # Resources and data
 The data for this assignment comes from three sources:
 
-1. **HCRIS**: All hospitals that treat Medicare patients must submit a hospital cost report. The data are then made available on the CMS website. The NBER also provides a slightly more user-friendly version of these data. Info and code for these data are available at my GitHub page [here](https://github.com/imccart/HCRIS). The raw data are available on our AWS AMI in the "HCRIS" folder.
+1. **HCRIS**: All hospitals that treat Medicare patients must submit a hospital cost report. The data are then made available on the CMS website. The NBER also provides a slightly more user-friendly version of these data. Info and code for these data are available at my GitHub page [here](https://github.com/imccart/HCRIS). The raw data are available on our AWS AMI in the "HCRIS" folder. Use these data for information on hospital beds and to construct a measure of hospital prices.
 
-2. **Provider of Services files**: These data are available from [NBER POS](https://data.nber.org/data/provider-of-services.html) as well as at [Adam Sacarny's GitHub repo](https://github.com/asacarny/provider-of-services). I've also made these data available on our shared AWS AMI in the "POS" folder. Use these data to get information on hospital ownership type.
-
-3. **Hospital Market GitHub Repo**: John Graves has an excellent GitHub repository detailing the issues in measuring hospital markets. You can access that repo [here](https://github.com/graveja0/health-care-markets). To replicate some of his work using the community detection algorithm, you'll need to use the [Hospital Service Area Files](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Hospital-Service-Area-File/index). The link takes you to the CMS website where you can download the data directly. I've also put these data in the "HSAF" folder on our AWS AMI.
+2. **Hospital Market GitHub Repo**: John Graves has an excellent GitHub repository detailing the issues in measuring hospital markets. You can access that repo [here](https://github.com/graveja0/health-care-markets). To replicate some of his work using the community detection algorithm, you'll need to use the [Hospital Service Area Files](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Hospital-Service-Area-File/index). The link takes you to the CMS website where you can download the data directly. I've also put these data in the "HSAF" folder on our AWS AMI. Note that much of John's code deals with presenting the markets on a map, rather than physically constructing the markets empirically. For a condensed version of the code focusing more on the market formation rather than mapping, see my GitHub repo [here](https://github.com/imccart/hospital-markets).
 
 
 # Questions
 In your GitHub repository, please be sure to clearly address/answer the following questions.
 
-1. Calculate hospital market shares when defining the "market" as a hospital's zip code and using hospital beds as your measure of quantity. Create a "violin plot" of market shares over time.
+1. Calculate hospital market shares when defining the "market" by zip code and using hospital beds as your measure of quantity. Create a "violin plot" of market shares over time.
 
 2. Calculate hospital market shares when defining the "market" as the HRR, again using hospital beds as your measure of quantity. Create a violin plot of market shares over time. How do these results differ from part 1?
 
