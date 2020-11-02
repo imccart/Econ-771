@@ -38,3 +38,11 @@ In your GitHub repository, please be sure to clearly address/answer the followin
 
 5. Use the Part D low-income subsidy as an IV for market share to examine the effect of market share in 2006 on premium changes.
 
+
+# Solutions
+Here are my answers. Since we're working with clean data already for this assignment, there's less preliminary data work.
+
+1. Final [solutions](../solutions/exercise3/solutions.pdf) in PDF. My actual `R Markdown` document is [here](../solutions/exercise3/solutions.Rmd), and [here](../solutions/exercise3/solutions.tex) is the `tex` file in case anyone is interested.
+
+2. Analysis file [here](../solutions/exercise3/analysis.R). This is where I do the actual analysis. As usual, notice that I remove a bunch of large objects and save the workspace. I then call the workspace in my markdown file.
+
