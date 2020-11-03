@@ -25,7 +25,7 @@ You will "turn in" your repository to me with your answers and all supporting do
 # Resources and data
 The data for this assignment comes from three sources:
 
-1. **HCRIS**: All hospitals that treat Medicare patients must submit a hospital cost report. The data are then made available on the CMS website. The NBER also provides a slightly more user-friendly version of these data. Info and code for these data are available at my GitHub page [here](https://github.com/imccart/HCRIS). The raw data are available on our AWS AMI in the "HCRIS" folder. Use these data for information on hospital beds and to construct a measure of hospital prices.
+1. **HCRIS**: All hospitals that treat Medicare patients must submit a hospital cost report. The data are then made available on the CMS website. The NBER also provides a slightly more user-friendly version of these data. Info and code for these data are available at my GitHub page [here](https://github.com/imccart/HCRIS). The raw data are available on our AWS AMI in the "HCRIS" folder. Use these data for information on total discharges and to construct a measure of hospital prices.
 
 2. **Hospital Market GitHub Repo**: John Graves has an excellent GitHub repository detailing the issues in measuring hospital markets. You can access that repo [here](https://github.com/graveja0/health-care-markets). To replicate some of his work using the community detection algorithm, you'll need to use the [Hospital Service Area Files](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Hospital-Service-Area-File/index). The link takes you to the CMS website where you can download the data directly. I've also put these data in the "HSAF" folder on our AWS AMI. Note that much of John's code deals with presenting the markets on a map, rather than physically constructing the markets empirically. For a condensed version of the code focusing more on the market formation rather than mapping, see my GitHub repo [here](https://github.com/imccart/hospital-markets).
 
@@ -33,11 +33,13 @@ The data for this assignment comes from three sources:
 # Questions
 In your GitHub repository, please be sure to clearly address/answer the following questions.
 
-1. Calculate hospital market shares when defining the "market" by zip code and using hospital beds as your measure of quantity. Create a "violin plot" of market shares over time.
+1. Calculate hospital market shares when defining the "market" by zip code and using hospital discharges as your measure of quantity. Create a "violin plot" of market shares over time.
 
-2. Calculate hospital market shares when defining the "market" as the HRR, again using hospital beds as your measure of quantity. Create a violin plot of market shares over time. How do these results differ from part 1?
+2. Calculate hospital market shares when defining the "market" as the HRR, again using hospital discharges as your measure of quantity. Create a violin plot of market shares over time. How do these results differ from part 1?
 
-3. Calculate hospital market shares when defining the market based on the community detection algorithms described [here](https://github.com/graveja0/health-care-markets). Continue to use hospital beds as your measure of quantity, and summarize your results with a violin plot. How do these results differ from those in parts 1 and 2?
+3. Calculate hospital market shares when defining the market based on the community detection algorithms described [here](https://github.com/graveja0/health-care-markets). Continue to use hospital discharges as your measure of quantity, and summarize your results with a violin plot. How do these results differ from those in parts 1 and 2?
 
-4. Estimate a nested logit discrete choice model using market share data based on the different definition of markets in parts 1-3. What is your price elasticity estimate in each case, and how does it differ based on your measure of the market? *hint: don't worry about instrumenting for anything right now.*
+4. Plot the average market shares over time for each of the three market definitions you've considered. Be sure to put all plots on the same graph.
+
+5. Estimate a logit discrete choice model using market share data based on the different definition of markets in parts 1-3. What is your price elasticity estimate in each case, and how does it differ based on your measure of the market? *hint: don't worry about instrumenting for anything right now.*
 
