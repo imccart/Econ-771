@@ -1,7 +1,7 @@
 ---
-title: "How do hospitals respond to price changes?"
+title: "Price effects of cross-market mergers"
 subtitle: "<html><div style='float:left'></div><hr color='#EB811B' size=1px width=0px></html>"
-author: Leemore Dafny
+author: Dafny, Ho, and Lee
 date: Comments by Ian McCarthy | Econ 771 #"`r format(Sys.time(), '%d %B %Y')`"
 header-includes: 
   - \usepackage{tikz}
@@ -65,16 +65,9 @@ knitr::opts_hooks$set(fig.callout = function(options) {
 # Table of contents
 
 1. [Motivation](#motivation)
-
-2. [Research Design](#design)
-
-3. [Intensive Margin](#intensive)
-
-4. [Extensive Margin](#extensive)
-
-5. [Hospital-level Changes](#overall)
-
-6. [Takeaways](#conc)
+2. [Theory](#theory)
+3. [Research Design](#design)
+4. [Results](#results)
 
 
 <!-- New Section -->
@@ -88,11 +81,49 @@ name: motivation
 
 
 ---
-# Two motivating points
+# Economic intuition
 
-1. Hospital responses to changes in policy or strategic responses to each other depend on their objective functions
+- Insurers bundle features of a product (health care services) and sell them as one "plan"
+- Hospitals are a major part of this bundle
+- Hospital mergers may then affect customers even when one of the merging entities is not in the same geographic market
+- Employers act as "common customers" in this setup
 
-2. If not-for-profit hospitals are really "for profits in disguise", then we need to treat them as such
+<br>
+--
+Contribution to understanding of merger effects and, practically, to merger analysis
+
+<!-- New Section -->
+---
+class: inverse, center, middle
+name: theory
+
+# Theory
+
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+---
+# Model setup
+
+- Standard bargaining model, simplified for two hospitals
+- Show that merger price effects will be positive if: $$\Phi(G) - \Phi(G_{-s}) > \sum_{h_{1},h_{2}} \left(\Phi(G) - \Phi(G_{-h}) \right)$$
+
+<br>
+--
+Intuition: The value of the hospital system $s$ (two hospitals) exceeds the sum of the value of each hospital individually (formally, the insurer's objective is submodular in its network of hospitals)
+
+---
+# Model predictions
+$$\Phi(G) - \Phi(G_{-s}) > \sum_{h_{1},h_{2}} \left(\Phi(G) - \Phi(G_{-h}) \right)$$
+
+A few cases of interest:
+1. Prices increase if hospitals are substitutes (value of $h_{1}$ is lower if $h_{2}$ is already in the network, and vice versa)
+2. Prices decrease if hospitals are complements
+3. No change if markets are separable (often assumed for simplicity, but likely unrealistic)
+
+---
+# Empirical prediction
+
+Thinking of employers as common customers, then cross-market mergers should increase prices under many reasonable assumptions
 
 
 <!-- New Section -->
@@ -100,264 +131,66 @@ name: motivation
 class: inverse, center, middle
 name: design
 
-# Research Design
+# Research Design and Data
 
 <html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
 
 ---
-# Research design
+# Empirical setting
 
-Exploit exogenous change in DRG payments in 1988...
-
---
-
-.center[
-and now for a **PPS Primer**<br>
-  ![](https://media.giphy.com/media/PLHdpauwfN2MvHcHxL/source.gif)
-]
+- Look at acquisitions among existing hospital systems
+- Focus on hospitals that are already members of the system
+- Exclude the systems operating in the same local market
+- "Adjacent" treatment: hospitals in merging systems that co-exist in the same state (but not local) market
+- "Nonadjacent" treatment: hospitals in one of the merging systems but the other system doesn't co-exist in the same state market
 
 ---
-# DRG and the PPS
+# Data
 
-- Diagnosis Related Groups (DRGs)...[2020 DRG codes](https://www.cms.gov/Medicare/Medicare-Fee-for-Service-Payment/AcuteInpatientPPS/FY2020-IPPS-Final-Rule-Home-Page-Items/FY2020-IPPS-Final-Rule-Tables)
-- Prospective Payment System (PPS) introduced in 1983 as replacement to cost-plus reimbursement<br>
-
---
-$$p_{hd} = \bar{p} \times w_{d} \times \gamma_{h}$$
+- Pricing data from HCRIS
+- Merger data from FTC (narrow sample) and Irving Levin Hospital Acquisition Reports (broad sample)
+- Limitations: Not many mergers to work with, especially given the market and system-membership restrictions
 
 ---
-count: false
+# Estimation
 
-# DRG and the PPS
-
-- Diagnosis Related Groups (DRGs)
-- Prospective Payment System (PPS) introduced in 1983 as replacement to cost-plus reimbursement
-
-$$p_{hd} = \color{red}{\bar{p}} \times w_{d} \times \gamma_{h}$$
-
-  - federal base payment
+Essentially an event study approach: $$\ln(price_{ht}) = \alpha_{h} + \sum_{t} \phi_{t}^{a} 1^{a}_{h,t} + \sum_{t}\phi_{t}^{na}1^{na}_{h,t} + X_{ht} \theta + \tau_{t} + \epsilon_{ht}$$
 
 
----
-count: false
-
-# DRG and the PPS
-
-- Diagnosis Related Groups (DRGs)
-- Prospective Payment System (PPS) introduced in 1983 as replacement to cost-plus reimbursement
-
-$$p_{hd} = \bar{p} \times \color{red}{w_{d}} \times \gamma_{h}$$
-
-  - federal base payment
-  - drg weight (adjustment $\in [0.09, 22.8]$)
-
-
----
-count: false
-
-# DRG and the PPS
-
-- Diagnosis Related Groups (DRGs)
-- Prospective Payment System (PPS) introduced in 1983 as replacement to cost-plus reimbursement
-
-$$p_{hd} = \bar{p} \times w_{d} \times \color{red}{\gamma_{h}}$$
-
-  - federal base payment
-  - drg weight (adjustment $\in [0.09, 22.8]$)
-  - hospital-specific adjustments (wage index, DSH, IME)
-
-
-
----
-count: false
-
-# DRG and the PPS
-
-- Diagnosis Related Groups (DRGs)
-- Prospective Payment System (PPS) introduced in 1983 as replacement to cost-plus reimbursement
-- Change to DRGs in 1988:
-  - "with complications or age over 69" became "with complications"
-  - "without complications and age under 70" became "without complications"
 
 <!-- New Section -->
 ---
 class: inverse, center, middle
-name: intensive
+name: results
 
-# Intensive Margin
-
-<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
-
-
----
-# Intesive margin
-
-- Dafny calls this the "nominal" effect
-- Recoding to put patient into most profitable DRG category
-- aka "upcoding"
-
----
-# Identifying upcoding
-
-- Chart review
-- Share of patients in "top" code (highest paying code)
-
---
-
-.center[
-  ![:scale 500px](pics/dafny_figure1_small.png)
-]
-
-
----
-# Estimation
-
-$$\begin{align}
-\text{share}_{pt} = \alpha + \beta_{1} \text{pair}_{p} + \beta_{2} Y_{t} + \beta_{3} \Delta\text{spread}_{pt}\times \mathbf{1}(t>1988) + \varepsilon_{pt}
-\end{align}$$
-
----
-count: false
-
-# Estimation
-
-$$\begin{align}
-\color{red}{\text{share}}_{pt} = \alpha + \beta_{1} \text{pair}_{p} + \beta_{2} Y_{t} + \beta_{3} \Delta\text{spread}_{pt}\times \mathbf{1}(t>1988) + \varepsilon_{pt}
-\end{align}$$
-
-
-- Share of patients in top DRG code within pair $p$ in year $t$
-- Claims data from 20% MedPAR files
-
----
-count: false
-
-# Estimation
-
-$$\begin{align}
-\text{share}_{pt} = \alpha + \beta_{1} \color{red}{\text{pair}}_{p} + \beta_{2} \color{red}{Y}_{t} + \beta_{3} \Delta\text{spread}_{pt}\times \mathbf{1}(t>1988) + \varepsilon_{pt}
-\end{align}$$
-
-
-- Indicators for DRG pairs and year
-
----
-count: false
-
-# Estimation
-
-$$\begin{align}
-\text{share}_{pt} = \alpha + \beta_{1} \text{pair}_{p} + \beta_{2} Y_{t} + \beta_{3} \color{red}{\Delta\text{spread}}_{pt}\times \mathbf{1}(t>1988) + \varepsilon_{pt}
-\end{align}$$
-
-- Change in spread (DRG weight in top code less the DRG weight in the bottom code) from 1987 to 1988.
-- DRG weights from the *Federal Register*, published annually
-
----
 # Results
 
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
+
+
+---
+# FTC Mergers Only
 
 .center[
-  ![:scale 600px](pics/dafny_results1_small.png)
+  ![:scale 800px](pics/dafny2019_fig1.png)
 ]
 
-
 ---
-# Variation by hospital
+# Full sample
 
 .center[
-  ![:scale 600px](pics/dafny_results2_small.png)
+  ![:scale 900px](pics/dafny2019_fig2.png)
 ]
-
-- Difference in year dummies in bottom row
-- Inteprets as distinction between FP and NFP...is that fair?
-
-<!-- New Section -->
----
-class: inverse, center, middle
-name: extensive
-
-# Extensive Margin
-
-<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
-
-
----
-# Extensive margin
-
-- Dafny calls this the "real" effect
-- Measures whether hospitals actually changed how they treat patients (costs, total volume)
-- Switches to price as main independent variable and IV strategy
-
---
-- **Results:** Not much of a response
-
-<!-- New Section -->
----
-class: inverse, center, middle
-name: overall
-
-# Hospital-level Changes
-
-<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
-
-
----
-# Hospital-level changes
-
-If hospitals upcoded with no change in aggregate outcomes, what did they do with the money?
-
----
-# Estimation
-
-$$\begin{align}
-\text{ln(intensity)}_{ht} = \alpha + \beta_{1} \text{hospital}_{h} + \beta_{2} Y_{t} + \beta_{3} \text{ln}(price)_{ht} + \varepsilon_{pt}
-\end{align}$$
-
-
----
-count: false
-
-# Estimation
-
-$$\begin{align}
-\text{ln(intensity)}_{ht} = \alpha + \beta_{1} \text{hospital}_{h} + \beta_{2} Y_{t} + \beta_{3} \text{ln(price)}_{ht} + \varepsilon_{pt}
-\end{align}$$
-
-- $\ln(price)$ is endogenous...use **Bartik** or **shift-share** instrument
-
---
-
-$$\ln(price)_{ht} = \delta + \gamma_{1} \text{hospital}_{h} + \gamma_{2} Y_{t} + \gamma_{3} \text{shareCC}_{h} \times \mathbf{1}(y>1988) + \mu_{ht}$$
-- $\text{shareCC}_{h}$ denotes share of young patients coded with CC in 1987
-
-
----
-count: false
-
-# Estimation
-
-$$\begin{align}
-\text{ln(intensity)}_{ht} = \alpha + \beta_{1} \text{hospital}_{h} + \beta_{2} Y_{t} + \beta_{3} \text{ln(price)}_{ht} + \varepsilon_{pt}
-\end{align}$$
-
-- $\ln(price)$ is endogenous...use **Bartik** or **shift-share** instrument
-- For more on Bartik instruments, see [Goldsmith-Pinkham, Sorkin, and Swift (2020)](https://www.aeaweb.org/articles?id=10.1257/aer.20181047). 
-
-<!-- New Section -->
----
-class: inverse, center, middle
-name: conc
-
-# Takeaways
-
-<html><div style='float:left'></div><hr color='#EB811B' size=1px width=1055px></html>
-
 
 ---
 # Takeaways
 
-- Compelling research design
-- Strong findings regarding upcoding
-- Not clear on FP versus NFP response given the other estimates
-- Not clear on IV and how to interpret in heterogeneous settings
+- 7 to 10% increase in price for "adjacent" treated hospitals in the same state
+- No significant effect for same-system hospitals out-of-state
+
+---
+# Threats and limitations
+
+- Noisy estimates with lack of pre-treatment data
+- Hard to say that the mergers are unrelated to other markets, since systems compete in the other markets too
+

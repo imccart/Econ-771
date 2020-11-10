@@ -75,10 +75,13 @@ Ho and Lee (2017) is not the first paper to present a bargaining model and estim
 **Evidence from mergers and closures**<br>
 Dafny (2009) looks specifically at the effects of a hospital merger on hospital prices. As opposed to the "structure-conduct-performance" approach, this analysis compares markets in which there was a merger to those in which there was no merger and examines the relative changes in prices. 
 
+- Fabrice's slides for Dafny (2009) are [here](../student-presentations/fabrice-20201105.pdf)
 
 ### Class 24, 11/10
 **Evidence from out-of-market mergers**<br>
 Dafny, Ho, and Lee (2019) examines the effects of "cross-market" mergers (i.e., hospital A in Atlanta mergers with hospital B in Savannah). They investigate a few potential mechanisms from such mergers, ultimately settling on the "common consumer" mechanism in which insurers negotiate with both hospitals so that the merger provides the joined system with more bargaining leverage even though the hospital markets themselves (Atlanta and Savannah, in our example) are distinct. Schmitt (2018) also considers out-of-market mergers; however, he considers them in the context of changing the extent to which different hospitals compete in other markets. In other words, his analysis uses out-of-market mergers as an event that changes the "pairwise overlaps" of hospitals in an otherwise unrelated market. 
+
+- My sldies for Dafny, Ho, and Lee (2019) are [here](slides-dafny.html)
 
 ### Class 25, 11/12
 **Mergers and acquisitions in dialysis**<br>
