@@ -1,7 +1,7 @@
 ---
 title: "Draft Paper"
 author: "Econ 771: Health Economics II"
-date: "Due: Friday, November 13"
+date: "Due: Tuesday, November 24"
 output: 
   bookdown::html_document2:
     toc: TRUE
