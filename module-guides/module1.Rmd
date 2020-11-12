@@ -78,7 +78,7 @@ Today's papers are both from David Dranove (and co-authors)...Dranove (1988) and
 
 I will briefly present the Dranove (1988) paper in the beginning of class. I'll also discuss the main source of debate in this literature. Dranove et al. (2017) is the only student-led presentation for this class.
 
-- **Update:** Since we've already talked about cost-shifting, I'll use this class to talk about Dafny (2005). My slides are [here](slides-dafny.html).
+- **Update:** Since we've already talked about cost-shifting, I'll use this class to talk about Dafny (2005). My slides are [here](slides-dafny2005.html).
 
 ### Class 6, 9/8
 **Response to insurance policies**<br>
