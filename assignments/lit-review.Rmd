@@ -22,7 +22,7 @@ myopts <- BibOptions(bib.style = "authoryear", style="html", first.inits=FALSE, 
 
 
 # Overview
-This describes the expectations for the literature review. This is only required for 2nd year students. For 3rd year students, you'll need to go a bit further and submit a draft paper. Details of the draft paper assignment are [here](assignments/draft-paper.html). Your literature review is due no later than **Friday, November 13, 2020**.
+This describes the expectations for the literature review. This is only required for 2nd year students. For 3rd year students, you'll need to go a bit further and submit a draft paper. Details of the draft paper assignment are [here](assignments/draft-paper.html). Your literature review is due no later than **Tuesday, November 24, 2020**.
 
 To begin, please "accept" the assignment on our GitHub classroom page. This will initialize a GitHub repository where you can edit and ultimately craft your answers in your data management/econometrics software of choice.  
 
