@@ -30,6 +30,23 @@ The data for this assignment comes from three sources:
 2. **Hospital Market GitHub Repo**: John Graves has an excellent GitHub repository detailing the issues in measuring hospital markets. You can access that repo [here](https://github.com/graveja0/health-care-markets). To replicate some of his work using the community detection algorithm, you'll need to use the [Hospital Service Area Files](https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Hospital-Service-Area-File/index). The link takes you to the CMS website where you can download the data directly. I've also put these data in the "HSAF" folder on our AWS AMI. Note that much of John's code deals with presenting the markets on a map, rather than physically constructing the markets empirically. For a condensed version of the code focusing more on the market formation rather than mapping, see my GitHub repo [here](https://github.com/imccart/hospital-markets).
 
 
+Note: Given the time crunch of the semester and the complexity of some of the raw data work for this assignment, I'm going to try to give you all a break here by skipping some steps for you. On our Canvas site, you'll find the 'hospital_markets.rds' data, which is the output from the hospital market github repo. I've also uploaded a couple of other geographic data files to give you info on HRR, zip, and fips. Once you've organized the HCRIS data following the repo listed in (1) above, ese the following code chunk to combine all of the data for this assignment:
+
+```{r, eval=FALSE}
+hcris.data <- readRDS(paste0(hcris.path,'/HCRIS_Data.rds'))
+hrr.xw <- read_excel(path=paste0(geog.path,'/ZipHSAHrr15.xls'))
+comm.det <- readRDS(paste0(community.path,'/hospital_markets.rds')) %>%
+  mutate(fips=as.numeric(fips))
+zip.county <- read_csv(paste0(geog.path,"/zcta-to-county.csv")) %>% 
+  filter(row_number() != 1) %>% 
+  mutate(zip = as.numeric(zcta5),
+         fips = as.numeric(county),
+         pct_zip_fips = as.numeric(afact)) %>% 
+  as_tibble() %>%
+  select(zip, fips, pct_zip_fips)
+```
+
+
 # Questions
 In your GitHub repository, please be sure to clearly address/answer the following questions. In all cases, limit your data to the years 2000 through 2017.
 
