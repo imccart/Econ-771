@@ -87,9 +87,13 @@ Dafny, Ho, and Lee (2019) examines the effects of "cross-market" mergers (i.e., 
 **Mergers and acquisitions in dialysis**<br>
 So far, we've focused exclusively on hospital markets, but there are some very interesting studies done on other aspects of healthcare. Eliason et al. (2020) is one such study on the dialysis industry.
 
+- Linh's slides on Eliason et al. (2020) are [here](../student-presentations/linh-20201112.pdf)
+
 ### Class 26, 11/17
 **Vertical integration between hospitals and physicians**<br>
 One of the biggest changes to the U.S. healthcare delivery system in the past 20 years is the relationships between physicians and hospitals. Around 2000, less than 5% of all physician practices were owned by a hospital. Today, over 1/3rd of physician practices are owned by hospital systems. Given the physician's important role as an agent to the patient, this change in the physician/hospital relationship has potentially important consequences for the amount and quality of care delivered. Also, in a bargaining context, this change in physician/hospital relationships has important consequences for prices.  Koch, Wendling, and Wilson (2017) examines the effects of physician/hospital integration on the quantity of care. Lin, McCarthy, and Richards (2020) examines the effects of physician/hospital integration on hospital prices.
+
+- Xin's slides on Koch et al. (2017) are [here](../student-presentations/xin-20201117.pdf)
 
 ### Class 27-28, 11/19 and 11/24
 **Workshop days!**<br>
